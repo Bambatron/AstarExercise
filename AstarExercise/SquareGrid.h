@@ -3,12 +3,11 @@
 #include <iostream>
 
 #include <unordered_map>
+#include <unordered_set>
+#include <array>
 #include <queue>
 #include <set>
 
-/// <summary>
-/// The Node used by the Graph
-/// </summary>
 struct Square {
 	int x, y;
 	Square(int _x = 0, int _y = 0) : x(_x), y(_y) {}
@@ -34,99 +33,78 @@ struct Square {
 	}
 };
 
-/// <summary>
-/// The possibles directions in a square grid
-/// </summary>
-const std::vector<Square> directions = {
-	Square(-1, 0),	//UP
-	Square(0, 1),	//RIGHT
-	Square(1, 0),	//DOWN
-	Square(0, -1)	//LEFT
-};
+namespace std {
+	// Implement hash function so we can put Square into an unordered_set
+	template <> struct hash<Square> {
+		std::size_t operator()(const Square& id) const noexcept {
+			// NOTE: better to use something like boost hash_combine
+			return std::hash<int>()(id.x ^ (id.y << 16));
+		}
+	};
+}
 
-/// <summary>
-/// Use XOR between the x coordinate and the y coordinated left-shifted by 16 
-/// </summary>
-class SquaresHashFunction {
+class SquareGrid {
 public:
-	size_t operator()(const Square& p) const {
-		return std::hash<int>()(p.x ^ (p.y << 16));
+	static const std::array<Square, 4> DIRS;
+	
+	SquareGrid(int _rows = 3, int _cols = 5) : rows(_rows), cols(_cols) { MakeGraph(); }
+
+	void MakeGraph();
+
+	void ReadGraph();
+
+	std::vector<Square> Neighbors(Square& square);
+
+	bool isInBounds(Square& square) {
+		return (square.x >= 0 && square.x < cols&&
+			square.y >= 0 && square.y < rows);
 	}
-};
 
-
-/// <summary>
-/// The Graph
-/// </summary>
-struct SquareGrid {
+private:
 	int cols, rows;	//cols = width of the grid;		rows = height of the grid
-	SquareGrid(int _rows = 3, int _cols = 5) : rows(_rows), cols(_cols) {}
 
-	std::unordered_map<Square, std::vector<Square>, SquaresHashFunction> edges;
-
-	/// <summary>
-	/// Return the nodes near the provided node
-	/// </summary>
-	/// <param name="sq">The node you want the neighbor of</param>
-	/// <returns></returns>
-	std::vector<Square> neighbors(Square sq) {
-		return edges[sq];
-	}
+	std::unordered_set<Square> nodes;	//switched to set as specyfing edges for each nodes is superflous
 };
 
+const std::array<Square, 4> SquareGrid::DIRS = {	/* East, West, North, South */
+	Square{1, 0}, Square{-1, 0},
+	Square{0, -1}, Square{0, 1}
+};
 
-
-/// <summary>
-/// Creates the nodes and edges of the graph
-/// </summary>
-/// <param name="graph">The graph to load</param>
-void loadGraph(SquareGrid& graph) {
-	int rows = graph.rows;
-	int cols = graph.cols;
-
+void SquareGrid::MakeGraph() {
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-			//Create current sqaure
-			Square current(i, j);
+			Square current(i, j);	//Create current square
 
-			//Search for neighbors
-			std::vector<Square> neighbors;
-			for (const Square& dir : directions) {
-				if (i + dir.x >= 0 && i + dir.x < rows &&
-					j + dir.y >= 0 && j + dir.y < cols) {
-					Square n(i + dir.x, j + dir.y);
-
-					neighbors.push_back(n);
-				}
-			}
-
-			//Add to graph
-			graph.edges.insert({ current, neighbors });
+			this->nodes.insert(current);	//Add to graph
 		}
-
 	}
 }
 
-/// <summary>
-/// Prints out each node and its neighbors
-/// </summary>
-/// <param name="graph">The graph to read</param>
-void readGraph(SquareGrid graph) {
-	for (auto sq = graph.edges.begin(); sq != graph.edges.end(); sq++) {
-		std::cout << "Visiting (" << sq->first.x << ", " << sq->first.y << ") with neighbors:\t";
-		for (auto neighbor : sq->second) {
-			std::cout << "(" << neighbor.x << ", " << neighbor.y << ")\t";
-		}
-		std::cout << std::endl;
+void SquareGrid::ReadGraph() {
+	for (auto sq : nodes) {
+		std::cout << "(" << sq.x << ", " << sq.y << ")" << std::endl;
 	}
 }
 
-/// <summary>
-/// Simple breadth first search on the given graph from the given node
-/// </summary>
-/// <param name="graph">The graph to execute the search on</param>
-/// <param name="start">The node from which to start the search</param>
-void BreadthFirstSearch(SquareGrid graph, Square& start) {
+std::vector<Square> SquareGrid::Neighbors(Square& square) {
+	std::vector<Square> neighbors;
+
+	for (auto dir : DIRS) {
+		Square next{ square.x + dir.x, square.y + dir.y };
+		if (isInBounds(next)) {
+			neighbors.push_back(next);
+		}
+	}
+
+	if ((square.x + square.y) % 2 == 0) {
+		std::reverse(neighbors.begin(), neighbors.end());
+	}
+
+	return neighbors;
+}
+
+/*void BreadthFirstSearch(SquareGrid& graph, Square& start) {
 	std::queue<Square> frontier;
 	frontier.push(start);
 
@@ -147,23 +125,6 @@ void BreadthFirstSearch(SquareGrid graph, Square& start) {
 	}
 }
 
-namespace std {
-	template <>
-	struct hash<Square> {
-		size_t operator()(const Square& s) const {
-			// Define a hash function for Square
-			return hash<int>()(s.x) ^ (hash<int>()(s.y) << 1);
-		}
-	};
-}
-
-/// <summary>
-/// Simple breadth first search on the given graph from the given node with an early exit on the given node
-/// </summary>
-/// <param name="graph">The graph to execute the search on</param>
-/// <param name="start">The node from which to start the search</param>
-/// <param name="goal">The node on which to end early the search</param>
-/// <returns></returns>
 std::unordered_map<Square, Square> BreadthFirstSearchToGoal(SquareGrid graph, Square& start, Square& goal) {
 	std::queue<Square> frontier;
 	frontier.push(start);
@@ -191,13 +152,6 @@ std::unordered_map<Square, Square> BreadthFirstSearchToGoal(SquareGrid graph, Sq
 	return cameFrom;
 }
 
-/// <summary>
-/// Re-orders the path created by a search
-/// </summary>
-/// <param name="path">The path created by a search</param>
-/// <param name="start">The node where the search starts</param>
-/// <param name="goal">The node where the search ends</param>
-/// <returns>The ordered path from the start node to the goal node</returns>
 std::vector<Square> ReconstructPath(const std::unordered_map<Square, Square>& path, Square& start, Square& goal) {
 	std::vector<Square> reconstructedPath;
 
@@ -217,3 +171,4 @@ std::vector<Square> ReconstructPath(const std::unordered_map<Square, Square>& pa
 
 	return reconstructedPath;
 }
+*/
