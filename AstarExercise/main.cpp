@@ -1,62 +1,28 @@
-#include <iostream>
+#pragma once
 
-#include <SFML/Graphics.hpp>
+#include <fstream>
+#include "json.hpp"
 
-#include "SquareGrid.h"
-
-/*struct WeightedSquare : public Square {
-	int w;
-	WeightedSquare(int _x = 0, int _y = 0, int _w = 1) : Square(_x, _y), w(_w) {}
-
-	bool operator==(const WeightedSquare& other) const {
-		return this->x == other.x &&
-			this->y == other.y &&
-			this->w == other.w;
-	}
-
-	bool operator !=(const WeightedSquare& other)const {
-		return !(*this == other);
-	}
-
-	bool operator<(const WeightedSquare& other) const {
-		return (this->x < other.x ||
-			(this->x == other.x && this->y < other.y));
-	}
-
-	WeightedSquare& operator=(const WeightedSquare& other) {
-		this->x = other.x;
-		this->y = other.y;
-		this->w = other.w;
-		return *this;
-	}
-};
-
-struct WeightedSquareGrid : public SquareGrid {
-	int rows, cols;
-	WeightedSquareGrid(int _rows = 3, int _cols = 5) : SquareGrid(_rows, _cols) {}
-
-	std::unordered_set<WeightedSquare> nodes;
-
-
-};*/
+#include "WeightedSquareGrid.h"
+#include "WeightedHexagonalGrid.h"
+#include "PathfindingAlgorithms.h"
 
 int main() {
 	std::cout << "Hello world!" << std::endl;
 	
-	SquareGrid graphExample;
-	Square example(1, 1);
+	/*Square example(1, 1);
 	auto vec = graphExample.Neighbors(example);
 
 	for (auto sq : vec) {
 		std::cout << sq.x << "-" << sq.y << "\t";
 	}
 	
+	SquareGrid graphExample;
+	Square startExample(0, 0);
+	std::cout << "Breadth first search from (0,0)" << std::endl;
+	BreadthFirstSearch(graphExample, startExample);
 
-	//Square startExample(0, 0);
-	/*std::cout << "Breadth first search from (0,0)" << std::endl;
-	BreadthFirstSearch(example, startExample);*/
-
-	/*Square goalExample(1, 3);
+	Square goalExample(1, 3);
 	std::cout << "Breadth first search from (" << startExample.x << ", " << startExample.y
 		<< ") to (" << goalExample.x << ", " << goalExample.y << ")" << std::endl;
 	auto pathTaken = BreadthFirstSearchToGoal(graphExample, startExample, goalExample);
@@ -68,6 +34,68 @@ int main() {
 	for (const Square& square : reconstructed) {
 		std::cout << "(" << square.x << ", " << square.y << ") ";
 	}*/
+
+ 	/*WeightedSquareGrid example;
+
+	Square start(0, 0);
+	Square goal(6, 4);
+
+	std::unordered_map<Square, Square> cameFrom;
+	std::unordered_map<Square, int> costSoFar;
+
+	AstarSearch(example, start, goal, cameFrom, costSoFar);
+
+	std::cout << "CostSoFar " << costSoFar[goal];
+
+	std::vector<Square> reconstructedPath = ReconstructPath(start, goal, cameFrom);
+	for (Square sq : reconstructedPath) {
+		std::cout << "( " << sq.x << ", " << sq.y << ")\t";
+	}
+	*/
+	
+
+	//Hex start(0, -2, 2);
+	//Hex goal(-1, 1, 0);
+	
+	/*HexGrid hexGrid;
+	
+	//BreadthFirstSearch(hexGrid, start);
+	
+	auto path = BreadthFirstSearchToGoal(hexGrid, start, goal);
+	auto reconstructedPath = ReconstructPath(path, start, goal);
+
+	std::cout << "Path from:";
+	start.Read();
+	std::cout << " to:";
+	goal.Read();
+	std::cout << std::endl;
+	for (const Hex& hex : reconstructedPath) {
+		hex.Read();
+	}*/
+
+	/*WeightedHexGrid weightedHexGrid(2);
+
+	std::unordered_map<Hex, Hex> cameFrom;
+	std::unordered_map<Hex, int> costSoFar;
+
+	std::cout << "Moving from ";
+	start.Read();
+	std::cout << " to ";
+	goal.Read();
+	std::cout << std::endl;
+
+	AstarSearch(weightedHexGrid, start, goal, cameFrom, costSoFar);
+
+	std::cout << "CostSoFar " << costSoFar[goal];
+
+	std::vector<Hex> reconstructedPath = ReconstructPath(start, goal, cameFrom);
+	for (const Hex& h : reconstructedPath) {
+		h.Read();
+	}*/
+
+	WeightedHexGrid hexGraph(std::string("example.json"));
+
+	//MakeGraphFromFile(std::string("example.json"));
 
 	return 0;
 }

@@ -31,6 +31,10 @@ struct Square {
 		this->y = other.y;
 		return *this;
 	}
+
+	void Read() {
+		std::cout << "(" << this->x << ", " << this->y << ")" << std::endl;
+	}
 };
 
 namespace std {
@@ -47,7 +51,11 @@ class SquareGrid {
 public:
 	static const std::array<Square, 4> DIRS;
 	
-	SquareGrid(int _rows = 3, int _cols = 5) : rows(_rows), cols(_cols) { MakeGraph(); }
+	SquareGrid(int _rows = 3, int _cols = 5) : rows(_rows), cols(_cols) { 
+		std::cout << "SquareGrid" << std::endl;
+		MakeGraph();
+		std::cout << "After make graph" << std::endl;
+	}
 
 	void MakeGraph();
 
@@ -60,7 +68,7 @@ public:
 			square.y >= 0 && square.y < rows);
 	}
 
-private:
+protected:
 	int cols, rows;	//cols = width of the grid;		rows = height of the grid
 
 	std::unordered_set<Square> nodes;	//switched to set as specyfing edges for each nodes is superflous
@@ -83,7 +91,7 @@ void SquareGrid::MakeGraph() {
 
 void SquareGrid::ReadGraph() {
 	for (auto sq : nodes) {
-		std::cout << "(" << sq.x << ", " << sq.y << ")" << std::endl;
+		sq.Read();
 	}
 }
 

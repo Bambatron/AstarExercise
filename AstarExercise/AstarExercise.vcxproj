@@ -142,10 +142,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="HexagonalGrid.h" />
+    <ClInclude Include="PathfindingAlgorithms.h" />
     <ClInclude Include="SquareGrid.h" />
+    <ClInclude Include="WeightedHexagonalGrid.h" />
+    <ClInclude Include="WeightedSquareGrid.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="example.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

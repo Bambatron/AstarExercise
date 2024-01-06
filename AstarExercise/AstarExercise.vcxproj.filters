@@ -18,10 +18,27 @@
     <ClInclude Include="SquareGrid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WeightedSquareGrid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HexagonalGrid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WeightedHexagonalGrid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PathfindingAlgorithms.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="example.json">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
