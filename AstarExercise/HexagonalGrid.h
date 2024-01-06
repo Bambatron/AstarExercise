@@ -68,7 +68,7 @@ struct Hex {
 	}
 
 	void Read() const {
-		std::cout << "(" << this->q << ", " << this->r << ", " << this->s << ")";
+		std::cout << "(" << this->q << ", " << this->r << ", " << this->s << ") \t";
 	}
 };
 
@@ -96,7 +96,7 @@ public:
 
 	void MakeGraph();
 
-	void ReadGraph();
+	virtual void ReadGraph();
 
 	std::vector<Hex> Neighbors(Hex& hex);
 
@@ -130,23 +130,7 @@ const std::array<Hex, 6> HexGrid::DIRS = {		//These are all counter-clock wise
 
 };
 
-void HexGrid::MakeGraph() {
-	//distance = max(abs(q), abs(r), abs(s))
-	for (int q = -radius; q <= radius; q++) {
-		int start = std::max(-radius, -q-radius);
-		int end = std::min(radius, radius-q);
-		for (int r = start; r <= end; r++) {
-			int s = -q - r;
-
-			Hex current(q, r, s);
-
-			this->nodes.insert(current + this->origin);
-		}
-	}
-}
-
 HexGrid::HexGrid(const std::string& jsonFilePath) {
-	std::cout << "HexGrid::MakeGraphFromFile" << std::endl;
 	// Read the JSON file
 	std::ifstream file(jsonFilePath);
 	if (!file.is_open()) {
@@ -179,10 +163,28 @@ HexGrid::HexGrid(const std::string& jsonFilePath) {
 	}
 }
 
+void HexGrid::MakeGraph() {
+	//distance = max(abs(q), abs(r), abs(s))
+	for (int q = -radius; q <= radius; q++) {
+		int start = std::max(-radius, -q - radius);
+		int end = std::min(radius, radius - q);
+		for (int r = start; r <= end; r++) {
+			int s = -q - r;
+
+			Hex current(q, r, s);
+
+			this->nodes.insert(current + this->origin);
+		}
+	}
+}
+
 void HexGrid::ReadGraph() {
+	std::cout << "Nodes: " << std::endl;
+
 	for (const auto& hex : nodes) {
 		hex.Read();
 	}
+	std::cout << std::endl;
 }
 
 std::vector<Hex> HexGrid::Neighbors(Hex& hex) {

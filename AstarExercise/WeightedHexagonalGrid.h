@@ -19,6 +19,8 @@ public:
 		return forests.find(to) != forests.end() ? 5 : 1;
 	}
 
+	void ReadGraph() override;
+
 private:
 	void MakeRandomForest();
 
@@ -27,7 +29,6 @@ private:
 };
 
 WeightedHexGrid::WeightedHexGrid(const std::string& jsonFilePath) : HexGrid(jsonFilePath) {
-	std::cout << "WeightedHexGrid::WeightedHexGrid" << std::endl;
 	// Read the JSON file
 	std::ifstream file(jsonFilePath);
 	if (!file.is_open()) {
@@ -40,16 +41,25 @@ WeightedHexGrid::WeightedHexGrid(const std::string& jsonFilePath) : HexGrid(json
 		file >> jsonData;
 		if (jsonData["forest"] == 1) {
 			// Accessing values inside the "forests" array
-			std::cout << "Forests:" << std::endl;
 			for (const auto& forest : jsonData["forests"]) {
-				int forest_q = forest["q"];
-				int forest_r = forest["r"];
-				std::cout << "  q = " << forest_q << ", r = " << forest_r << std::endl;
+				int q = forest["q"];
+				int r = forest["r"];
+				Hex h(q, r, -q - r);
+				forests.insert(h);
 			}
 		}
 	}
 	catch (const std::exception& e) {
 		std::cerr << "Error parsing JSON: " << e.what() << std::endl;
+	}
+}
+
+void WeightedHexGrid::ReadGraph() {
+	HexGrid::ReadGraph();
+
+	std::cout << "With forests: " << std::endl;
+	for (const Hex& h : forests) {
+		h.Read();
 	}
 }
 
@@ -68,8 +78,5 @@ void WeightedHexGrid::MakeRandomForest() {
 		if (randomInt == 0) {
 			forests.insert(Hex(hex));
 		}
-		std::cout << "Node";
-		hex.Read();
-		std::cout << ((randomInt == 0) ? "is a forest" : "is NOT a forest") << std::endl;
 	}
 }
