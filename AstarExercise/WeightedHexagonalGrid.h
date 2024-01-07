@@ -19,7 +19,7 @@ public:
 		return forests.find(to) != forests.end() ? 5 : 1;
 	}
 
-	void ReadGraph() override;
+	void ReadGrid() override;
 
 private:
 	void MakeRandomForest();
@@ -54,8 +54,8 @@ WeightedHexGrid::WeightedHexGrid(const std::string& jsonFilePath) : HexGrid(json
 	}
 }
 
-void WeightedHexGrid::ReadGraph() {
-	HexGrid::ReadGraph();
+void WeightedHexGrid::ReadGrid() {
+	HexGrid::ReadGrid();
 
 	std::cout << "With forests: " << std::endl;
 	for (const Hex& h : forests) {

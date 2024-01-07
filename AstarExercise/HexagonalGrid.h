@@ -68,7 +68,7 @@ struct Hex {
 	}
 
 	void Read() const {
-		std::cout << "(" << this->q << ", " << this->r << ", " << this->s << ") \t";
+		std::cout << " (" << this->q << ", " << this->r << ", " << this->s << ") -";
 	}
 };
 
@@ -96,7 +96,7 @@ public:
 
 	void MakeGraph();
 
-	virtual void ReadGraph();
+	virtual void ReadGrid();
 
 	std::vector<Hex> Neighbors(Hex& hex);
 
@@ -178,12 +178,13 @@ void HexGrid::MakeGraph() {
 	}
 }
 
-void HexGrid::ReadGraph() {
+void HexGrid::ReadGrid() {
 	std::cout << "Nodes: " << std::endl;
 
 	for (const auto& hex : nodes) {
 		hex.Read();
 	}
+	
 	std::cout << std::endl;
 }
 

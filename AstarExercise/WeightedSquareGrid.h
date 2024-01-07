@@ -2,8 +2,6 @@
 #include <iostream>
 #include <random>
 
-#include <SFML/Graphics.hpp>
-
 #include "SquareGrid.h"
 
 inline double Heuristic(Square start, Square goal) {
