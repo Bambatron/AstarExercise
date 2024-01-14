@@ -13,11 +13,11 @@
 struct Hex {
 	int q, r, s;
 
-	Hex(int _q = 0, int _r = 0, int _s = 0) : q(_q), r(_r), s(_s) {	//Cube constructor
+	Hex(int _q, int _r, int _s) : q(_q), r(_r), s(_s) {	//Cube constructor
 		assert(q + r + s == 0);
 	}
 	
-	Hex(int _q	, int _r) : Hex(_q, _r, -_q-_r){}
+	Hex(int _q = 0	, int _r = 0) : Hex(_q, _r, -_q-_r){}
 
 	Hex(const Hex& original) : q(original.q), r(original.r), s(original.s) {
 		assert(q + r + s == 0);
@@ -83,6 +83,32 @@ namespace std {
 	};
 }
 
+//Rounds hex coordinates of the pixel conversion to the correct hex
+Hex HexRound(double fractQ, double fractR, double fractS) {
+	// Round the input parameters to integers
+	int q = int(round(fractQ));
+	int r = int(round(fractR));
+	int s = int(round(fractS));
+
+	// Calculate differences between rounded values and original values
+	double q_diff = abs(q - fractQ);
+	double r_diff = abs(r - fractR);
+	double s_diff = abs(s - fractS);
+
+	// Adjust the ccordinates
+	if (q_diff > r_diff and q_diff > s_diff) {
+		q = -r - s;
+	}
+	else if (r_diff > s_diff) {
+		r = -q - s;
+	}
+	else {
+		s = -q - r;
+	}
+
+	return Hex(q, r, s);
+}
+
 //Hexagonal shaped grid
 class HexGrid {
 public:
@@ -95,6 +121,10 @@ public:
 	HexGrid(const std::string& jsonFilePath);
 
 	void MakeGraph();
+
+	std::unordered_set<Hex> Visit() {
+		return nodes;
+	}
 
 	virtual void ReadGrid();
 
@@ -113,6 +143,8 @@ public:
 		return false;
 	}
 
+	const std::unordered_set<Hex>& VisitNodes() { return nodes; }
+
 protected:
 	int radius;
 	Hex origin;
@@ -120,7 +152,8 @@ protected:
 	std::unordered_set<Hex> nodes;
 };
 
-const std::array<Hex, 6> HexGrid::DIRS = {		//These are all counter-clock wise
+//These are all counter-clock wise
+const std::array<Hex, 6> HexGrid::DIRS = {
 	Hex(1, 0, -1),	//Pointy: right		| Flat: down-right
 	Hex(1, -1, 0),	//Pointy: up-right	| Flat: up-right
 	Hex(0, -1, 1),	//Pointy: up-left	| Flat: up

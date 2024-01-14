@@ -19,6 +19,8 @@ public:
 		return forests.find(to) != forests.end() ? 5 : 1;
 	}
 
+	bool IsForest(const Hex& hex) { return (forests.find(hex) != forests.end()); }
+	
 	void ReadGrid() override;
 
 private:

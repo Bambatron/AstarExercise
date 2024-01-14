@@ -1,11 +1,98 @@
 ﻿  main.cpp
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(45,88): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(45): message : while compiling class template member function 'Map<HexTile,WeightedHexGrid>::Map(int,const std::string &)'
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(62): message : see reference to function template instantiation 'Map<HexTile,WeightedHexGrid>::Map(int,const std::string &)' being compiled
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(62): message : see reference to class template instantiation 'Map<HexTile,WeightedHexGrid>' being compiled
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(144,73): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(146,75): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(148,90): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(148,75): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(151,74): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(153,89): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(153,74): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(160,79): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(162,90): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(162,69): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(165,77): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(167,88): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(167,67): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(50,114): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(50): message : while compiling class template member function 'Map<HexTile,WeightedHexGrid>::Map(int,sf::Vector2i,const std::string &)'
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(108): message : see reference to function template instantiation 'Map<HexTile,WeightedHexGrid>::Map(int,sf::Vector2i,const std::string &)' being compiled
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(108): message : see reference to class template instantiation 'Map<HexTile,WeightedHexGrid>' being compiled
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(89,16): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(85): message : while compiling class template member function 'Hex Map<HexTile,WeightedHexGrid>::PixelToHex(sf::Vector2i)'
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(110): message : see reference to function template instantiation 'Hex Map<HexTile,WeightedHexGrid>::PixelToHex(sf::Vector2i)' being compiled
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(73,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(71): message : while compiling class template member function 'sf::Vector2f Map<HexTile,WeightedHexGrid>::HexToPixel(const Hex &)'
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(56): message : see reference to function template instantiation 'sf::Vector2f Map<HexTile,WeightedHexGrid>::HexToPixel(const Hex &)' being compiled
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(50): message : while compiling class template member function 'Map<HexTile,WeightedHexGrid>::Map(int,sf::Vector2i,const std::string &)'
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(108): message : see reference to function template instantiation 'Map<HexTile,WeightedHexGrid>::Map(int,sf::Vector2i,const std::string &)' being compiled
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(75,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(76,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   Generating code
-  3 of 1479 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
-    2 functions were new in current compilation
+  2 of 1502 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
     1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   AstarExercise.vcxproj -> C:\Workspace\AstarExercise\x64\Release\AstarExercise.exe
