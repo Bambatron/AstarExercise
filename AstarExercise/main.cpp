@@ -7,12 +7,12 @@
 
 #include "WeightedSquareGrid.h"
 #include "WeightedHexagonalGrid.h"
-#include "PathfindingAlgorithms.h"
+#include "PathfindingAlgorithsmGraphics.h"
 
 struct HexTile {
     HexTile(float radius) : body(radius, 6) {
         body.setFillColor(sf::Color::Transparent);
-        body.setOutlineColor(sf::Color::White);
+        body.setOutlineColor(sf::Color::Black);
         body.setOutlineThickness(1);
         body.setOrigin(sf::Vector2f(radius, radius));
     }
@@ -38,6 +38,9 @@ public:
 
     sf::Vector2f HexToPixel(const Hex& hex);
     Hex PixelToHex(sf::Vector2i pixelPos);
+    
+    TileType& GetTile() { return tile; }
+    GridType& GetGrid() { return grid; }
 
 private:
     sf::Vector2i windowSize;
@@ -101,16 +104,21 @@ int main() {
 
     sf::RenderWindow window(sf::VideoMode(800, 600), "Hexagon Example", sf::Style::Default, settings);
     sf::Vector2i windowSize = sf::Vector2i(window.getSize().x, window.getSize().y) ;
-    bool _showGrid = false;
-
-    int rad = 50;
+    
+    int rad = 40;
 
     Map<HexTile, WeightedHexGrid> map(rad, windowSize);
 
-    map.PixelToHex(sf::Vector2i(369, 236));
+    //Visual grid
+    bool _showVisualGrid = false;
+
+    Hex start(0, 0, 0);
+    Hex goal(0, 3, -3);
+
+    BreadthFirstSearchRecursiveVisual(map, start, window, sf::seconds(2.f));
 
     // Main loop
-    while (window.isOpen()) {
+    /*while (window.isOpen()) {
         // Handle events
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -119,14 +127,13 @@ int main() {
             if (event.type == sf::Event::MouseButtonPressed) {  //Check which mouse button is pressed
                 if (event.mouseButton.button == sf::Mouse::Left) {  //Get the mouse position and print it
                     sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
-                    std::cout << "Mouse Clicked at: " << mousePosition.x << ", " << mousePosition.y << std::endl;
                     auto hex = map.PixelToHex(mousePosition);
-                    std::cout << "Hex found: " << hex.q << " " << hex.r << " " << hex.s << std::endl;
+                    std::cout << "Hex: " << hex.q << " " << hex.r << " " << hex.s << std::endl;
                 }
             }
             if (event.type == sf::Event::KeyPressed) {
                 if (event.key.code == sf::Keyboard::G) {
-                    _showGrid = !(_showGrid);
+                    _showVisualGrid = !(_showVisualGrid);
                 }
                 if (event.key.code == sf::Keyboard::Escape) {
                     window.close();
@@ -135,45 +142,44 @@ int main() {
         }
 
         // Clear the window
-        window.clear();
+        /*window.clear();
 
         // Draw the hexagon
         map.Render(window);
-        if (_showGrid) {
+        if (_showVisualGrid) {
             //This grid is cetered on the middle of the window
-            for (int i = 0; i < windowSize.x /2 ; i += rad * sqrt(3) / 2) {
+            for (int i = 0; i < windowSize.x /2 ; i += rad * sqrt(3) / 2 ) {
                 sf::VertexArray verticalRight(sf::LinesStrip, 2);
                 verticalRight[0].position = sf::Vector2f(windowSize.x / 2 + i, 0);
-                verticalRight[0].color = sf::Color::Red;
+                verticalRight[0].color = sf::Color::White;
                 verticalRight[1].position = sf::Vector2f(windowSize.x / 2 + i, windowSize.y);
-                verticalRight[1].color = sf::Color::Red;
+                verticalRight[1].color = sf::Color::White;
                 sf::VertexArray verticalLeft(sf::LinesStrip, 2);
                 verticalLeft[0].position = sf::Vector2f(windowSize.x / 2 - i, 0);
-                verticalLeft[0].color = sf::Color::Red;
+                verticalLeft[0].color = sf::Color::White;
                 verticalLeft[1].position = sf::Vector2f(windowSize.x / 2 - i, windowSize.y);
-                verticalLeft[1].color = sf::Color::Red;
+                verticalLeft[1].color = sf::Color::White;
                 window.draw(verticalRight);
                 window.draw(verticalLeft);
             }
             for (int i = 0; i < windowSize.y / 2; i += rad) {
                 sf::VertexArray horizontalDown(sf::LinesStrip, 2);
                 horizontalDown[0].position = sf::Vector2f(0, windowSize.y / 2 + i);
-                horizontalDown[0].color = sf::Color::Red;
+                horizontalDown[0].color = sf::Color::White;
                 horizontalDown[1].position = sf::Vector2f(windowSize.x, windowSize.y / 2 + i);
-                horizontalDown[1].color = sf::Color::Red;
+                horizontalDown[1].color = sf::Color::White;
                 sf::VertexArray horizontalUp(sf::LinesStrip, 2);
                 horizontalUp[0].position = sf::Vector2f(0, windowSize.y / 2 - i);
-                horizontalUp[0].color = sf::Color::Red;
+                horizontalUp[0].color = sf::Color::White;
                 horizontalUp[1].position = sf::Vector2f(windowSize.x, windowSize.y / 2 - i);
-                horizontalUp[1].color = sf::Color::Red;
+                horizontalUp[1].color = sf::Color::White;
                 window.draw(horizontalDown);
                 window.draw(horizontalUp);
             }
         }
-
         // Display the contents of the window
         window.display();
-    }
+    }*/
 
 	return 0;
 }

@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="HexagonalGrid.h" />
     <ClInclude Include="PathfindingAlgorithms.h" />
+    <ClInclude Include="PathfindingAlgorithsmGraphics.h" />
     <ClInclude Include="SquareGrid.h" />
     <ClInclude Include="WeightedHexagonalGrid.h" />
     <ClInclude Include="WeightedSquareGrid.h" />
