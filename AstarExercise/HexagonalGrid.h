@@ -122,10 +122,6 @@ public:
 
 	void MakeGraph();
 
-	std::unordered_set<Hex> Visit() {
-		return nodes;
-	}
-
 	virtual void ReadGrid();
 
 	std::vector<Hex> Neighbors(Hex& hex);
@@ -143,7 +139,7 @@ public:
 		return false;
 	}
 
-	const std::unordered_set<Hex>& VisitNodes() { return nodes; }
+	const std::unordered_set<Hex>& VisitNodes() const { return nodes; }
 
 protected:
 	int radius;
