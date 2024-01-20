@@ -1,31 +1,12 @@
 ﻿  main.cpp
-C:\Workspace\AstarExercise\AstarExercise\Map.h(47,57): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(67,75): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(69,67): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(48,57): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(68,75): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(70,67): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(71,82): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
-          with
-          [
-              T=int
-          ]
-          and
-          [
-              T=float
-          ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(71,67): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(74,66): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(76,81): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(72,82): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
           with
           [
               T=int
@@ -34,23 +15,17 @@ C:\Workspace\AstarExercise\AstarExercise\Map.h(76,81): warning C4244: 'argument'
           [
               T=float
           ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(76,66): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(72,67): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(81,61): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(83,71): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(75,66): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(85,82): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(85,61): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(77,81): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
           with
           [
               T=int
@@ -59,17 +34,23 @@ C:\Workspace\AstarExercise\AstarExercise\Map.h(85,61): warning C4244: 'argument'
           [
               T=float
           ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(88,69): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(77,66): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(90,80): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(82,61): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(84,71): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(90,59): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(86,82): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Workspace\AstarExercise\AstarExercise\Map.h(86,61): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
           with
           [
               T=int
@@ -78,13 +59,44 @@ C:\Workspace\AstarExercise\AstarExercise\Map.h(90,59): warning C4244: 'argument'
           [
               T=float
           ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(99,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(101,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(89,69): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Workspace\AstarExercise\AstarExercise\Map.h(91,80): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Workspace\AstarExercise\AstarExercise\Map.h(91,59): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Workspace\AstarExercise\AstarExercise\Map.h(100,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\Map.h(102,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(114,16): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(103,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(115,16): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(39,13): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(40,28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(41,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(41,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(50,49): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\PathfindingAlgorithsmGraphics.h(196,17): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(143): message : see reference to function template instantiation 'bool RecursiveAstarSearchVisual<WeightedHexGrid,Hex>(Graph,Location,PriorityQueue<Hex,int> &,std::unordered_map<Hex,Hex,std::hash<Hex>,std::equal_to<Hex>,std::allocator<std::pair<const Hex,Hex>>> &,std::unordered_map<Hex,int,std::hash<Hex>,std::equal_to<Hex>,std::allocator<std::pair<const Hex,int>>> &)' being compiled
+          with
+          [
+              Graph=WeightedHexGrid,
+              Location=Hex
+          ]
   Generating code
-  2 of 362 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
+  2 of 1039 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    2 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   AstarExercise.vcxproj -> C:\Workspace\AstarExercise\x64\Release\AstarExercise.exe

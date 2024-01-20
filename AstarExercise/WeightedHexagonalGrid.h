@@ -61,7 +61,7 @@ void WeightedHexGrid::ReadGrid() {
 
 	std::cout << "With forests: " << std::endl;
 	for (const Hex& h : forests) {
-		h.Read();
+		std::cout << h.Read() << "\t";
 	}
 }
 

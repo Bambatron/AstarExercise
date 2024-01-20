@@ -33,10 +33,11 @@ public:
     void Render(const WeightedHexGrid& grid, sf::RenderWindow& target);
     void RenderVisualGrid(sf::RenderWindow& target);
 
+    sf::Vector2i GetWindowSize() { return windowSize; }
+    HexTile& GetTile() { return tile; }
+
     sf::Vector2f HexToPixel(const Hex& hex);
     Hex PixelToHex(sf::Vector2i pixelPos);
-
-    const HexTile& GetTile() { return tile; }
 
 private:
     sf::Vector2i windowSize;
@@ -115,5 +116,6 @@ Hex Map::PixelToHex(sf::Vector2i pixelPos) {
 
     double q = ((pixelPos.x * sqrt(3) / 3) - (pixelPos.y * 1. / 3)) / radius;
     double r = (pixelPos.y * 2. * 1. / 3) / radius;
+
     return HexRound(q, r, -q - r);
 }

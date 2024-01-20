@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <sstream>
 #include <functional> 
 #include <cassert>
 
@@ -67,8 +68,11 @@ struct Hex {
 		return *this;
 	}
 
-	void Read() const {
-		std::cout << " (" << this->q << ", " << this->r << ", " << this->s << ") -";
+	std::string Read() const {
+		std::ostringstream oss;
+		oss << "(" << this->q << ", " << this->r << ", " << this->s << ")" << std::dec;
+		// Add more information if needed based on your struct members
+		return oss.str();
 	}
 };
 
@@ -181,9 +185,7 @@ HexGrid::HexGrid(const std::string& jsonFilePath) {
 
 		this->origin = Hex(q, r, -q - r);
 
-		std::cout << "Origin: ";
-		origin.Read();
-		std::cout << std::endl;
+		std::cout << "Origin: " << origin.Read() << std::endl;
 
 		MakeGraph();
 	}
@@ -211,7 +213,7 @@ void HexGrid::ReadGrid() {
 	std::cout << "Nodes: " << std::endl;
 
 	for (const auto& hex : nodes) {
-		hex.Read();
+		std::cout << hex.Read() << "\t";
 	}
 	
 	std::cout << std::endl;
