@@ -14,10 +14,10 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Hexagon Example", sf::Style::Default, settings);
     
     Map map;
-    WeightedHexGrid grid;
+    WeightedHexGrid grid("example.json");
     bool _showVisualGrid = false;
 
-    //Searc stuff
+    //Search stuff
     bool _breadthFirstGoal = false;
     bool _astarSearch = false;
     Hex start;
@@ -58,8 +58,9 @@ int main() {
         // Handle events
         sf::Event event;
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed) {
                 window.close();
+            }
             if (event.type == sf::Event::MouseButtonPressed) {  //Check which mouse button is pressed
                 if (_selectingStartingHex) {
                     sf::Vector2i mousePosition = sf::Vector2i(event.mouseButton.x, event.mouseButton.y);
@@ -90,6 +91,18 @@ int main() {
                     _selectingGoalHex = false;
                     _renderGoalHex = true;
                     _startSearch = true;
+                }
+            }
+            if (event.type == sf::Event::MouseWheelScrolled) {
+                if (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel) {
+                    sf::Vector2i mousePos = sf::Vector2i(event.mouseWheelScroll.x, event.mouseWheelScroll.y);
+                    std::cout << "Mouse wheel scrolled on Hex: "<< map.PixelToHex(mousePos).Read() << std::endl;
+                    if (event.mouseWheelScroll.delta >0) {
+                        std::cout << "Increase" << std::endl;
+                    }
+                    else {
+                        std::cout << "Decrease" << std::endl;
+                    }
                 }
             }
             if (event.type == sf::Event::KeyPressed) {
@@ -164,7 +177,7 @@ int main() {
         if (_showVisualGrid) {
             map.RenderVisualGrid(window);
         }
-        if (_startSearch && !_breadthFirstGoal) {
+        if (_startSearch && !_breadthFirstGoal && !_astarSearch) {
             for (auto it : reached) { //Render closed nodes
                 circle.setPosition(map.HexToPixel(it));
                 circle.setFillColor(sf::Color::Red);

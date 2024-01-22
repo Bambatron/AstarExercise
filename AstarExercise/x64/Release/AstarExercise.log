@@ -88,15 +88,15 @@ C:\Workspace\AstarExercise\AstarExercise\main.cpp(41,27): warning C4244: 'argume
 C:\Workspace\AstarExercise\AstarExercise\main.cpp(41,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\main.cpp(50,49): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\PathfindingAlgorithsmGraphics.h(196,17): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(143): message : see reference to function template instantiation 'bool RecursiveAstarSearchVisual<WeightedHexGrid,Hex>(Graph,Location,PriorityQueue<Hex,int> &,std::unordered_map<Hex,Hex,std::hash<Hex>,std::equal_to<Hex>,std::allocator<std::pair<const Hex,Hex>>> &,std::unordered_map<Hex,int,std::hash<Hex>,std::equal_to<Hex>,std::allocator<std::pair<const Hex,int>>> &)' being compiled
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(159): message : see reference to function template instantiation 'bool RecursiveAstarSearchVisual<WeightedHexGrid,Hex>(Graph,Location,PriorityQueue<Hex,int> &,std::unordered_map<Hex,Hex,std::hash<Hex>,std::equal_to<Hex>,std::allocator<std::pair<const Hex,Hex>>> &,std::unordered_map<Hex,int,std::hash<Hex>,std::equal_to<Hex>,std::allocator<std::pair<const Hex,int>>> &)' being compiled
           with
           [
               Graph=WeightedHexGrid,
               Location=Hex
           ]
   Generating code
-  2 of 1039 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+  1 of 2142 functions (<0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    2 functions had inline decision re-evaluated but remain unchanged
+    5 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   AstarExercise.vcxproj -> C:\Workspace\AstarExercise\x64\Release\AstarExercise.exe
