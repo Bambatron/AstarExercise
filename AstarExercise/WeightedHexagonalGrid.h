@@ -3,82 +3,148 @@
 
 #include "HexagonalGrid.h"
 
-inline double Heuristic(Hex start, Hex goal) {
-	return (std::abs(start.q - goal.q) + std::abs(start.r - goal.r) + std::abs(start.s - goal.s)) / 2;
+namespace std {
+	template <> struct hash<std::pair<Hex, unsigned int>> {
+		size_t operator()(const std::pair<Hex, unsigned int>& wh) const {
+			hash<int> int_hash;
+			size_t hq = int_hash(wh.first.q);
+			size_t hr = int_hash(wh.first.r);
+			return hq ^ (hr + 0x9e3779b9 + (hq << 6) + (hq >> 2));
+		}
+	};
 }
 
-class WeightedHexGrid : public HexGrid {
+class WeightedHexGrid {
 public:
-	WeightedHexGrid(int _radius = 4, const Hex& _origin = Hex(0, 0, 0)) : HexGrid(_radius, _origin) {
-		MakeRandomForest();
-	}
+	WeightedHexGrid(const std::string& jsonFilePath = "BasicMapWeighhted.json");
+	WeightedHexGrid(int _radius, Hex _origin);
 
-	WeightedHexGrid(const std::string& jsonFilePath);
+	void MakeGraph();
+	void MakeRandomGraph();
 
-	int Cost(Hex from, Hex to) const {
-		return forests.find(to) != forests.end() ? 5 : 1;
-	}
+	unsigned int RandomWeight();
 
-	bool IsForest(const Hex& hex) const { return (forests.find(hex) != forests.end()); }
-	
-	void ReadGrid() override;
+	void ReadGrid();
+
+	void Increase(const Hex& hex) { nodes[hex]++; }
+	void Decrease(const Hex& hex) { (nodes[hex] > 1) ? nodes[hex]-- : nodes[hex]==1; }
+
+	const std::unordered_map<Hex, unsigned int>& VisitNodes() const { return nodes; }
 
 private:
-	void MakeRandomForest();
+	int radius;
+	Hex origin;
 
-	std::unordered_set<Hex> forests;
-
+	std::unordered_map<Hex, unsigned int> nodes;
 };
 
-WeightedHexGrid::WeightedHexGrid(const std::string& jsonFilePath) : HexGrid(jsonFilePath) {
-	// Read the JSON file
+WeightedHexGrid::WeightedHexGrid(const std::string& jsonFilePath) : radius(0), origin(Hex(0,0)) {
 	std::ifstream file(jsonFilePath);
 	if (!file.is_open()) {
 		std::cerr << "Error opening file: " << jsonFilePath << std::endl;
 	}
-
 	// Parse the JSON data
 	nlohmann::json jsonData;
 	try {
 		file >> jsonData;
-		if (jsonData["forest"] == 1) {
-			// Accessing values inside the "forests" array
-			for (const auto& forest : jsonData["forests"]) {
-				int q = forest["q"];
-				int r = forest["r"];
-				Hex h(q, r, -q - r);
-				forests.insert(h);
-			}
-		}
+		// Accessing individual values
+		this->radius = jsonData["radius"];
+
+		// Accessing values inside the "origin" object
+		int q = jsonData["origin"]["q"];
+		int r = jsonData["origin"]["r"];
+		unsigned int w = jsonData["origin"]["w"];
+		this->origin = Hex(q, r);
+		nodes[origin] = w;
+
+		MakeGraph();
+
+		jsonData["forests"];
 	}
 	catch (const std::exception& e) {
 		std::cerr << "Error parsing JSON: " << e.what() << std::endl;
 	}
+
 }
 
-void WeightedHexGrid::ReadGrid() {
-	HexGrid::ReadGrid();
+WeightedHexGrid::WeightedHexGrid(int _radius, Hex _origin) : radius(_radius), origin(_origin) {
+	MakeRandomGraph();
+}
 
-	std::cout << "With forests: " << std::endl;
-	for (const Hex& h : forests) {
-		std::cout << h.Read() << "\t";
+void WeightedHexGrid::MakeGraph() {
+	for (int q = -radius; q <= radius; q++) {
+		int start = std::max(-radius, -q - radius);
+		int end = std::min(radius, radius - q);
+		for (int r = start; r <= end; r++) {
+			Hex current(q, r);
+
+			this->nodes[current + this->origin] =  1;
+		}
 	}
 }
 
-void WeightedHexGrid::MakeRandomForest() {
-	for (auto& hex : nodes) {
-		// Seed the random number generator with a time-based seed
-		std::random_device rd;
-		std::mt19937 gen(rd());
-
-		// Define the distribution for integers between 0 and 2
-		std::uniform_int_distribution<int> distribution(0, 2);
-
-		// Generate a random integer between 0 and 1
-		int randomInt = distribution(gen);
-
-		if (randomInt == 0) {
-			forests.insert(Hex(hex));
+void WeightedHexGrid::MakeRandomGraph() {
+	this->nodes.insert(std::pair<Hex, unsigned int>(origin, RandomWeight()));
+	
+	for (int q = -radius; q <= radius; q++) {
+		int start = std::max(-radius, -q - radius);
+		int end = std::min(radius, radius - q);
+		for (int r = start; r <= end; r++) {
+			Hex current(q, r);
+			unsigned int w = RandomWeight();
+			this->nodes[current + this->origin] = w;
 		}
+	}
+}
+
+unsigned int WeightedHexGrid::RandomWeight() {
+	unsigned int ret = 0;
+	std::random_device rd;
+	std::mt19937 gen(rd());
+
+	// Define the distribution for integers between 0 and 99
+	std::uniform_int_distribution<int> distribution(0, 99);
+
+	// Generate a random integer between 0 and 1
+	int randomInt = distribution(gen);
+
+	if (randomInt < 27) {
+		ret = 1;
+	}
+	else if (randomInt >= 27 && randomInt < 47) {
+		ret = 2;
+	}
+	else if (randomInt >= 47 && randomInt < 62) {
+		ret = 3;
+	}
+	else if (randomInt >= 62 && randomInt < 72) {
+		ret = 4;
+	}
+	else if (randomInt >= 72 && randomInt < 82) {
+		ret = 5;
+	}
+	else if (randomInt >= 82 && randomInt < 89) {
+		ret = 6;
+	}
+	else if (randomInt >= 89 && randomInt < 94) {
+		ret = 7;
+	}
+	else if (randomInt >= 94 && randomInt < 97) {
+		ret = 8;
+	}
+	else if (randomInt >= 97 && randomInt < 99) {
+		ret = 9;
+	}
+	else if (randomInt == 99) {
+		ret = 10;
+	}
+
+	return ret;
+}
+
+void WeightedHexGrid::ReadGrid() {
+	std::cout << "Weighted Grid" << std::endl;
+	for (const auto& it : nodes) {
+		std::cout << it.first.Read() << " | " << it.second << "\t";
 	}
 }

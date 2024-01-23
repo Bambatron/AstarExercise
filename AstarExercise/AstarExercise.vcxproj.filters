@@ -43,7 +43,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="example.json">
+    <None Include="BasicMap.json">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="BasicMapWeighted.json">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

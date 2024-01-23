@@ -1,90 +1,13 @@
 ﻿  main.cpp
-C:\Workspace\AstarExercise\AstarExercise\Map.h(48,57): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(68,75): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(70,67): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(72,82): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
-          with
-          [
-              T=int
-          ]
-          and
-          [
-              T=float
-          ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(72,67): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(75,66): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(77,81): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
-          with
-          [
-              T=int
-          ]
-          and
-          [
-              T=float
-          ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(77,66): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(82,61): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(84,71): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(86,82): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(86,61): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
-          with
-          [
-              T=int
-          ]
-          and
-          [
-              T=float
-          ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(89,69): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(91,80): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(91,59): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
-          with
-          [
-              T=int
-          ]
-          and
-          [
-              T=float
-          ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(100,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(102,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(103,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(115,16): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(68,13): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(69,28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(70,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(70,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(79,49): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(138,41): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(90,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(88): message : while compiling class template member function 'sf::Vector2f Map<ForestHexGrid>::HexToPixel(const Hex &)'
+C:\Workspace\AstarExercise\AstarExercise\Map.h(116): message : see reference to function template instantiation 'sf::Vector2f Map<ForestHexGrid>::HexToPixel(const Hex &)' being compiled
+C:\Workspace\AstarExercise\AstarExercise\Map.h(114): message : see reference to class template instantiation 'Map<ForestHexGrid>' being compiled
+C:\Workspace\AstarExercise\AstarExercise\Map.h(92,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(93,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(50,63): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(50): message : while compiling class template member function 'Map<WeightedHexGrid>::Map(int,sf::Vector2i)'
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(33): message : see reference to function template instantiation 'Map<WeightedHexGrid>::Map(int,sf::Vector2i)' being compiled
+C:\Workspace\AstarExercise\AstarExercise\Map.h(130): message : see reference to class template instantiation 'Map<WeightedHexGrid>' being compiled
   AstarExercise.vcxproj -> C:\Workspace\AstarExercise\x64\Debug\AstarExercise.exe

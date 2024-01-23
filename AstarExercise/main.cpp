@@ -6,16 +6,54 @@
 #include "Map.h"
 
 int main() {
-	std::cout << "Hello world!" << std::endl;
-
+    std::cout << "Hello world" << std::endl;
+    
+    //Creating window
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
-
     sf::RenderWindow window(sf::VideoMode(800, 600), "Hexagon Example", sf::Style::Default, settings);
+
+    //Creating grid
+    WeightedHexGrid weightedGrid(4, Hex(0,0));
     
-    Map map;
-    WeightedHexGrid grid("example.json");
+    Map<WeightedHexGrid> map;
     bool _showVisualGrid = false;
+
+    while (window.isOpen()) {
+        sf::Event e;
+        while (window.pollEvent(e)) {
+            if (e.type == sf::Event::Closed) {
+                window.close();
+            }
+            if (e.type == sf::Event::KeyPressed) {
+                if(e.key.code == sf::Keyboard::Escape) {
+                    window.close();
+                }
+                if (e.key.code == sf::Keyboard::R) {
+                    //SaveGrid();
+                }
+                if (e.key.code == sf::Keyboard::G) {
+                    _showVisualGrid = !(_showVisualGrid);
+                }
+            }
+        }
+
+        //Render
+        window.clear();
+
+        map.Render(weightedGrid, window);
+        if (_showVisualGrid) {
+            map.RenderVisualGrid(window);
+        }
+
+        window.display();
+    }
+
+    return 0;
+}
+
+	/*
+    
 
     //Search stuff
     bool _breadthFirstGoal = false;
@@ -217,4 +255,4 @@ int main() {
     }
 
 	return 0;
-}
+}*/

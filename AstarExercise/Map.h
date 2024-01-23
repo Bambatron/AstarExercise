@@ -26,11 +26,12 @@ struct HexTile {
     sf::CircleShape body;
 };
 
+template<typename Grid>
 class Map {
 public:
     Map(int tileSize = 30, sf::Vector2i _windowSize = sf::Vector2i(800, 600));
 
-    void Render(const WeightedHexGrid& grid, sf::RenderWindow& target);
+    void Render(const Grid& grid, sf::RenderWindow& target);
     void RenderVisualGrid(sf::RenderWindow& target);
 
     sf::Vector2i GetWindowSize() { return windowSize; }
@@ -45,25 +46,13 @@ private:
     HexTile tile;
 };
 
-Map::Map(int tileSize, sf::Vector2i _windowSize) : tile(tileSize), windowSize(_windowSize) {}
-
-void Map::Render(const WeightedHexGrid& grid, sf::RenderWindow& target) {
-    for (auto it : grid.VisitNodes()) {
-        sf::Vector2f pos = HexToPixel(it);
-        tile.SetPosition(pos);
-
-        if (grid.IsForest(it)) {
-            tile.SetFillColor(sf::Color::Green);
-        }
-        else {
-            tile.SetFillColor(sf::Color::Yellow);
-        }
-
-        target.draw(tile.body);
-    }
+template<typename Grid>
+Map<Grid>::Map(int tileSize, sf::Vector2i _windowSize) : tile(tileSize), windowSize(_windowSize) {
+   
 }
 
-void Map::RenderVisualGrid(sf::RenderWindow& target) {
+template<typename Grid>
+void Map<Grid>::RenderVisualGrid(sf::RenderWindow& target) {
     //This grid is cetered on the middle of the window
     for (int i = 0; i < windowSize.x / 2; i += tile.Radius() * sqrt(3) / 2) {
         sf::VertexArray verticalRight(sf::LinesStrip, 2);
@@ -95,7 +84,8 @@ void Map::RenderVisualGrid(sf::RenderWindow& target) {
     }
 }
 
-sf::Vector2f Map::HexToPixel(const Hex& hex) {
+template <typename Grid>
+sf::Vector2f Map<Grid>::HexToPixel(const Hex& hex) {
     float x, y;
     int size = tile.Radius();
 
@@ -108,7 +98,8 @@ sf::Vector2f Map::HexToPixel(const Hex& hex) {
     return sf::Vector2f(x, y);
 }
 
-Hex Map::PixelToHex(sf::Vector2i pixelPos) {
+template <typename Grid>
+Hex Map<Grid>::PixelToHex(sf::Vector2i pixelPos) {
     pixelPos.x -= windowSize.x / 2;
     pixelPos.y -= windowSize.y / 2;
 
@@ -118,4 +109,49 @@ Hex Map::PixelToHex(sf::Vector2i pixelPos) {
     double r = (pixelPos.y * 2. * 1. / 3) / radius;
 
     return HexRound(q, r, -q - r);
+}
+
+void Map<ForestHexGrid>::Render(const ForestHexGrid& grid, sf::RenderWindow& target) {
+    for (const auto& it : grid.VisitNodes()) {
+        sf::Vector2f pos = HexToPixel(it);
+        tile.SetPosition(pos);
+
+        if (grid.IsForest(it)) {
+            tile.SetFillColor(sf::Color::Green);
+        }
+        else {
+            tile.SetFillColor(sf::Color::Yellow);
+        }
+
+        target.draw(tile.body);
+    }
+}
+
+void Map<WeightedHexGrid>::Render(const WeightedHexGrid& grid, sf::RenderWindow& target) {
+    sf::Font font;
+    if (!font.loadFromFile("wowsers.ttf")) {
+        std::cout << "Error loading map font" << std::endl;
+    } //Error
+    sf::Text text;
+    text.setFont(font);
+    text.setFillColor(sf::Color::White);
+    text.setCharacterSize(tile.Radius() / 2);
+    
+    for (const auto& it : grid.VisitNodes()) {
+        sf::Vector2f pos = HexToPixel(it.first);
+        tile.SetPosition(pos);
+        tile.SetFillColor(sf::Color::Black);
+        tile.SetOutlineColor(sf::Color::White);
+        tile.SetOutlineThickness(3);
+
+        std::string tmp = std::to_string(it.second);
+        text.setString(tmp);
+        text.setPosition(pos);
+
+        target.draw(tile.body);
+        target.draw(text);
+    }
+
+    tile.SetOutlineColor(sf::Color::Black);
+    tile.SetOutlineThickness(1);
 }
