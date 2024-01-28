@@ -103,7 +103,6 @@ _Chutzpah*
 
 # Visual C++ cache files
 ipch/
-*.ipch
 *.aps
 *.ncb
 *.opendb
@@ -399,3 +398,5 @@ FodyWeavers.xsd
 *.sln.iml
 *.ipch
 .vs/AstarExercise/v16/ipch/AutoPCH/9ef04984b9ccbc53/MAIN.ipch
+*.ipch
+*.ipch
