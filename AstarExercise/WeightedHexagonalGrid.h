@@ -16,7 +16,7 @@ namespace std {
 
 class WeightedHexGrid {
 public:
-	WeightedHexGrid(const std::string& jsonFilePath = "BasicMapWeighhted.json");
+	WeightedHexGrid(const std::string& jsonFilePath = "BasicMapWeighted.json");
 	WeightedHexGrid(int _radius, Hex _origin);
 
 	void MakeGraph();
@@ -29,7 +29,25 @@ public:
 	void Increase(const Hex& hex) { nodes[hex]++; }
 	void Decrease(const Hex& hex) { (nodes[hex] > 1) ? nodes[hex]-- : nodes[hex]==1; }
 
+	const int Radius() const { return radius; }
+	const Hex& Origin() const { return origin; }
+	
+	int Distance(Hex& start, Hex& goal) {
+		int dist = std::max(abs(start.q - goal.q), abs(start.r - goal.r));
+		dist = std::max(dist, abs(start.s - goal.s));
+		return dist;
+	}
+
+	bool IsInBounds(Hex& hex) {
+		if (Distance(origin, hex) <= radius) {
+			return true;
+		}
+		return false;
+	}
+
 	const std::unordered_map<Hex, unsigned int>& VisitNodes() const { return nodes; }
+
+	nlohmann::json ToJson() const;
 
 private:
 	int radius;
@@ -47,24 +65,24 @@ WeightedHexGrid::WeightedHexGrid(const std::string& jsonFilePath) : radius(0), o
 	nlohmann::json jsonData;
 	try {
 		file >> jsonData;
-		// Accessing individual values
-		this->radius = jsonData["radius"];
 
-		// Accessing values inside the "origin" object
 		int q = jsonData["origin"]["q"];
 		int r = jsonData["origin"]["r"];
-		unsigned int w = jsonData["origin"]["w"];
 		this->origin = Hex(q, r);
-		nodes[origin] = w;
+		nodes[origin] = 1;
 
+		this->radius = jsonData["radius"];
+		
 		MakeGraph();
 
-		jsonData["forests"];
+		for (const auto& wHex : jsonData["weightedNodes"]) {
+			Hex hex{ wHex["q"], wHex["r"] };
+			nodes[hex] = wHex["w"];
+		}
 	}
 	catch (const std::exception& e) {
 		std::cerr << "Error parsing JSON: " << e.what() << std::endl;
 	}
-
 }
 
 WeightedHexGrid::WeightedHexGrid(int _radius, Hex _origin) : radius(_radius), origin(_origin) {
@@ -147,4 +165,26 @@ void WeightedHexGrid::ReadGrid() {
 	for (const auto& it : nodes) {
 		std::cout << it.first.Read() << " | " << it.second << "\t";
 	}
+}
+
+nlohmann::json WeightedHexGrid::ToJson() const {
+	nlohmann::json result;
+
+	// Add radius and origin to JSON
+	result["radius"] = radius;
+	result["origin"] = { {"q", origin.q}, {"r", origin.r} };
+
+	// Create an array for hexes with weight different from 1
+	nlohmann::json hexArray = nlohmann::json::array();
+	for (const auto& it: nodes) {
+		if (it.second > 1) {
+			nlohmann::json hexInfo = { {"q", it.first.q}, {"r", it.first.r}, {"w", it.second} };
+			hexArray.push_back(hexInfo);
+		}
+	}
+
+	// Add the hexArray to the result
+	result["weightedNodes"] = hexArray;
+
+	return result;
 }

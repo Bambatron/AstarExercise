@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <fstream>
 #include <functional> 
 #include <cassert>
 
@@ -10,6 +11,8 @@
 #include <array>
 #include <queue>
 #include <set>
+
+#include "json.hpp"
 
 struct Hex {
 	int q, r, s;
@@ -136,7 +139,7 @@ public:
 		return dist;
 	}
 
-	bool IsInBound(Hex& hex) {
+	bool IsInBounds(Hex& hex) {
 		if (Distance(origin, hex) <= radius) {
 			return true;
 		}
@@ -224,7 +227,7 @@ std::vector<Hex> HexGrid::Neighbors(Hex& hex) {
 
 	for (auto dir : DIRS) {
 		Hex next(hex + dir);
-		if (IsInBound(next)) {
+		if (IsInBounds(next)) {
 			neighbors.push_back(next);
 		}
 	}

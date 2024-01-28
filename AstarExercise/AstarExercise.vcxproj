@@ -152,6 +152,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="PathfindingAlgorithms.h" />
     <ClInclude Include="PathfindingAlgorithsmGraphics.h" />
+    <ClInclude Include="SaveOpenUtilities.h" />
     <ClInclude Include="SquareGrid.h" />
     <ClInclude Include="WeightedHexagonalGrid.h" />
     <ClInclude Include="WeightedSquareGrid.h" />

@@ -1,13 +1,60 @@
 ﻿  main.cpp
-C:\Workspace\AstarExercise\AstarExercise\Map.h(138,41): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(90,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(88): message : while compiling class template member function 'sf::Vector2f Map<ForestHexGrid>::HexToPixel(const Hex &)'
-C:\Workspace\AstarExercise\AstarExercise\Map.h(116): message : see reference to function template instantiation 'sf::Vector2f Map<ForestHexGrid>::HexToPixel(const Hex &)' being compiled
-C:\Workspace\AstarExercise\AstarExercise\Map.h(114): message : see reference to class template instantiation 'Map<ForestHexGrid>' being compiled
-C:\Workspace\AstarExercise\AstarExercise\Map.h(92,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(93,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(50,63): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(50): message : while compiling class template member function 'Map<WeightedHexGrid>::Map(int,sf::Vector2i)'
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(33): message : see reference to function template instantiation 'Map<WeightedHexGrid>::Map(int,sf::Vector2i)' being compiled
-C:\Workspace\AstarExercise\AstarExercise\Map.h(130): message : see reference to class template instantiation 'Map<WeightedHexGrid>' being compiled
+C:\Workspace\AstarExercise\AstarExercise\Map.h(1,13): warning C4081: expected 'newline'; found '+'
+C:\Workspace\AstarExercise\AstarExercise\Map.h(26,61): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(34,33): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Workspace\AstarExercise\AstarExercise\Map.h(33,23): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Workspace\AstarExercise\AstarExercise\Map.h(41,32): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Workspace\AstarExercise\AstarExercise\Map.h(40,23): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Workspace\AstarExercise\AstarExercise\Map.h(46,48): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Workspace\AstarExercise\AstarExercise\Map.h(195,45): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(232,41): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(267,45): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(45,30): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(48,30): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(63,21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(62): message : while compiling class template member function 'void Map<WeightedHexGrid>::Zoom(int)'
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(45): message : see reference to function template instantiation 'void Map<WeightedHexGrid>::Zoom(int)' being compiled
+C:\Workspace\AstarExercise\AstarExercise\Map.h(222): message : see reference to class template instantiation 'Map<WeightedHexGrid>' being compiled
+C:\Workspace\AstarExercise\AstarExercise\Map.h(129,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(127): message : while compiling class template member function 'sf::Vector2f Map<ForestHexGrid>::HexToPixel(const Hex &)'
+C:\Workspace\AstarExercise\AstarExercise\Map.h(160): message : see reference to function template instantiation 'sf::Vector2f Map<ForestHexGrid>::HexToPixel(const Hex &)' being compiled
+C:\Workspace\AstarExercise\AstarExercise\Map.h(156): message : see reference to class template instantiation 'Map<ForestHexGrid>' being compiled
+C:\Workspace\AstarExercise\AstarExercise\Map.h(131,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(132,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(87,132): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Workspace\AstarExercise\AstarExercise\Map.h(87): message : while compiling class template member function 'Map<WeightedHexGrid>::Map(sf::Vector2u,int)'
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(18): message : see reference to function template instantiation 'Map<WeightedHexGrid>::Map(sf::Vector2u,int)' being compiled
+C:\Workspace\AstarExercise\AstarExercise\Map.h(87,116): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Workspace\AstarExercise\AstarExercise\Map.h(87,169): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(145,16): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Map.h(141): message : while compiling class template member function 'Hex Map<WeightedHexGrid>::PixelToHex(sf::Vector2f)'
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(88): message : see reference to function template instantiation 'Hex Map<WeightedHexGrid>::PixelToHex(sf::Vector2f)' being compiled
   AstarExercise.vcxproj -> C:\Workspace\AstarExercise\x64\Debug\AstarExercise.exe

@@ -1,23 +1,24 @@
 #pragma once
 
-#include <fstream>
-#include "json.hpp"
-
 #include "Map.h"
+
+#include "SaveOpenUtilities.h"
 
 int main() {
     std::cout << "Hello world" << std::endl;
-    
-    //Creating window
+   
+   //Creating window
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Hexagon Example", sf::Style::Default, settings);
+    sf::RenderWindow window(sf::VideoMode(1024, 768), "Hexagon Example", sf::Style::Default, settings);
 
     //Creating grid
-    WeightedHexGrid weightedGrid(4, Hex(0,0));
+    WeightedHexGrid* grid = new WeightedHexGrid();
     
-    Map<WeightedHexGrid> map;
-    bool _showVisualGrid = false;
+    Map<WeightedHexGrid> map(window.getSize());
+    
+    bool _selectedHex = false;
+    Hex selectedHex(0, 0);
 
     while (window.isOpen()) {
         sf::Event e;
@@ -29,11 +30,83 @@ int main() {
                 if(e.key.code == sf::Keyboard::Escape) {
                     window.close();
                 }
+
                 if (e.key.code == sf::Keyboard::R) {
-                    //SaveGrid();
+                    SaveGrid(*grid);
+                }
+                if (e.key.code == sf::Keyboard::T) {
+                    std::string filename = OpenGrid();
+                    if (!filename.empty()) {
+                        grid = new WeightedHexGrid(filename);
+                    }
+                }
+
+                if (e.key.code == sf::Keyboard::Z) {
+                    //map.Zoom(0.75);
+                }
+                if (e.key.code == sf::Keyboard::X) {
+                    //map.Zoom(1.25);
+                }
+                if (e.key.code == sf::Keyboard::Left) {
+                    //map.MoveCamera(-5.0f, 0.0f);
+                }
+                if (e.key.code == sf::Keyboard::Up) {
+                    //map.MoveCamera(0.0f, -5.0f);
+                }
+                if (e.key.code == sf::Keyboard::Down) {
+                    //map.MoveCamera(0.0f, +5.0f);
+                }
+                if (e.key.code == sf::Keyboard::Right) {
+                   //map.MoveCamera(5.0f, 0.0f);
+                }
+                if (e.key.code == sf::Keyboard::F) {
+                    map.ToggleVisualGrid();
                 }
                 if (e.key.code == sf::Keyboard::G) {
-                    _showVisualGrid = !(_showVisualGrid);
+                    map.ToggleHexCenter();
+                }
+                if (e.key.code == sf::Keyboard::H) {
+                    map.ToggleHexCoordinates();
+                }
+
+                if (_selectedHex) {
+                    if (e.key.code == sf::Keyboard::Add) {
+                        std::cout << "Increase hex: " << selectedHex.Read() << std::endl;
+                        grid->Increase(selectedHex);
+                    }
+                    if (e.key.code == sf::Keyboard::Subtract) {
+                        std::cout << "Decrease hex: " << selectedHex.Read() << std::endl;
+                        grid->Decrease(selectedHex);
+                    }
+                }
+            }
+        
+            if (e.type == sf::Event::MouseButtonPressed) {
+                if (e.mouseButton.button == sf::Mouse::Left) {
+                    sf::Vector2i pixelPos = sf::Mouse::getPosition(window); //Get the current mouse position in the window
+                    std::cout << "Pixel pos: " << pixelPos.x << ", " << pixelPos.y << std::endl;
+                    /*sf::Vector2f worldPos = window.mapPixelToCoords(pixelPos);  //Convert it to world coordinates
+                    std::cout << "World pos: " << worldPos.x << ", " << worldPos.y << std::endl;
+                    Hex tmp(map.PixelToHex(worldPos, window));*/
+                    Hex tmp(map.PixelToHex(sf::Vector2f(pixelPos), window));
+                    std::cout << tmp.Read() << std::endl;
+                    if (grid->IsInBounds(tmp) && tmp != selectedHex) {
+                        std::cout << "Selected hex is: " << tmp.Read() << std::endl;
+                        _selectedHex = true;
+                        selectedHex = tmp;
+                    }
+                    else {
+                        std::cout << "Deselect" << std::endl;
+                        _selectedHex = false;
+                    }
+                }
+            }
+            if (e.type == sf::Event::MouseWheelScrolled) {
+                if (e.mouseWheel.x > 0) {
+                    map.Zoom(0.85);
+                }
+                else if (e.mouseWheel.x < 0) {
+                    map.Zoom(1.15);
                 }
             }
         }
@@ -41,19 +114,15 @@ int main() {
         //Render
         window.clear();
 
-        map.Render(weightedGrid, window);
-        if (_showVisualGrid) {
-            map.RenderVisualGrid(window);
-        }
-
+        map.Render(*grid, window);
+        
         window.display();
     }
 
     return 0;
 }
 
-	/*
-    
+	/*   
 
     //Search stuff
     bool _breadthFirstGoal = false;
@@ -79,13 +148,6 @@ int main() {
     circle.setOrigin(rad, rad);
     circle.setOutlineColor(sf::Color::Black);
     circle.setOutlineThickness(1);
-
-    sf::Font font;
-    if (!font.loadFromFile("wowsers.ttf")) {} //Error
-    sf::Text text;
-    text.setFont(font);
-    text.setFillColor(sf::Color::White);
-    text.setCharacterSize(map.GetTile().Radius()/2);
 
     sf::Clock gClcok;
     sf::Time elapsedTime = sf::Time::Zero;
