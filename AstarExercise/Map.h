@@ -13,11 +13,15 @@ struct HexTile {
         body.setFillColor(sf::Color::Transparent);
         body.setOutlineColor(sf::Color::Black);
         body.setOutlineThickness(1);
-        body.setOrigin(sf::Vector2f(radius, radius));
+        body.setOrigin(radius, radius);
     }
 
     void SetPosition(sf::Vector2f pos) { body.setPosition(pos); }
-    void SetRadius(float radius) { body.setRadius(radius); }
+    void SetRadius(unsigned int radius) { 
+        body.setOrigin(-body.getRadius(), -body.getRadius());   //Reset the origin to the top left corner
+        body.setRadius(radius); //Update the radius 
+        body.setOrigin(body.getRadius(), body.getRadius());   //Set the origin to the new center 
+    }
     void SetFillColor(const sf::Color& color) { body.setFillColor(color); }
     void SetOutlineColor(const sf::Color& color) { body.setOutlineColor(color); }
     void SetOutlineThickness(float size) { body.setOutlineThickness(size); }
@@ -64,7 +68,11 @@ public:
     void ToggleHexCenter() { _showHexCenter = !(_showHexCenter); }
     void ToggleHexCoordinates() { _showHexCoordinates = !(_showHexCoordinates); }
 
-    void Zoom(float factor) {}
+    void Zoom(float factor) {
+        tile.SetRadius((tile.Radius() + factor > std::min(windowSize.x, windowSize.y) / 20) ?
+            tile.Radius() + factor :
+            std::min(windowSize.x, windowSize.y) / 20);
+    }
     //void MoveCamera(sf::Vector2f offset) { camera.move(offset); }
     //void MoveCamera(float offsetX, float offsetY) { MoveCamera(sf::Vector2f(offsetX, offsetY)); }
 
@@ -246,9 +254,9 @@ void Map<WeightedHexGrid>::Render(const WeightedHexGrid& grid, sf::RenderWindow&
 
     for (const auto& it : grid.VisitNodes()) {
         sf::Vector2f pos = HexToPixel(it.first);
+        text.setPosition(pos);
         std::string tmp = std::to_string(it.second);
         text.setString(tmp);
-        text.setPosition(pos);
         target.draw(text);
     }
 
@@ -271,8 +279,12 @@ void Map<WeightedHexGrid>::Render(const WeightedHexGrid& grid, sf::RenderWindow&
         }
     }    
     if (_showHexCoordinates) {
-        textSize = tile.Radius() / 3.;
-        text.setCharacterSize(textSize);
+        sf::Text coordText;
+        coordText.setFont(font);
+        float coordTextSize = tile.Radius() / 4.;
+        coordText.setOrigin(coordTextSize / 2., coordTextSize / 2.);
+        coordText.setFillColor(sf::Color::White);
+        coordText.setCharacterSize(coordTextSize);
 
         for (const auto& it : grid.VisitNodes()) {
             sf::Vector2f pos;
@@ -284,13 +296,13 @@ void Map<WeightedHexGrid>::Render(const WeightedHexGrid& grid, sf::RenderWindow&
             std::string tmp = std::to_string(it.first.q);
             text.setString(tmp);
             target.draw(text);
-
+            
             text.setFillColor(sf::Color::Green);
             text.setPosition(pos + tile.RightSide());
             tmp = std::to_string(it.first.r);
             text.setString(tmp);
             target.draw(text);
-
+           
             text.setFillColor(sf::Color::Red);
             text.setPosition(pos + tile.DownLeftSide());
             tmp = std::to_string(it.first.s);

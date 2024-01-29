@@ -41,12 +41,6 @@ int main() {
                     }
                 }
 
-                if (e.key.code == sf::Keyboard::Z) {
-                    //map.Zoom(0.75);
-                }
-                if (e.key.code == sf::Keyboard::X) {
-                    //map.Zoom(1.25);
-                }
                 if (e.key.code == sf::Keyboard::Left) {
                     //map.MoveCamera(-5.0f, 0.0f);
                 }
@@ -103,10 +97,12 @@ int main() {
             }
             if (e.type == sf::Event::MouseWheelScrolled) {
                 if (e.mouseWheel.x > 0) {
-                    map.Zoom(0.85);
+                    //map.Zoom(0.85);
+                    map.Zoom(5);
                 }
                 else if (e.mouseWheel.x < 0) {
-                    map.Zoom(1.15);
+                    //map.Zoom(1.15);
+                    map.Zoom(-5);
                 }
             }
         }
