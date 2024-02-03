@@ -1,10 +1,35 @@
 #pragma once
 
-#include "Map.h"
-
 #include "SaveOpenUtilities.h"
+#include "Pathfinder.h"
+#include "HexGrid.h"
+#include "Painter.h"
 
 int main() {
+
+    HexGrid grid("BasicMapWeighted.json");
+    Hex start(1, 1);
+    Hex goal(-1, 0);
+
+
+    /*PATHFINDER EXAMPLE
+    * Pathfinder<HexGrid, Hex> pathFinder(new AstarStrategy<HexGrid, Hex>{});
+    * pathFinder.SetStart(start);
+    * while (!pathFinder.MakeStep(grid, goal)) { 
+    *   //Stuff
+    * }
+    * std::cout << "Setted start: " << pathFinder.GetStart().PrintOut() << std::endl;
+    * auto pathTaken = pathFinder.PathTaken(goal);
+    * std::cout << "Came form: " << "\t";
+    * for (auto it : pathTaken) {
+    *   std::cout << it.PrintOut() << "\t";
+    * }
+    * std::cout << "Cost so far: " << pathFinder.GetCostAtLocation(goal) << std::endl;
+    */
+
+    return 0;
+}
+/*
     std::cout << "Hello world" << std::endl;
    
    //Creating window
@@ -81,7 +106,7 @@ int main() {
                     std::cout << "Pixel pos: " << pixelPos.x << ", " << pixelPos.y << std::endl;
                     /*sf::Vector2f worldPos = window.mapPixelToCoords(pixelPos);  //Convert it to world coordinates
                     std::cout << "World pos: " << worldPos.x << ", " << worldPos.y << std::endl;
-                    Hex tmp(map.PixelToHex(worldPos, window));*/
+                    Hex tmp(map.PixelToHex(worldPos, window));
                     Hex tmp(map.PixelToHex(sf::Vector2f(pixelPos), window));
                     std::cout << tmp.Read() << std::endl;
                     if (grid->IsInBounds(tmp) && tmp != selectedHex) {
