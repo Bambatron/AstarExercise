@@ -1,49 +1,45 @@
 #pragma once
 
+#include <typeindex>
+
 #include "SaveOpenUtilities.h"
 #include "Pathfinder.h"
 #include "HexGrid.h"
-#include "Painter.h"
+#include "HexPainter.h"
+#include "LabelMenu.h"
+
+enum GameState {
+    Normal,
+    Searching,
+};
 
 int main() {
-
-    HexGrid grid("BasicMapWeighted.json");
-    Hex start(1, 1);
-    Hex goal(-1, 0);
-
-
-    /*PATHFINDER EXAMPLE
-    * Pathfinder<HexGrid, Hex> pathFinder(new AstarStrategy<HexGrid, Hex>{});
-    * pathFinder.SetStart(start);
-    * while (!pathFinder.MakeStep(grid, goal)) { 
-    *   //Stuff
-    * }
-    * std::cout << "Setted start: " << pathFinder.GetStart().PrintOut() << std::endl;
-    * auto pathTaken = pathFinder.PathTaken(goal);
-    * std::cout << "Came form: " << "\t";
-    * for (auto it : pathTaken) {
-    *   std::cout << it.PrintOut() << "\t";
-    * }
-    * std::cout << "Cost so far: " << pathFinder.GetCostAtLocation(goal) << std::endl;
-    */
-
-    return 0;
-}
-/*
     std::cout << "Hello world" << std::endl;
-   
-   //Creating window
-    sf::ContextSettings settings;
-    settings.antialiasingLevel = 8;
-    sf::RenderWindow window(sf::VideoMode(1024, 768), "Hexagon Example", sf::Style::Default, settings);
+    
+   GameState gameState = GameState::Normal;
 
-    //Creating grid
-    WeightedHexGrid* grid = new WeightedHexGrid();
+   sf::ContextSettings settings;
+   settings.antialiasingLevel = 8;
+   sf::RenderWindow window(sf::VideoMode(1024, 768), "Hexagon Example", sf::Style::Default, settings);
+
+   HexGrid grid("BasicMapWeighted.json");
+   bool _selectedHex = false;
+   Hex selectedHex(0, 0);
+
+   HexPainter painter(30, window.getSize());
+   float movementSpeed = 10;
+   float scrollSpeed = 10;
+
+   Pathfinder<HexGrid, Hex> pathFinder(new AstarStrategy<HexGrid, Hex>{});
+   bool _startSelected;
+   Hex start;
+   bool _goalSelected;
+   Hex goal;
+
+    LabelMenu label(sf::Vector2f(10, 10), sf::Vector2f(10, 10));
+    Hex labeledHex;
     
-    Map<WeightedHexGrid> map(window.getSize());
-    
-    bool _selectedHex = false;
-    Hex selectedHex(0, 0);
+    //std::type_index objType = typeid(pathFinder);
 
     while (window.isOpen()) {
         sf::Event e;
@@ -51,83 +47,161 @@ int main() {
             if (e.type == sf::Event::Closed) {
                 window.close();
             }
-            if (e.type == sf::Event::KeyPressed) {
-                if(e.key.code == sf::Keyboard::Escape) {
-                    window.close();
+
+            if (e.type == sf::Event::KeyPressed) {  //ProcessInputKeyboard(e.key.code);
+                if (e.key.code == sf::Keyboard::Left) {
+                    painter.MoveCamera(+movementSpeed, 0.0f);
+                }
+                if (e.key.code == sf::Keyboard::Up) {
+                    painter.MoveCamera(0.0f, +movementSpeed);
+                }
+                if (e.key.code == sf::Keyboard::Down) {
+                    painter.MoveCamera(0.0f, -movementSpeed);
+                }
+                if (e.key.code == sf::Keyboard::Right) {
+                    painter.MoveCamera(-movementSpeed, 0.0f);
                 }
 
                 if (e.key.code == sf::Keyboard::R) {
-                    SaveGrid(*grid);
+                    SaveGrid(grid);
                 }
                 if (e.key.code == sf::Keyboard::T) {
                     std::string filename = OpenGrid();
                     if (!filename.empty()) {
-                        grid = new WeightedHexGrid(filename);
+                        grid = HexGrid(filename);
                     }
                 }
 
-                if (e.key.code == sf::Keyboard::Left) {
-                    //map.MoveCamera(-5.0f, 0.0f);
-                }
-                if (e.key.code == sf::Keyboard::Up) {
-                    //map.MoveCamera(0.0f, -5.0f);
-                }
-                if (e.key.code == sf::Keyboard::Down) {
-                    //map.MoveCamera(0.0f, +5.0f);
-                }
-                if (e.key.code == sf::Keyboard::Right) {
-                   //map.MoveCamera(5.0f, 0.0f);
-                }
                 if (e.key.code == sf::Keyboard::F) {
-                    map.ToggleVisualGrid();
+                    painter.ToggleVisualGrid();
                 }
                 if (e.key.code == sf::Keyboard::G) {
-                    map.ToggleHexCenter();
+                    painter.ToggleHexCenter();
                 }
                 if (e.key.code == sf::Keyboard::H) {
-                    map.ToggleHexCoordinates();
+                    painter.ToggleHexCoordinates();
                 }
 
-                if (_selectedHex) {
-                    if (e.key.code == sf::Keyboard::Add) {
-                        std::cout << "Increase hex: " << selectedHex.Read() << std::endl;
-                        grid->Increase(selectedHex);
+                if (gameState == GameState::Normal) {
+                    if (e.key.code == sf::Keyboard::Escape) {
+                        window.close();
                     }
-                    if (e.key.code == sf::Keyboard::Subtract) {
-                        std::cout << "Decrease hex: " << selectedHex.Read() << std::endl;
-                        grid->Decrease(selectedHex);
+
+                    if (e.key.code == sf::Keyboard::Add && _selectedHex) {
+                        grid.Increase(selectedHex);
+                    }
+                    if (e.key.code == sf::Keyboard::Subtract && _selectedHex) {
+                        grid.Decrease(selectedHex);
+                    }
+
+                    if (e.key.code == sf::Keyboard::Q) {    //Start Astar search
+                        pathFinder.SwitchFuntion(new AstarStrategy<HexGrid, Hex>);
+                        gameState = GameState::Searching;
+                    }
+                    if (e.key.code == sf::Keyboard::W) {    //Start Dijkstra search
+                        gameState = GameState::Searching;
+                    }
+                }
+                else if (gameState == GameState::Searching) {
+                    if (e.key.code == sf::Keyboard::Escape) {
+                        pathFinder.Reset();
+                        gameState = GameState::Normal;
+                    }
+                    
+                    if (e.key.code == sf::Keyboard::A) {
+                        //Move backward a step in the search
+                    }
+                    if (e.key.code == sf::Keyboard::D) {
+                        //move ahead a step in the search
+                    }
+                    if (e.key.code == sf::Keyboard::P) {
+                        //Switch between Manual or Automatical Search progression
+                    }
+
+                    if (e.key.code == sf::Keyboard::I) {
+                        pathFinder.ClearStart();
+                    }
+                    if (e.key.code == sf::Keyboard::O) {
+                        pathFinder.ClearGoal();
+                    }
+                    if (e.key.code == sf::Keyboard::R) {
+                        pathFinder.Reset();
                     }
                 }
             }
-        
-            if (e.type == sf::Event::MouseButtonPressed) {
+
+            if (e.type == sf::Event::MouseButtonPressed) {  //ProcessInputMouse(e.mouseButton.button)
                 if (e.mouseButton.button == sf::Mouse::Left) {
+                    if (gameState == GameState::Normal) {
+                        sf::Vector2i pixelPos = sf::Mouse::getPosition(window); //Get the current mouse position in the window
+                        std::cout << "Pixel pos: " << pixelPos.x << ", " << pixelPos.y << std::endl;
+                        Hex tmp(PixelToHex(sf::Vector2f(pixelPos), painter.GetTile().Radius(), painter.GetWindowCenter()));
+                        if (grid.IsInBounds(tmp) && tmp != selectedHex) {
+                            std::cout << "Selected hex is: " << tmp.PrintOut() << std::endl;
+                            _selectedHex = true;
+                            selectedHex = tmp;
+                        }
+                        else {
+                            std::cout << "Deselect" << std::endl;
+                            _selectedHex = false;
+                        }
+                    }
+                    else if (gameState == GameState::Searching) {
+                        sf::Vector2i pixelPos = sf::Mouse::getPosition(window); //Get the current mouse position in the window
+                        Hex tmp(PixelToHex(sf::Vector2f(pixelPos), painter.GetTile().Radius(), painter.GetWindowCenter()));
+
+                        if (!pathFinder.IsStartSelected()) {
+                            pathFinder.SetStart(tmp);
+                        }
+                        else if(!pathFinder.IsGoalSelected()){
+                            pathFinder.SetGoal(tmp);
+                        }
+                    }
+                }
+
+                if (e.mouseButton.button == sf::Mouse::Right) {
                     sf::Vector2i pixelPos = sf::Mouse::getPosition(window); //Get the current mouse position in the window
                     std::cout << "Pixel pos: " << pixelPos.x << ", " << pixelPos.y << std::endl;
-                    /*sf::Vector2f worldPos = window.mapPixelToCoords(pixelPos);  //Convert it to world coordinates
-                    std::cout << "World pos: " << worldPos.x << ", " << worldPos.y << std::endl;
-                    Hex tmp(map.PixelToHex(worldPos, window));
-                    Hex tmp(map.PixelToHex(sf::Vector2f(pixelPos), window));
-                    std::cout << tmp.Read() << std::endl;
-                    if (grid->IsInBounds(tmp) && tmp != selectedHex) {
-                        std::cout << "Selected hex is: " << tmp.Read() << std::endl;
-                        _selectedHex = true;
-                        selectedHex = tmp;
+                    Hex tmp(PixelToHex(sf::Vector2f(pixelPos), painter.GetTile().Radius(), painter.GetWindowCenter()));
+                    if (grid.IsInBounds(tmp)) {
+                        if (label.IsOpen()) {
+                            if (tmp == labeledHex) {
+                                label.Close();
+                            }
+                            else {
+                                label.SetPosition(sf::Vector2f(pixelPos));
+                                label.ClearParameters();
+                                label.AddParameters("Coordinates: ", tmp.q, tmp.r, tmp.s);
+                                label.AddParameters("Weight: ", grid.Weight(tmp));
+                                labeledHex = tmp;
+                            }
+                        }
+                        else {
+                            if (tmp != labeledHex) {
+                                label.SetPosition(sf::Vector2f(pixelPos));
+                                label.ClearParameters();
+                                label.AddParameters("Coordinates: ", tmp.q, tmp.r, tmp.s);
+                                label.AddParameters("Weight: ", grid.Weight(tmp));
+                                labeledHex = tmp;
+                            }
+                            label.Open();
+                        }
+
                     }
                     else {
-                        std::cout << "Deselect" << std::endl;
-                        _selectedHex = false;
+                        label.Close();
                     }
+
                 }
+
             }
-            if (e.type == sf::Event::MouseWheelScrolled) {
+
+            if (e.type == sf::Event::MouseWheelScrolled) {  //ProcessInputWheel(e.mouseWheel.delta)M
                 if (e.mouseWheel.x > 0) {
-                    //map.Zoom(0.85);
-                    map.Zoom(5);
+                    painter.Zoom(scrollSpeed);
                 }
                 else if (e.mouseWheel.x < 0) {
-                    //map.Zoom(1.15);
-                    map.Zoom(-5);
+                    painter.Zoom(-scrollSpeed);
                 }
             }
         }
@@ -135,13 +209,45 @@ int main() {
         //Render
         window.clear();
 
-        map.Render(*grid, window);
-        
+        painter.Render(grid, window);
+        if (label.IsOpen()) {
+            label.Render(window);
+        }
+
         window.display();
     }
 
     return 0;
 }
+
+//PATHFINDER EXAMPLE
+/*
+    Pathfinder<HexGrid, Hex> pathFinder(new AstarStrategy<HexGrid, Hex>{});
+    pathFinder.SetStart(start);
+    while (!pathFinder.MakeStep(grid, goal)) {
+        //Stuff
+    }
+    std::cout << "Setted start: " << pathFinder.GetStart().PrintOut() << std::endl;
+    auto pathTaken = pathFinder.PathTaken(goal);
+    std::cout << "Came form: " << "\t";
+    for (auto it : pathTaken) {
+        std::cout << it.PrintOut() << "\t";
+    }
+    std::cout << "Cost so far: " << pathFinder.GetCostAtLocation(goal) << std::endl;
+*/
+
+//LABELMENU EXAMPLE
+/*
+    labelMenu.DrawParameters("Goal coordinates", goal.q, goal.r, goal.s);
+    // Print the contents of the info vector
+    for (const auto& pair : labelMenu.GetInfo()) {
+        std::cout << "Name: " << pair.first << ", Parameters: ";
+        for (const auto& str : pair.second) {
+            std::cout << str << " ";
+        }
+        std::cout << std::endl;
+    }
+*/
 
 	/*   
 

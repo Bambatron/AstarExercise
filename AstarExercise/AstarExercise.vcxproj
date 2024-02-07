@@ -159,12 +159,17 @@
     <ClInclude Include="HexGrid.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="HexPainter.h" />
+    <ClInclude Include="LabelMenu.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="PainterInterface.h" />
     <ClInclude Include="Pathfinder.h" />
     <ClInclude Include="Pathfinding\Astar.h" />
     <ClInclude Include="Pathfinding\BFS.h" />
     <ClInclude Include="Pathfinding\DFS.h" />
     <ClInclude Include="Pathfinding\Dijkstra.h" />
     <ClInclude Include="Pathfinding\PathfindingUtilities.h" />
+    <ClInclude Include="SaveOpenUtilities.h" />
+    <ClInclude Include="Square.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

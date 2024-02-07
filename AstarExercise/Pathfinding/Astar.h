@@ -89,6 +89,8 @@ class AstarStrategy : public PathfindingStrategy<Graph, Location> {
 public:
 	AstarStrategy() {};
 
+	//static AstarStrategy* CreateInstace(Graph& graph, Location& loc) override { return new AstarStrategy<Graph, Location> }
+
 	bool MakeStep(Graph& graph, Location& goal,
 		std::unordered_map<Location, Location>& cameFrom,
 		std::unordered_map<Location, unsigned int>& costSoFar,

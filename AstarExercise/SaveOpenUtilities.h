@@ -59,7 +59,6 @@ std::string OpenGrid() {
     }
 }
 
-
 void WriteNum(std::ofstream& outputFile, std::string& paramName, int value, bool comma = true) {
     outputFile << "\"" << paramName << "\": " << value;
     if (comma)

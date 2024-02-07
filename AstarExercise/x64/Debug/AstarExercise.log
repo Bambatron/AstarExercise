@@ -1,60 +1,77 @@
 ﻿  main.cpp
-C:\Workspace\AstarExercise\AstarExercise\Map.h(1,13): warning C4081: expected 'newline'; found '+'
-C:\Workspace\AstarExercise\AstarExercise\Map.h(26,61): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(34,33): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Hex.h(120,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Hex.h(121,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(28,24): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(32,61): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(39,33): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(33,23): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(38,23): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(41,32): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(46,32): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(40,23): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(45,23): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(46,48): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(51,48): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(195,45): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(232,41): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(267,45): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(45,30): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(48,30): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(63,21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(62): message : while compiling class template member function 'void Map<WeightedHexGrid>::Zoom(int)'
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(45): message : see reference to function template instantiation 'void Map<WeightedHexGrid>::Zoom(int)' being compiled
-C:\Workspace\AstarExercise\AstarExercise\Map.h(222): message : see reference to class template instantiation 'Map<WeightedHexGrid>' being compiled
-C:\Workspace\AstarExercise\AstarExercise\Map.h(129,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(127): message : while compiling class template member function 'sf::Vector2f Map<ForestHexGrid>::HexToPixel(const Hex &)'
-C:\Workspace\AstarExercise\AstarExercise\Map.h(160): message : see reference to function template instantiation 'sf::Vector2f Map<ForestHexGrid>::HexToPixel(const Hex &)' being compiled
-C:\Workspace\AstarExercise\AstarExercise\Map.h(156): message : see reference to class template instantiation 'Map<ForestHexGrid>' being compiled
-C:\Workspace\AstarExercise\AstarExercise\Map.h(131,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(132,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(87,132): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(66,147): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(71,60): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(86,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(87,44): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(87,29): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(89,27): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(92,60): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(103,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(107,46): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(107,35): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(111,51): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(120,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(121,63): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(121,43): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(123,36): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(128,51): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(152,22): warning C4244: 'initializing': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\LabelMenu.h(101,46): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\LabelMenu.h(113,27): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(53,56): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(53,40): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(56,46): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(56,40): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(59,46): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(59,40): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(62,56): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(62,40): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(138,92): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(151,92): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(165,88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(36,9): warning C4101: '_goalSelected': unreferenced local variable
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(34,9): warning C4101: '_startSelected': unreferenced local variable
+C:\Workspace\AstarExercise\AstarExercise\Pathfinding\Astar.h(55,17): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Pathfinding\Astar.h(98): message : see reference to function template instantiation 'bool AstarSearchStep<Graph,Location>(Graph &,Location &,std::unordered_map<Location,Location,std::hash<Hex>,std::equal_to<Hex>,std::allocator<std::pair<const Location,Location>>> &,std::unordered_map<Hex,unsigned int,std::hash<Hex>,std::equal_to<Hex>,std::allocator<std::pair<const Hex,unsigned int>>> &,PriorityQueue<Location,unsigned int> &)' being compiled
           with
           [
-              T=float
+              Graph=HexGrid,
+              Location=Hex
           ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(87): message : while compiling class template member function 'Map<WeightedHexGrid>::Map(sf::Vector2u,int)'
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(18): message : see reference to function template instantiation 'Map<WeightedHexGrid>::Map(sf::Vector2u,int)' being compiled
-C:\Workspace\AstarExercise\AstarExercise\Map.h(87,116): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Pathfinding\Astar.h(97): message : while compiling class template member function 'bool AstarStrategy<HexGrid,Hex>::MakeStep(Graph &,Location &,std::unordered_map<Location,Location,std::hash<Hex>,std::equal_to<Hex>,std::allocator<std::pair<const Location,Location>>> &,std::unordered_map<Hex,unsigned int,std::hash<Hex>,std::equal_to<Hex>,std::allocator<std::pair<const Hex,unsigned int>>> &,PriorityQueue<Location,unsigned int> &)'
           with
           [
-              T=float
+              Graph=HexGrid,
+              Location=Hex
           ]
-C:\Workspace\AstarExercise\AstarExercise\Map.h(87,169): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(145,16): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Map.h(141): message : while compiling class template member function 'Hex Map<WeightedHexGrid>::PixelToHex(sf::Vector2f)'
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(88): message : see reference to function template instantiation 'Hex Map<WeightedHexGrid>::PixelToHex(sf::Vector2f)' being compiled
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(33): message : see reference to class template instantiation 'AstarStrategy<HexGrid,Hex>' being compiled
   AstarExercise.vcxproj -> C:\Workspace\AstarExercise\x64\Debug\AstarExercise.exe

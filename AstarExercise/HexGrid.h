@@ -52,6 +52,10 @@ public:
 		return false;
 	}
 
+	int Weight(Hex& hex) { 
+		if (_weighted) return nodes[hex];
+		else return 1;
+	}
 	int Cost(Hex& start, Hex& goal) {
 		if (_weighted) return nodes[start] + nodes[goal];
 		else return 1;

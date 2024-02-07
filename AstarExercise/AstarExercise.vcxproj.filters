@@ -16,6 +16,12 @@
     <Filter Include="Header Files\Pathfinding">
       <UniqueIdentifier>{d7090b88-ec5a-4e6e-990a-0ea02c8b0e37}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Painters">
+      <UniqueIdentifier>{fca562c1-d042-47a7-8bc0-02799ce8c262}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Grids">
+      <UniqueIdentifier>{4524c007-6720-43f5-b242-100c24381fcb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -31,9 +37,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Hex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Pathfinding\Astar.h">
       <Filter>Header Files\Pathfinding</Filter>
     </ClInclude>
@@ -49,9 +52,6 @@
     <ClInclude Include="Pathfinding\PathfindingUtilities.h">
       <Filter>Header Files\Pathfinding</Filter>
     </ClInclude>
-    <ClInclude Include="HexGrid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Pathfinder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -59,6 +59,27 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HexPainter.h">
+      <Filter>Header Files\Painters</Filter>
+    </ClInclude>
+    <ClInclude Include="PainterInterface.h">
+      <Filter>Header Files\Painters</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveOpenUtilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Hex.h">
+      <Filter>Header Files\Grids</Filter>
+    </ClInclude>
+    <ClInclude Include="HexGrid.h">
+      <Filter>Header Files\Grids</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Header Files\Grids</Filter>
+    </ClInclude>
+    <ClInclude Include="Square.h">
+      <Filter>Header Files\Grids</Filter>
+    </ClInclude>
+    <ClInclude Include="LabelMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

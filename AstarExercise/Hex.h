@@ -7,8 +7,10 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Node.h"
+
 //Cube coordinates
-struct Hex {
+struct Hex : public NodeInterface {
 	int q, r, s;
 
 	Hex(int _q, int _r, int _s) : q(_q), r(_r), s(_s) {	//Cube constructor
@@ -65,10 +67,10 @@ struct Hex {
 		return *this;
 	}
 
-	virtual std::string PrintOut() const {
+	const std::string PrintOut() const override {
 		std::ostringstream oss;
 		oss << "(" << this->q << ", " << this->r << ", " << this->s << ")" << std::dec;
-		// Add more information if needed based on your struct members
+		
 		return oss.str();
 	}
 };
@@ -118,15 +120,15 @@ sf::Vector2f HexToPixel(const Hex& hex, int tileRadius, sf::Vector2i windowCente
 	x = size * (sqrt(3) * hex.q + sqrt(3) / 2 * hex.r);
 	y = size * (3. / 2 * hex.r);
 
-	x += windowCenter.x / 2;
-	y += windowCenter.y / 2;
+	x += windowCenter.x;
+	y += windowCenter.y;
 
 	return sf::Vector2f(x, y);
 }
 
 Hex PixelToHex(sf::Vector2f pixelPos, int tileRadius, sf::Vector2i windowCenter) {
-	pixelPos.x -= windowCenter.x / 2;
-	pixelPos.y -= windowCenter.y / 2;
+	pixelPos.x -= windowCenter.x;
+	pixelPos.y -= windowCenter.y;
 
 	int radius = tileRadius;
 
@@ -150,48 +152,3 @@ const std::array<Hex, 6> DIRS = {
 inline double Heuristic(Hex start, Hex goal) {
 	return (std::abs(start.q - goal.q) + std::abs(start.r - goal.r) + std::abs(start.s - goal.s)) / 2;
 }
-
-struct HexTile {
-	sf::CircleShape body;
-
-	HexTile(float radius) : body(radius, 6) {
-		body.setFillColor(sf::Color::Transparent);
-		body.setOutlineColor(sf::Color::Black);
-		body.setOutlineThickness(1);
-		body.setOrigin(radius, radius);
-	}
-
-	void SetPosition(sf::Vector2f pos) { body.setPosition(pos); }
-	void SetRadius(unsigned int radius) {
-		body.setOrigin(-body.getRadius(), -body.getRadius());   //Reset the origin to the top left corner
-		body.setRadius(radius); //Update the radius 
-		body.setOrigin(body.getRadius(), body.getRadius());   //Set the origin to the new center 
-	}
-	void SetFillColor(const sf::Color& color) { body.setFillColor(color); }
-	void SetOutlineColor(const sf::Color& color) { body.setOutlineColor(color); }
-	void SetOutlineThickness(float size) { body.setOutlineThickness(size); }
-
-	float Radius() { return body.getRadius(); }
-	float Apothem() { return ((body.getRadius() * sqrt(3.)) / 2.); }
-	sf::Vector2f Position() { return body.getPosition(); }
-
-	sf::Vector2f TopLeftSide() {
-		float a = Apothem();
-		//Should be (-a/2, -a sqrt(3)/2) however it goes outside the tile
-		return sf::Vector2f(
-			(-a / 2.),
-			(-a * sqrt(2) / 2.));
-	}
-	sf::Vector2f DownLeftSide() {
-		float a = Apothem();
-		//Should be (-a/2, a sqrt(3)/2) however it goes outside the tile
-		return sf::Vector2f(
-			(-a / 2.),
-			(a * sqrt(2) / 2.));
-	}
-	sf::Vector2f RightSide() {
-		float a = Apothem();
-		//Should be (a, 0) however it goes outside the tile
-		return sf::Vector2f((a * sqrt(2) / 2.), 0);
-	}
-};

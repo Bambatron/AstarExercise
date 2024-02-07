@@ -86,6 +86,7 @@ template<typename Graph, typename Location>
 class DijkstraStrategy : public PathfindingStrategy<Graph, Location> {
 public:
     DijkstraStrategy() {}
+   // static  DijkstraStrategy* CreateInstace(Graph& graph, Location& loc) override { return new DijkstraStrategy<Graph, Location>}
 
     bool MakeStep(Graph& graph, Location& goal,
         std::unordered_map<Location, Location>& cameFrom,
