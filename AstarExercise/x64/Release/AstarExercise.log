@@ -1,6 +1,6 @@
 ﻿  main.cpp
-C:\Workspace\AstarExercise\AstarExercise\Hex.h(120,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Hex.h(121,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Hex.h(134,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Hex.h(135,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(28,24): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(32,61): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\HexPainter.h(39,33): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
@@ -75,8 +75,9 @@ C:\Workspace\AstarExercise\AstarExercise\Pathfinding\Astar.h(97): message : whil
           ]
 C:\Workspace\AstarExercise\AstarExercise\main.cpp(33): message : see reference to class template instantiation 'AstarStrategy<HexGrid,Hex>' being compiled
   Generating code
-  64 of 2170 functions ( 2.9%) were compiled, the rest were copied from previous compilation.
-    8 functions were new in current compilation
-    195 functions had inline decision re-evaluated but remain unchanged
+C:\Workspace\AstarExercise\AstarExercise\Hex.h(82): warning C4172: returning address of local variable or temporary: tmp
+  153 of 2229 functions ( 6.9%) were compiled, the rest were copied from previous compilation.
+    60 functions were new in current compilation
+    97 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   AstarExercise.vcxproj -> C:\Workspace\AstarExercise\x64\Release\AstarExercise.exe

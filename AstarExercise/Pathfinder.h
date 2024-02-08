@@ -5,17 +5,43 @@
 #include "Pathfinding/Dijkstra.h"
 #include "Pathfinding/Astar.h"
 
+template<typename Location>
+struct SearchRecord {
+    bool completed;
+    Location currentNode;
+    std::vector<std::pair<Location, Location>> cameFrom;    //Nodes of the path to go to the search goal
+    std::vector<std::pair<Location, unsigned int>> costSoFar;   //Cost to go to each location
+    std::vector<Location> frontier;    //Discovered noedds
+};
+
 template <typename Graph, typename Location>
 class Pathfinder {
 public:
 	Pathfinder(PathfindingStrategy<Graph, Location>* _strat) : strategy(_strat) {
         _startSelected = false;
+        _goalSelected = false;
     }
 
-    bool MakeStep(Graph& graph) { return strategy->MakeStep(graph, goal, cameFrom, costSoFar, frontier); }
+    bool MakeStep(Graph& graph);
 
     void SwitchFuntion(PathfindingStrategy<Graph, Location>* _strat) { this->strategy = _strat; }
 
+   void Reset() {
+       _startSelected = false;
+       _goalSelected = false;
+       cameFrom.clear();
+       costSoFar.clear();
+       while (!frontier.isEmpty()) {
+           frontier.get();
+       }
+       currentRecord = 0;
+       record.clear();
+   }
+
+    std::vector<Location> PathTaken(Location& goal) { return ReconstructPath(start, goal, cameFrom); }
+
+    bool IsStartSelected() const { return _startSelected; }
+    const Location& GetStart() const { return start; }
     void SetStart(Location start) {
         if (!_startSelected) {
             _startSelected = true;
@@ -26,6 +52,9 @@ public:
         }
     }
     void ClearStart() { _startSelected = false; }
+    
+    bool IsGoalSelected() const { return _goalSelected; }
+    const Location& GetGoal() const { return goal; }
     void SetGoal(Location goal) {
         if (!_goalSelected) {
             _goalSelected = true;
@@ -33,38 +62,15 @@ public:
         }
     }
     void ClearGoal() { _goalSelected = false; }
-
-    void Reset() {
-        _startSelected = false;
-        _goalSelected = false;
-        cameFrom.clear();
-        costSoFar.clear();
-        while (!frontier.isEmpty()) {
-            frontier.get();
-        }
-    }
-
-    std::vector<Location> PathTaken(Location& goal) { return ReconstructPath(start, goal, cameFrom); }
-
-    bool IsStartSelected() const { return _startSelected; }
-    bool IsStartSelected(Location& loc) const {
-        if (_startSelected)
-            loc = start;
-        return _startSelected;
-    }
-    const Location& GetStart() const { return start; }
-    bool IsGoalSelected() const { return _goalSelected; }
-    bool IsGoalSelected(Location& loc) const {
-        if (_goalSelected)
-            loc = goal;
-        return _goalSelected;
-    }
-    const Location& GetGoal() const { return goal; }
     
     const std::unordered_map<Location, Location>& GetCameFrom() const { return cameFrom; }
     const std::unordered_map<Location, unsigned int>& GetCostSoFar() const { return costSoFar; }
     const unsigned int GetCostAtLocation(Location loc) { return costSoFar[loc]; }
     const PriorityQueue<Location, unsigned int>& GetFrontier() const { return frontier; }
+
+    const SearchRecord<Location>& GetCurrentRecord() { return record[currentRecord]; }
+    void MoveAheadRecord() {currentRecord += (currentRecord < record.size()) ? 1 : 0; }
+    void MoveBackwardRecord() { currentRecord -= (currentRecord > 0) ? 1 : 0; }
 
 private:
     PathfindingStrategy<Graph, Location>* strategy;
@@ -77,4 +83,29 @@ private:
     std::unordered_map<Location, Location> cameFrom;
     std::unordered_map<Location, unsigned int> costSoFar;
     PriorityQueue<Location, unsigned int> frontier;
+
+    std::vector<SearchRecord<Location>> record;
+    unsigned int currentRecord;
 };
+
+template<typename Graph, typename Location>
+bool Pathfinder<Graph, Location>::MakeStep(Graph& graph) {
+    SearchRecord<Location> cRecord;
+    cRecord.currentNode = frontier.top();
+    cRecord.completed = strategy->MakeStep(graph, goal, cameFrom, costSoFar, frontier);
+    
+    for (auto it : cameFrom) {
+        cRecord.cameFrom.push_back(it);
+    }
+    for (auto it : costSoFar) {
+        cRecord.costSoFar.push_back(it);
+    }
+    PriorityQueue<Location, unsigned int> tmp = frontier;
+    while (!tmp.isEmpty()) { //Render discovered and open nodes
+        cRecord.frontier.push_back(tmp.get());
+    }
+
+    record.push_back(cRecord);
+    
+    return cRecord.completed;
+}

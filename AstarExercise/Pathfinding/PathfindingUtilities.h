@@ -25,6 +25,10 @@ struct PriorityQueue {
         elements.pop();
         return best_item;
     }
+
+    T top() {
+        return elements.top().second;
+    }
 };
 
 template<typename Location>

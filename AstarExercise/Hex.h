@@ -10,7 +10,7 @@
 #include "Node.h"
 
 //Cube coordinates
-struct Hex : public NodeInterface {
+struct Hex : public Node {
 	int q, r, s;
 
 	Hex(int _q, int _r, int _s) : q(_q), r(_r), s(_s) {	//Cube constructor
@@ -70,8 +70,22 @@ struct Hex : public NodeInterface {
 	const std::string PrintOut() const override {
 		std::ostringstream oss;
 		oss << "(" << this->q << ", " << this->r << ", " << this->s << ")" << std::dec;
-		
+
 		return oss.str();
+	}
+
+	std::vector<int>& GetCoordinates() override { 
+		std::vector<int>tmp;
+		tmp.push_back(q);
+		tmp.push_back(r);
+		tmp.push_back(s);
+		return tmp;
+	}
+	void ChangeCoordinates(std::vector<int> newCoordinates) {
+		q = newCoordinates[1];
+		r = newCoordinates[2];
+		s = newCoordinates[3];
+	
 	}
 };
 
