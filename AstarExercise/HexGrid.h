@@ -22,56 +22,64 @@ namespace std {
 
 class HexGrid {
 public:
+	using Location = Hex;
+	using Cost_t = unsigned int;
+
 	HexGrid(const std::string& jsonFilePath = "BasicMapWeighted.json");
 	HexGrid(int _radius, Hex _origin);
 
 	void MakeGraph();
 	void MakeRandomGraph();
-	unsigned int RandomWeight();
+	Cost_t RandomWeight();
 
 	void ReadGrid();
 
-	std::vector<Hex> Neighbors(Hex& hex);
+	std::vector<Location > Neighbors(Location& hex);
 
-	void Increase(const Hex& hex) { nodes[hex]++; }
-	void Decrease(const Hex& hex) { (nodes[hex] > 1) ? nodes[hex]-- : nodes[hex] == 1; }
+	void Increase(const Location& hex) { nodes[hex]++; }
+	void Decrease(const Location& hex) { (nodes[hex] > 1) ? nodes[hex]-- : nodes[hex] == 1; }
 
 	const int Radius() const { return radius; }
-	const Hex& Origin() const { return origin; }
+	const Location& Origin() const { return origin; }
 
-	int Distance(Hex& start, Hex& goal) {
+	int Distance(Location& start, Location& goal) {
 		int dist = std::max(abs(start.q - goal.q), abs(start.r - goal.r));
 		dist = std::max(dist, abs(start.s - goal.s));
 		return dist;
 	}
 
-	bool IsInBounds(Hex& hex) {
+	bool IsInBounds(Location& hex) {
 		if (Distance(origin, hex) <= radius) {
 			return true;
 		}
 		return false;
 	}
 
-	int Weight(Hex& hex) { 
+	Cost_t Weight(Location& hex) {
 		if (_weighted) return nodes[hex];
 		else return 1;
 	}
-	int Cost(Hex& start, Hex& goal) {
+	Cost_t Cost(Location& start, Location& goal) {
 		if (_weighted) return nodes[start] + nodes[goal];
 		else return 1;
 	}
 
-	const std::unordered_map<Hex, unsigned int>& VisitNodes() const { return nodes; }
+	inline Cost_t Heuristic(Location  start, Location  goal) {
+		return (std::abs(start.q - goal.q) + std::abs(start.r - goal.r) + std::abs(start.s - goal.s)) / 2;
+	}
+
+
+	const std::unordered_map<Location, Cost_t>& VisitNodes() const { return nodes; }
 
 	nlohmann::json ToJson() const;
 
 private:
 	int radius;
-	Hex origin;
+	Location origin;
 
 	bool _weighted;
 
-	std::unordered_map<Hex, unsigned int> nodes;
+	std::unordered_map<Location, Cost_t> nodes;
 };
 
 HexGrid::HexGrid(const std::string& jsonFilePath) : radius(0), origin(Hex(0, 0)) {

@@ -14,17 +14,20 @@ struct SearchRecord {
     std::vector<Location> frontier;    //Discovered noedds
 };
 
-template <typename Graph, typename Location>
+template <typename Graph>
 class Pathfinder {
 public:
-	Pathfinder(PathfindingStrategy<Graph, Location>* _strat) : strategy(_strat) {
+    using Location = typedef typename Graph::Location;
+    using Cost_t = typedef typename Graph::Cost_t;
+
+	Pathfinder(PathfindingStrategy<Graph>* _strat) : strategy(_strat) {
         _startSelected = false;
         _goalSelected = false;
     }
 
     bool MakeStep(Graph& graph);
 
-    void SwitchFuntion(PathfindingStrategy<Graph, Location>* _strat) { this->strategy = _strat; }
+    void SwitchFuntion(PathfindingStrategy<Graph>* _strat) { this->strategy = _strat; }
 
    void Reset() {
        _startSelected = false;
@@ -65,7 +68,7 @@ public:
     
     const std::unordered_map<Location, Location>& GetCameFrom() const { return cameFrom; }
     const std::unordered_map<Location, unsigned int>& GetCostSoFar() const { return costSoFar; }
-    const unsigned int GetCostAtLocation(Location loc) { return costSoFar[loc]; }
+    const Cost_t GetCostAtLocation(Location loc) { return costSoFar[loc]; }
     const PriorityQueue<Location, unsigned int>& GetFrontier() const { return frontier; }
 
     const SearchRecord<Location>& GetCurrentRecord() { return record[currentRecord]; }
@@ -73,7 +76,7 @@ public:
     void MoveBackwardRecord() { currentRecord -= (currentRecord > 0) ? 1 : 0; }
 
 private:
-    PathfindingStrategy<Graph, Location>* strategy;
+    PathfindingStrategy<Graph>* strategy;
 
     Location start;
     bool _startSelected;
@@ -81,15 +84,15 @@ private:
     bool _goalSelected;
     
     std::unordered_map<Location, Location> cameFrom;
-    std::unordered_map<Location, unsigned int> costSoFar;
-    PriorityQueue<Location, unsigned int> frontier;
+    std::unordered_map<Location, Cost_t> costSoFar;
+    PriorityQueue<Location, Cost_t> frontier;
 
     std::vector<SearchRecord<Location>> record;
     unsigned int currentRecord;
 };
 
-template<typename Graph, typename Location>
-bool Pathfinder<Graph, Location>::MakeStep(Graph& graph) {
+template<typename Graph>
+bool Pathfinder<Graph>::MakeStep(Graph& graph) {
     SearchRecord<Location> cRecord;
     cRecord.currentNode = frontier.top();
     cRecord.completed = strategy->MakeStep(graph, goal, cameFrom, costSoFar, frontier);

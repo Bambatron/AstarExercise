@@ -30,32 +30,29 @@ int main() {
    float movementSpeed = 10;
    float scrollSpeed = 10;
 
-   Pathfinder<HexGrid, Hex> pathFinder(new AstarStrategy<HexGrid, Hex>{});
+   Pathfinder<HexGrid> pathFinder(new AstarStrategy<HexGrid>{});
    bool _startSelected;
    Hex start(3,1);
    bool _goalSelected;
    Hex goal(3,-1);
    pathFinder.SetStart(start);
    pathFinder.SetGoal(goal);
+   bool _searchRecordManual = false;
    while (!pathFinder.MakeStep(grid)) {}
    
-   SearchRecord<Hex> record = pathFinder.GetCurrentRecord();
-   std::cout << record.completed << " " << record.currentNode.PrintOut() << std::endl;
-   pathFinder.MoveAheadRecord();
-   record = pathFinder.GetCurrentRecord();
-   std::cout << record.completed << " " << record.currentNode.PrintOut() << std::endl;
-   pathFinder.MoveAheadRecord();
-   record = pathFinder.GetCurrentRecord();
-   std::cout << record.completed << " " << record.currentNode.PrintOut() << std::endl;
-   pathFinder.MoveBackwardRecord();
-   record = pathFinder.GetCurrentRecord();
-   std::cout << record.completed << " " << record.currentNode.PrintOut() << std::endl;
 
+   SearchRecord<Hex> record = pathFinder.GetCurrentRecord();
+   int i = 1;
+   bool _keepGoing = true;
 
    LabelMenu label(sf::Vector2f(10, 10), sf::Vector2f(10, 10));
    Hex labeledHex;
     
     //std::type_index objType = typeid(pathFinder);
+
+   sf::Clock gClcok;
+   sf::Time elapsedTime = sf::Time::Zero;
+   sf::Time frameRate = sf::seconds(1.f / 10.f);
 
     while (window.isOpen()) {
         sf::Event e;
@@ -111,11 +108,13 @@ int main() {
                     }
 
                     if (e.key.code == sf::Keyboard::Q) {    //Start Astar search
-                        pathFinder.SwitchFuntion(new AstarStrategy<HexGrid, Hex>);
+                        pathFinder.SwitchFuntion(new AstarStrategy<HexGrid>);
                         gameState = GameState::Searching;
+                        _keepGoing = true;
                     }
                     if (e.key.code == sf::Keyboard::W) {    //Start Dijkstra search
                         gameState = GameState::Searching;
+                        _keepGoing = true;
                     }
                 }
                 
@@ -125,14 +124,18 @@ int main() {
                         gameState = GameState::Normal;
                     }
                     
-                    if (e.key.code == sf::Keyboard::A) {
-                        //Move backward a step in the search
-                    }
-                    if (e.key.code == sf::Keyboard::D) {
-                        //move ahead a step in the search
-                    }
                     if (e.key.code == sf::Keyboard::P) {
                         //Switch between Manual or Automatical Search progression
+                        _searchRecordManual = !(_searchRecordManual);
+                        record = pathFinder.GetCurrentRecord();
+                    }
+                    if (_searchRecordManual) {
+                        if (e.key.code == sf::Keyboard::A) {    //Move backward a step in the search
+                            pathFinder.MoveBackwardRecord();
+                        }
+                        if (e.key.code == sf::Keyboard::D) {    //Move ahead a step in the search
+                            pathFinder.MoveAheadRecord();
+                        }
                     }
 
                     if (e.key.code == sf::Keyboard::I) {
@@ -221,13 +224,58 @@ int main() {
             }
         }
 
+        elapsedTime += gClcok.restart();
+        while (elapsedTime >= frameRate) {
+            if (gameState == GameState::Searching && !_searchRecordManual) {
+                if (i % 5 == 0) {
+                    std::cout << "mod " << i << std::endl;
+                    pathFinder.MoveAheadRecord();
+                    record = pathFinder.GetCurrentRecord();
+                    i = 1;
+                }
+                else {
+                    std::cout << "no mod " << i << std::endl;
+                    i++;
+                }
+
+            }
+
+            elapsedTime -= frameRate;
+        }
+        
+
         //Render
         window.clear();
 
         painter.Render(grid, window);
-        if (label.IsOpen()) {
-            label.Render(window);
+        if (gameState == GameState::Searching) {
+            //painter.RenderSearchRecord(record);
+            if (_keepGoing) {
+                if (record.completed) {
+                    _keepGoing = false;
+                }
+                std::cout << "Record: " << std::endl;
+                std::cout << "Current node: " << record.currentNode.PrintOut() << std::endl;
+                std::cout << "Frontier: ";
+                for (auto it : record.frontier) {
+                    std::cout << it.PrintOut() << "\t";
+                    HexToPixel(it, painter.GetTile().Radius(), painter.GetWindowCenter());
+                }
+                std::cout << std::endl;
+                std::cout << "Came from: ";
+                for (auto it : record.cameFrom) {
+                    std::cout << it.first.PrintOut() << " to " << it.second.PrintOut() << "\t";
+                }
+                std::cout << std::endl;
+                std::cout << "Came from: ";
+                for (auto it : record.costSoFar) {
+                    std::cout << it.first.PrintOut() << " cost: " << it.second << "\t";
+                }
+                std::cout << std::endl;
+            }
         }
+        if (label.IsOpen()) { label.Render(window); }
+
 
         window.display();
     }

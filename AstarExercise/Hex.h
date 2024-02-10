@@ -162,7 +162,3 @@ const std::array<Hex, 6> DIRS = {
 	Hex(0, 1, -1)	//Pointy: down-right| Flat: down
 };
 
-//Basic heuristic funtion
-inline double Heuristic(Hex start, Hex goal) {
-	return (std::abs(start.q - goal.q) + std::abs(start.r - goal.r) + std::abs(start.s - goal.s)) / 2;
-}

@@ -49,15 +49,15 @@ std::vector<Location> ReconstructPath(Location start, Location goal, std::unorde
 
 
 // Interface for 
-template<typename Graph, typename Location>
+template<typename Graph>
 class PathfindingStrategy {
 public:
  //   static virtual PathfindingStrategy* CreateInstace(Graph& graph, Location& loc) = 0;
     
-    virtual bool MakeStep(Graph& graph, Location& goal,
-        std::unordered_map<Location, Location>& cameFrom,
-        std::unordered_map<Location, unsigned int>& costSoFar,
-        PriorityQueue<Location, unsigned int>& frontier) = 0;
+    virtual bool MakeStep(Graph& graph, typename Graph::Location& goal,
+        std::unordered_map<typename Graph::Location, typename Graph::Location>& cameFrom,
+        std::unordered_map<typename Graph::Location, typename Graph::Cost_t>& costSoFar,
+        PriorityQueue<typename Graph::Location, typename Graph::Cost_t>& frontier) = 0;
 
     virtual ~PathfindingStrategy() {} // Virtual destructor for polymorphism
 };

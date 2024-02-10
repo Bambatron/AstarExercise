@@ -1,12 +1,17 @@
 #pragma once
 #include "PathfindingUtilities.h"
 
-template<typename Graph, typename Location>
-unsigned int AstarSearch(Graph graph, Location start, Location goal, std::vector<Location>& pathTaken) {
-	std::unordered_map<Location, Location> cameFrom;
-	std::unordered_map<Location, unsigned int> costSoFar;
+template<typename Graph>
+typename Graph::Cost_t AstarSearch(Graph& graph, typename Graph::Location& start, typename Graph::Location& goal,
+	std::vector<typename Graph::Location>& pathTaken) {
+	
+	typedef typename Graph::Location Location;
+	typedef typename Graph::Cost_t Cost_t;
 
-	PriorityQueue<Location, unsigned int> frontier;
+	std::unordered_map<Location, Location> cameFrom;
+	std::unordered_map<Location, Cost_t> costSoFar;
+
+	PriorityQueue<Location, Cost_t> frontier;
 	frontier.put(start, 0);
 
 	cameFrom[start] = start;
@@ -20,11 +25,11 @@ unsigned int AstarSearch(Graph graph, Location start, Location goal, std::vector
 		}
 
 		for (Location next : graph.Neighbors(current)) {
-			int newCost = costSoFar[current] + graph.Cost(current, next);
+			Cost_t newCost = costSoFar[current] + graph.Cost(current, next);
 			if (costSoFar.find(next) == costSoFar.end() ||
 				newCost < costSoFar[next]) {
 				costSoFar[next] = newCost;
-				int priority = newCost + Heuristic(next, goal);
+				Cost_t priority = newCost + graph.Heuristic(next, goal);
 				frontier.put(next, priority);
 				cameFrom[next] = current;
 			}
@@ -35,9 +40,16 @@ unsigned int AstarSearch(Graph graph, Location start, Location goal, std::vector
 	return costSoFar[goal];
 }
 
-template<typename Graph, typename Location>
-bool AstarSearchStep(Graph& graph, Location& goal, std::unordered_map<Location, Location>& cameFrom, std::unordered_map<Location, unsigned int>& costSoFar, PriorityQueue<Location, unsigned int>& frontier) {
-    if (frontier.isEmpty()) {
+template<typename Graph>
+bool AstarSearchStep(Graph& graph, typename Graph::Location& goal,
+	std::unordered_map<typename Graph::Location, typename Graph::Location>& cameFrom,
+	std::unordered_map<typename Graph::Location, typename Graph::Cost_t>& costSoFar,
+	PriorityQueue<typename Graph::Location, typename Graph::Cost_t>& frontier) {
+	
+	typedef typename Graph::Location Location;
+	typedef typename Graph::Cost_t Cost_t;
+
+	if (frontier.isEmpty()) {
         return true;
     }
 
@@ -48,11 +60,11 @@ bool AstarSearchStep(Graph& graph, Location& goal, std::unordered_map<Location, 
     }
 
     for (Location next : graph.Neighbors(current)) {
-        unsigned int newCost = costSoFar[current] + graph.Cost(current, next);
+        Cost_t newCost = costSoFar[current] + graph.Cost(current, next);
 		if (costSoFar.find(next) == costSoFar.end() ||
 			newCost < costSoFar[next]) {
 			costSoFar[next] = newCost;
-			int priority = newCost + Heuristic(next, goal);
+			Cost_t priority = newCost + graph.Heuristic(next, goal);
 			frontier.put(next, priority);
 			cameFrom[next] = current;
 		}
@@ -61,18 +73,28 @@ bool AstarSearchStep(Graph& graph, Location& goal, std::unordered_map<Location, 
     return false;
 }
 
-template<typename Graph, typename Location>
-void AstarSearchHelper(Graph& graph, Location& goal, std::unordered_map<Location, Location>& cameFrom, std::unordered_map<Location, unsigned int>& costSoFar, PriorityQueue<Location, unsigned int>& frontier) {
+template<typename Graph>
+void AstarSearchHelper(Graph& graph, typename Graph::Location& goal,
+	std::unordered_map<typename Graph::Location, typename Graph::Location>& cameFrom, std::unordered_map<typename Graph::Location,
+	typename Graph::Cost_t>& costSoFar,
+	PriorityQueue<typename Graph::Location, typename Graph::Cost_t>& frontier) {
+
     if (!AstarSearchStep(graph, goal, cameFrom, costSoFar, frontier))
         AstarSearchHelper(graph, goal, cameFrom, costSoFar, frontier);
 }
 
-template<typename Graph, typename Location>
-unsigned int AstarSearchRecursive(Graph& graph, Location& start, Location& goal, std::vector<Location>& pathTaken) {
-    std::unordered_map<Location, Location> cameFrom;
-    std::unordered_map<Location, unsigned int> costSoFar;
+template<typename Graph>
+typename Graph::Cost_t AstarSearchRecursive(Graph& graph, typename Graph::Location& start, typename Graph::Location& goal,
+	std::function<typename Graph::Cost_t(typename Graph::Location a, typename Graph::Location b)> heuristic,
+	std::vector<typename Graph::Location>& pathTaken) {
+	
+	typedef typename Graph::Location Location;
+	typedef typename Graph::Cost_t Cost_t;
 
-    PriorityQueue<Location, unsigned int> frontier;
+	std::unordered_map<Location, Location> cameFrom;
+    std::unordered_map<Location, Cost_t> costSoFar;
+
+    PriorityQueue<Location, Cost_t> frontier;
     frontier.put(start, 0);
 
     cameFrom[start] = start;
@@ -84,17 +106,17 @@ unsigned int AstarSearchRecursive(Graph& graph, Location& start, Location& goal,
     return costSoFar[goal];
 }
 
-template<typename Graph, typename Location>
-class AstarStrategy : public PathfindingStrategy<Graph, Location> {
+template<typename Graph>
+class AstarStrategy : public PathfindingStrategy<Graph> {
 public:
 	AstarStrategy() {};
 
 	//static AstarStrategy* CreateInstace(Graph& graph, Location& loc) override { return new AstarStrategy<Graph, Location> }
 
-	bool MakeStep(Graph& graph, Location& goal,
-		std::unordered_map<Location, Location>& cameFrom,
-		std::unordered_map<Location, unsigned int>& costSoFar,
-		PriorityQueue<Location, unsigned int>& frontier) override {
+	bool MakeStep(Graph& graph, typename Graph::Location& goal,
+		std::unordered_map<typename Graph::Location, typename Graph::Location>& cameFrom,
+		std::unordered_map<typename Graph::Location, typename Graph::Cost_t>& costSoFar,
+		PriorityQueue<typename Graph::Location, typename Graph::Cost_t>& frontier) override {
 		return AstarSearchStep(graph, goal, cameFrom, costSoFar, frontier);
 	}
 };

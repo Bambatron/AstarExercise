@@ -2,12 +2,17 @@
 
 #include "PathfindingUtilities.h"
 
-template< typename Graph, typename Location>
-unsigned int DijkstraSearch(Graph& graph, Location& start, Location& goal, std::vector<Location>& pathTaken) {
-    std::unordered_map<Location, Location> cameFrom;
-    std::unordered_map<Location, unsigned int> costSoFar;
+template< typename Graph>
+typename Graph::Cost_t DijkstraSearch(Graph& graph, typename Graph::Location& start, typename Graph::Location& goal,
+    std::vector<typename Graph::Location>& pathTaken) {
 
-    PriorityQueue<Location, unsigned int> frontier;
+    typedef typename Graph::Location Location;
+    typedef typename Graph::Cost_t Cost_t;
+
+    std::unordered_map<Location, Location> cameFrom;
+    std::unordered_map<Location, Cost_t> costSoFar;
+
+    PriorityQueue<Location, Cost_t> frontier;
     frontier.put(start, 0);
 
     cameFrom[start] = start;
@@ -21,7 +26,7 @@ unsigned int DijkstraSearch(Graph& graph, Location& start, Location& goal, std::
         }
 
         for (Location next : graph.Neighbors(current)) {
-            unsigned int newCost = costSoFar[current] + graph.Cost(current, next);
+            Cost_t newCost = costSoFar[current] + graph.Cost(current, next);
             if (costSoFar.find(next) == costSoFar.end()
                 || newCost < costSoFar[next]) {
                 costSoFar[next] = newCost;
@@ -35,8 +40,15 @@ unsigned int DijkstraSearch(Graph& graph, Location& start, Location& goal, std::
     return costSoFar[goal];
 }
 
-template<typename Graph, typename Location>
-bool DijkstraSearchStep(Graph& graph, Location& goal, std::unordered_map<Location, Location>& cameFrom, std::unordered_map<Location, unsigned int>& costSoFar, PriorityQueue<Location, unsigned int>& frontier) {
+template<typename Graph>
+bool DijkstraSearchStep(Graph& graph, typename Graph::Location& goal,
+    std::unordered_map<typename Graph::Location, typename Graph::Location>& cameFrom,
+    std::unordered_map<typename Graph::Location, typename Graph::Cost_t>& costSoFar,
+    PriorityQueue<typename Graph::Location, typename Graph::Cost_t>& frontier) {
+    
+    typedef typename Graph::Location Location;
+    typedef typename Graph::Cost_t Cost_t;
+    
     if (frontier.isEmpty()) {
         return true;
     }
@@ -48,7 +60,7 @@ bool DijkstraSearchStep(Graph& graph, Location& goal, std::unordered_map<Locatio
     }
 
     for (Location next : graph.Neighbors(current)) {
-        unsigned int newCost = costSoFar[current] + graph.Cost(current, next);
+        Cost_t newCost = costSoFar[current] + graph.Cost(current, next);
         if (costSoFar.find(next) == costSoFar.end() || newCost < costSoFar[next]) {
             costSoFar[next] = newCost;
             cameFrom[next] = current;
@@ -59,14 +71,22 @@ bool DijkstraSearchStep(Graph& graph, Location& goal, std::unordered_map<Locatio
     return false;
 }
 
-template<typename Graph, typename Location>
-void DijkstraSearchHelper(Graph& graph, Location& goal, std::unordered_map<Location, Location>& cameFrom, std::unordered_map<Location, unsigned int>& costSoFar, PriorityQueue<Location, unsigned int>& frontier) {
+template<typename Graph>
+void DijkstraSearchHelper(Graph& graph, typename Graph::Location& goal,
+    std::unordered_map< typename Graph::Location, typename Graph::Location>& cameFrom,
+    std::unordered_map< typename Graph::Location, typename Graph::Cost_t>& costSoFar,
+    PriorityQueue< typename Graph::Location, typename Graph::Cost_t>& frontier) {
     if(!DijkstraSearchStep(graph, goal, cameFrom, costSoFar, frontier)) 
         DijkstraSearchHelper(graph, goal, cameFrom, costSoFar, frontier);
 }
 
-template<typename Graph, typename Location>
-unsigned int DijkstraSearchRecursive(Graph& graph, Location& start, Location& goal, std::vector<Location>& pathTaken) {
+template<typename Graph>
+unsigned int DijkstraSearchRecursive(Graph& graph, typename Graph::Location& start, typename Graph::Location& goal,
+    std::vector<typename Graph::Location>& pathTaken) {
+    
+    typedef typename Graph::Location Location;
+    typedef typename Graph::Cost_t Cost_t;
+    
     std::unordered_map<Location, Location> cameFrom;
     std::unordered_map<Location, unsigned int> costSoFar;
 
@@ -82,16 +102,16 @@ unsigned int DijkstraSearchRecursive(Graph& graph, Location& start, Location& go
     return costSoFar[goal];
 }
 
-template<typename Graph, typename Location>
-class DijkstraStrategy : public PathfindingStrategy<Graph, Location> {
+template<typename Graph>
+class DijkstraStrategy : public PathfindingStrategy<Graph> {
 public:
     DijkstraStrategy() {}
    // static  DijkstraStrategy* CreateInstace(Graph& graph, Location& loc) override { return new DijkstraStrategy<Graph, Location>}
 
-    bool MakeStep(Graph& graph, Location& goal,
-        std::unordered_map<Location, Location>& cameFrom,
-        std::unordered_map<Location, unsigned int>& costSoFar,
-        PriorityQueue<Location, unsigned int>& frontier) override {
+    bool MakeStep(Graph& graph, typename Graph::Location& goal,
+        std::unordered_map<typename Graph::Location, typename Graph::Location>& cameFrom,
+        std::unordered_map<typename Graph::Location, typename Graph::Cost_t>& costSoFar,
+        PriorityQueue<typename Graph::Location, typename Graph::Cost_t>& frontier) override {
         return DijkstraSearchStep(graph, goal, cameFrom, costSoFar, frontier);
     }
 };
