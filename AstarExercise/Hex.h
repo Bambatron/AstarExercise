@@ -10,7 +10,7 @@
 #include "Node.h"
 
 //Cube coordinates
-struct Hex : public Node {
+struct Hex {
 	int q, r, s;
 
 	Hex(int _q, int _r, int _s) : q(_q), r(_r), s(_s) {	//Cube constructor
@@ -29,9 +29,7 @@ struct Hex : public Node {
 			this->s == other.s);
 	}
 
-	bool operator!=(const Hex& other) {
-		return !(*this == other);
-	}
+	bool operator!=(const Hex& other) { return !(*this == other); }
 
 	bool operator <(const Hex& other) const {
 		return (this->q < other.q ||
@@ -67,25 +65,11 @@ struct Hex : public Node {
 		return *this;
 	}
 
-	const std::string PrintOut() const override {
+	const std::string PrintOut() const {
 		std::ostringstream oss;
 		oss << "(" << this->q << ", " << this->r << ", " << this->s << ")" << std::dec;
 
 		return oss.str();
-	}
-
-	std::vector<int>& GetCoordinates() override { 
-		std::vector<int>tmp;
-		tmp.push_back(q);
-		tmp.push_back(r);
-		tmp.push_back(s);
-		return tmp;
-	}
-	void ChangeCoordinates(std::vector<int> newCoordinates) {
-		q = newCoordinates[1];
-		r = newCoordinates[2];
-		s = newCoordinates[3];
-	
 	}
 };
 
@@ -144,21 +128,57 @@ Hex PixelToHex(sf::Vector2f pixelPos, int tileRadius, sf::Vector2i windowCenter)
 	pixelPos.x -= windowCenter.x;
 	pixelPos.y -= windowCenter.y;
 
-	int radius = tileRadius;
-
-	double q = ((pixelPos.x * sqrt(3) / 3) - (pixelPos.y * 1. / 3)) / radius;
-	double r = (pixelPos.y * 2. * 1. / 3) / radius;
+	double q = ((pixelPos.x * sqrt(3) / 3) - (pixelPos.y * 1. / 3)) / tileRadius;
+	double r = (pixelPos.y * 2. * 1. / 3) / tileRadius;
 
 	return HexRound(q, r, -q - r);
 }
 
-//Counter-clock wise
-const std::array<Hex, 6> DIRS = {
-	Hex(1, 0, -1),	//Pointy: right		| Flat: down-right
-	Hex(1, -1, 0),	//Pointy: up-right	| Flat: up-right
-	Hex(0, -1, 1),	//Pointy: up-left	| Flat: up
-	Hex(-1, 0, 1),	//Pointy: left		| Flat: up-left
-	Hex(-1, 1, 0),	//Pointy: down-left	| Flat: down-left
-	Hex(0, 1, -1)	//Pointy: down-right| Flat: down
-};
 
+
+struct HexTile {
+	sf::CircleShape body;
+
+	HexTile(float radius) : body(radius, 6) {
+		body.setFillColor(sf::Color::Transparent);
+		body.setOutlineColor(sf::Color::Black);
+		body.setOutlineThickness(1);
+		body.setOrigin(radius, radius);
+	}
+	HexTile(const HexTile& other) : body(other.body) {}
+
+	void SetOrigin(sf::Vector2f origin) { body.setOrigin(origin); }
+	void SetPosition(sf::Vector2f pos) { body.setPosition(pos); }
+	void SetFillColor(const sf::Color& color) { body.setFillColor(color); }
+	void SetOutlineColor(const sf::Color& color) { body.setOutlineColor(color); }
+	void SetOutlineThickness(float size) { body.setOutlineThickness(size); }
+	sf::Vector2f Position() { return body.getPosition(); }
+
+	void SetRadius(unsigned int radius) {
+		body.setOrigin(-body.getRadius(), -body.getRadius());   //Reset the origin to the top left corner
+		body.setRadius(radius); //Update the radius 
+		body.setOrigin(body.getRadius(), body.getRadius());   //Set the origin to the new center 
+	}
+	float Radius() { return body.getRadius(); }
+	float Apothem() { return ((body.getRadius() * sqrt(3.)) / 2.); }
+
+	sf::Vector2f TopLeftSide() {
+		float a = Apothem();
+		//Should be (-a/2, -a sqrt(3)/2) however it goes outside the tile
+		return sf::Vector2f(
+			(-a / 2.) + 2.,
+			(-a * sqrt(2) / 2.) + 5.);
+	}
+	sf::Vector2f DownLeftSide() {
+		float a = Apothem();
+		//Should be (-a/2, a sqrt(3)/2) however it goes outside the tile
+		return sf::Vector2f(
+			(-a / 2.) + 2.,
+			(a * sqrt(2) / 2.) - 5.);
+	}
+	sf::Vector2f RightSide() {
+		float a = Apothem();
+		//Should be (a, 0) however it goes outside the tile
+		return sf::Vector2f((a * sqrt(2) / 2.) - 2., 0);
+	}
+};

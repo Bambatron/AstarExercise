@@ -35,6 +35,9 @@
     <None Include="BasicMapWeighted.json">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="BasicSquareMap.json">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Pathfinding\Astar.h">
@@ -70,9 +73,6 @@
     <ClInclude Include="HexGrid.h">
       <Filter>Header Files\Grids</Filter>
     </ClInclude>
-    <ClInclude Include="Node.h">
-      <Filter>Header Files\Grids</Filter>
-    </ClInclude>
     <ClInclude Include="Square.h">
       <Filter>Header Files\Grids</Filter>
     </ClInclude>
@@ -81,6 +81,12 @@
     </ClInclude>
     <ClInclude Include="Pathfinder.h">
       <Filter>Header Files\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="SquareGrid.h">
+      <Filter>Header Files\Grids</Filter>
+    </ClInclude>
+    <ClInclude Include="SquarePainter.h">
+      <Filter>Header Files\Painters</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

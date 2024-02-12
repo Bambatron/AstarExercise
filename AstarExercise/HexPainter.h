@@ -4,56 +4,7 @@
 
 #include "PainterInterface.h"
 
-struct HexTile {
-    sf::CircleShape body;
-
-    HexTile(float radius) : body(radius, 6) {
-        body.setFillColor(sf::Color::Transparent);
-        body.setOutlineColor(sf::Color::Black);
-        body.setOutlineThickness(1);
-        body.setOrigin(radius, radius);
-    }
-    HexTile(const HexTile& other) : body(other.body) {}
-    
-    void SetOrigin(sf::Vector2f origin) { body.setOrigin(origin); }
-    void SetPosition(sf::Vector2f pos) { body.setPosition(pos); }
-    void SetFillColor(const sf::Color& color) { body.setFillColor(color); }
-    void SetOutlineColor(const sf::Color& color) { body.setOutlineColor(color); }
-    void SetOutlineThickness(float size) { body.setOutlineThickness(size); }
-    sf::Vector2f Position() { return body.getPosition(); }
-
-
-    void SetRadius(unsigned int radius) {
-        body.setOrigin(-body.getRadius(), -body.getRadius());   //Reset the origin to the top left corner
-        body.setRadius(radius); //Update the radius 
-        body.setOrigin(body.getRadius(), body.getRadius());   //Set the origin to the new center 
-    }
-    float Radius() { return body.getRadius(); }
-    float Apothem() { return ((body.getRadius() * sqrt(3.)) / 2.); }
-    
-    sf::Vector2f TopLeftSide() {
-        float a = Apothem();
-        //Should be (-a/2, -a sqrt(3)/2) however it goes outside the tile
-        return sf::Vector2f(
-            (-a / 2.) + 2.,
-            (-a * sqrt(2) / 2.) + 5.);
-    }
-    sf::Vector2f DownLeftSide() {
-        float a = Apothem();
-        //Should be (-a/2, a sqrt(3)/2) however it goes outside the tile
-        return sf::Vector2f(
-            (-a / 2.) + 2.,
-            (a * sqrt(2) / 2.) - 5.);
-    }
-    sf::Vector2f RightSide() {
-        float a = Apothem();
-        //Should be (a, 0) however it goes outside the tile
-        return sf::Vector2f((a * sqrt(2) / 2.) - 2., 0);
-    }
-};
-
-//template<Grid, Location, Tile>
-class HexPainter : public Painter<HexTile> {
+class HexPainter : public Painter<HexGrid> {
 public:
     HexPainter(int tileSize = 30, sf::Vector2u _windowSize = sf::Vector2u(1024, 768), unsigned int maxZoomFactor = 4, unsigned int minZoomFactor = 40);
 
@@ -63,7 +14,7 @@ public:
     void Zoom(float factor) override;
 };
 
-HexPainter::HexPainter(int tileSize, sf::Vector2u _windowSize, unsigned int maxZoomFactor, unsigned int minZoomFactor) : Painter<HexTile>(HexTile(tileSize), _windowSize, maxZoomFactor, minZoomFactor) {}
+HexPainter::HexPainter(int tileSize, sf::Vector2u _windowSize, unsigned int maxZoomFactor, unsigned int minZoomFactor) : Painter<HexGrid>(HexTile(tileSize), _windowSize, maxZoomFactor, minZoomFactor) {}
 
 void HexPainter::Render(HexGrid& grid, sf::RenderWindow& target) {
     //Draw background hexes map zoomed in as in camera
@@ -114,6 +65,7 @@ void HexPainter::Render(HexGrid& grid, sf::RenderWindow& target) {
             target.draw(circleTile);
         }
     }
+
     if (_showHexCoordinates) {
         sf::Text coordText;
         coordText.setFont(font);
@@ -149,14 +101,16 @@ void HexPainter::Render(HexGrid& grid, sf::RenderWindow& target) {
 }
 
 void HexPainter::Zoom(float factor) {
-    unsigned int rad = tile.Radius() + factor;
+    unsigned int rad = tile.Radius() + factor;  //Radius of zoomed tile
     
-    if (rad > maxZoom) {
-        rad = maxZoom;
+    if (rad > maxZoom) {    //Checks if too big
+        rad = maxZoom; 
     }
-    else if (rad < minZoom) {
+    else if (rad < minZoom) {   //Checks if too small
         rad = minZoom;
     }
 
-    tile.SetRadius(rad);
+    tile.SetRadius(rad);    //Zooms by enlarging or reducing the size of the tile    
+    //Text loses details when zoomed
+    //This is a lot easier than having two view of the map one for the zoomed tiles and one for the text
 }

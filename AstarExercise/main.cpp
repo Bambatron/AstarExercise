@@ -5,6 +5,7 @@
 #include "SaveOpenUtilities.h"
 #include "Pathfinder.h"
 #include "HexGrid.h"
+#include "SquareGrid.h"
 #include "HexPainter.h"
 #include "LabelMenu.h"
 
@@ -15,45 +16,45 @@ enum GameState {
 
 int main() {
     std::cout << "Hello world" << std::endl;
+  
+    GameState gameState = GameState::Normal;
     
-   GameState gameState = GameState::Normal;
+    sf::ContextSettings settings;
+    settings.antialiasingLevel = 8;
+    sf::RenderWindow window(sf::VideoMode(1024, 768), "Hexagon Example", sf::Style::Default, settings);
+    
+    HexGrid grid("BasicMapWeighted.json");
+    bool _selectedHex = false;
+    Hex selectedHex(0, 0);
 
-   sf::ContextSettings settings;
-   settings.antialiasingLevel = 8;
-   sf::RenderWindow window(sf::VideoMode(1024, 768), "Hexagon Example", sf::Style::Default, settings);
+    HexPainter painter(30, window.getSize());
+    float movementSpeed = 10;
+    float scrollSpeed = 10;
 
-   HexGrid grid("BasicMapWeighted.json");
-   bool _selectedHex = false;
-   Hex selectedHex(0, 0);
-
-   HexPainter painter(30, window.getSize());
-   float movementSpeed = 10;
-   float scrollSpeed = 10;
-
-   Pathfinder<HexGrid> pathFinder(new AstarStrategy<HexGrid>{});
-   bool _startSelected;
-   Hex start(3,1);
-   bool _goalSelected;
-   Hex goal(3,-1);
-   pathFinder.SetStart(start);
-   pathFinder.SetGoal(goal);
-   bool _searchRecordManual = false;
-   while (!pathFinder.MakeStep(grid)) {}
+    Pathfinder<HexGrid> pathFinder(new AstarStrategy<HexGrid>{});
+    bool _startSelected;
+    Hex start(3,1);
+    bool _goalSelected;
+    Hex goal(3,-1);
+    pathFinder.SetStart(start);
+    pathFinder.SetGoal(goal);
+    bool _searchRecordManual = false;
+    while (!pathFinder.MakeStep(grid)) {}
    
 
-   SearchRecord<Hex> record = pathFinder.GetCurrentRecord();
-   int i = 1;
-   bool _keepGoing = true;
+    SearchRecord<Hex> record = pathFinder.GetCurrentRecord();
+    int i = 1;
+    bool _keepGoing = true;
 
-   LabelMenu label(sf::Vector2f(10, 10), sf::Vector2f(10, 10));
-   Hex labeledHex;
+    LabelMenu label(sf::Vector2f(10, 10), sf::Vector2f(10, 10));
+    Hex labeledHex;
     
     //std::type_index objType = typeid(pathFinder);
 
-   sf::Clock gClcok;
-   sf::Time elapsedTime = sf::Time::Zero;
-   sf::Time frameRate = sf::seconds(1.f / 10.f);
-
+    sf::Clock gClcok;
+    sf::Time elapsedTime = sf::Time::Zero;
+    sf::Time frameRate = sf::seconds(1.f / 10.f);
+    
     while (window.isOpen()) {
         sf::Event e;
         while (window.pollEvent(e)) {

@@ -153,6 +153,7 @@
   <ItemGroup>
     <None Include="BasicMapWeighted.json" />
     <None Include="BasicMap.json" />
+    <None Include="BasicSquareMap.json" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Hex.h" />
@@ -160,7 +161,6 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="HexPainter.h" />
     <ClInclude Include="LabelMenu.h" />
-    <ClInclude Include="Node.h" />
     <ClInclude Include="PainterInterface.h" />
     <ClInclude Include="Pathfinder.h" />
     <ClInclude Include="Pathfinding\Astar.h" />
@@ -170,6 +170,8 @@
     <ClInclude Include="Pathfinding\PathfindingUtilities.h" />
     <ClInclude Include="SaveOpenUtilities.h" />
     <ClInclude Include="Square.h" />
+    <ClInclude Include="SquareGrid.h" />
+    <ClInclude Include="SquarePainter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

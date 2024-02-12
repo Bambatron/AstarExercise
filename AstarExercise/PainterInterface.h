@@ -2,13 +2,15 @@
 
 #include <SFML/Graphics.hpp>
 
-template<typename Tile>
+template<typename Graph>
 class Painter {
 public:
+    using Tile = typename Graph::Tile;
+
     Painter(const Tile& initialTile, sf::Vector2u _windowSize = sf::Vector2u(1024, 768), unsigned int maxZoomFactor = 4, unsigned int minZoomFactor = 40);
     virtual ~Painter() {}
 
-	virtual void Render(HexGrid& grid, sf::RenderWindow& target) = 0;
+	virtual void Render(Graph& grid, sf::RenderWindow& target) = 0;
 
     void ToggleVisualGrid() { _showVisualGrid = !(_showVisualGrid); }
     void ToggleHexCenter() { _showHexCenter = !(_showHexCenter); }
@@ -41,8 +43,8 @@ protected:
 	Tile tile;
 };
 
-template<typename Tile>
-Painter<Tile>::Painter(const Tile& initialTile, sf::Vector2u _windowSize, unsigned int maxZoomFactor, unsigned int minZoomFactor) : tile(initialTile), windowSize(_windowSize) {
+template<typename Graph>
+Painter<Graph>::Painter(const typename Graph::Tile& initialTile, sf::Vector2u _windowSize, unsigned int maxZoomFactor, unsigned int minZoomFactor) : tile(initialTile), windowSize(_windowSize) {
     windowCenter = sf::Vector2i(_windowSize.x / 2, _windowSize.y / 2);
 
     SetMaxZoom(maxZoomFactor);

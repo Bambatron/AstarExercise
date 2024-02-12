@@ -9,67 +9,66 @@
 
 #include "Hex.h"
 
-namespace std {
-	template <> struct hash<std::pair<Hex, unsigned int>> {
-		size_t operator()(const std::pair<Hex, unsigned int>& wh) const {
-			hash<int> int_hash;
-			size_t hq = int_hash(wh.first.q);
-			size_t hr = int_hash(wh.first.r);
-			return hq ^ (hr + 0x9e3779b9 + (hq << 6) + (hq >> 2));
-		}
-	};
-}
+//Counter-clock wise
+const std::array<Hex, 6> HEXDIRS = {
+	Hex(1, 0, -1),	//Pointy: right		| Flat: down-right
+	Hex(1, -1, 0),	//Pointy: up-right	| Flat: up-right
+	Hex(0, -1, 1),	//Pointy: up-left	| Flat: up
+	Hex(-1, 0, 1),	//Pointy: left		| Flat: up-left
+	Hex(-1, 1, 0),	//Pointy: down-left	| Flat: down-left
+	Hex(0, 1, -1)	//Pointy: down-right| Flat: down
+};
 
 class HexGrid {
 public:
 	using Location = Hex;
 	using Cost_t = unsigned int;
+	using Tile = HexTile;
 
 	HexGrid(const std::string& jsonFilePath = "BasicMapWeighted.json");
-	HexGrid(int _radius, Hex _origin);
+	HexGrid(int _radius, Hex _origin, bool _weighted);
 
 	void MakeGraph();
 	void MakeRandomGraph();
-	Cost_t RandomWeight();
+	unsigned int RandomWeight();
 
 	void ReadGrid();
 
-	std::vector<Location > Neighbors(Location& hex);
+	std::vector<Hex> Neighbors(Hex& hex);
 
-	void Increase(const Location& hex) { nodes[hex]++; }
-	void Decrease(const Location& hex) { (nodes[hex] > 1) ? nodes[hex]-- : nodes[hex] == 1; }
+	void Increase(const Hex& hex) { nodes[hex]++; }
+	void Decrease(const Hex& hex) { (nodes[hex] > 1) ? nodes[hex]-- : nodes[hex] == 1; }
 
 	const int Radius() const { return radius; }
-	const Location& Origin() const { return origin; }
+	const Hex& Origin() const { return origin; }
 
-	int Distance(Location& start, Location& goal) {
+	int Distance(Hex& start, Hex& goal) {
 		int dist = std::max(abs(start.q - goal.q), abs(start.r - goal.r));
 		dist = std::max(dist, abs(start.s - goal.s));
 		return dist;
 	}
 
-	bool IsInBounds(Location& hex) {
+	bool IsInBounds(Hex& hex) {
 		if (Distance(origin, hex) <= radius) {
 			return true;
 		}
 		return false;
 	}
 
-	Cost_t Weight(Location& hex) {
-		if (_weighted) return nodes[hex];
+	unsigned int  Weight(Hex& hex) {
+		if (weighted) return nodes[hex];
 		else return 1;
 	}
-	Cost_t Cost(Location& start, Location& goal) {
-		if (_weighted) return nodes[start] + nodes[goal];
+	unsigned int  Cost(Hex& start, Hex& goal) {
+		if (weighted) return nodes[start] + nodes[goal];
 		else return 1;
 	}
 
-	inline Cost_t Heuristic(Location  start, Location  goal) {
+	inline unsigned int Heuristic(Hex& start, Hex& goal) {
 		return (std::abs(start.q - goal.q) + std::abs(start.r - goal.r) + std::abs(start.s - goal.s)) / 2;
 	}
 
-
-	const std::unordered_map<Location, Cost_t>& VisitNodes() const { return nodes; }
+	const std::unordered_map<Hex, unsigned int>& VisitNodes() const { return nodes; }
 
 	nlohmann::json ToJson() const;
 
@@ -77,9 +76,9 @@ private:
 	int radius;
 	Location origin;
 
-	bool _weighted;
+	bool weighted;
 
-	std::unordered_map<Location, Cost_t> nodes;
+	std::unordered_map<Hex, unsigned int> nodes;
 };
 
 HexGrid::HexGrid(const std::string& jsonFilePath) : radius(0), origin(Hex(0, 0)) {
@@ -102,14 +101,14 @@ HexGrid::HexGrid(const std::string& jsonFilePath) : radius(0), origin(Hex(0, 0))
 		MakeGraph();
 
 		if (jsonData.find("weightedNodes") != jsonData.end()) {
-			_weighted = true;
+			weighted = true;
 			for (const auto& wHex : jsonData["weightedNodes"]) {
 				Hex hex{ wHex["q"], wHex["r"] };
 				nodes[hex] = wHex["w"];
 			}
 		}
 		else {
-			_weighted = false;
+			weighted = false;
 		}
 	}
 	catch (const std::exception& e) {
@@ -117,8 +116,11 @@ HexGrid::HexGrid(const std::string& jsonFilePath) : radius(0), origin(Hex(0, 0))
 	}
 }
 
-HexGrid::HexGrid(int _radius, Hex _origin) : radius(_radius), origin(_origin) {
-	MakeRandomGraph();
+HexGrid::HexGrid(int _radius, Hex _origin, bool _weighted) : radius(_radius), origin(_origin), weighted(_weighted) {
+	if (weighted)
+		MakeRandomGraph();
+	else
+		MakeGraph();
 }
 
 void HexGrid::MakeGraph() {
@@ -202,7 +204,7 @@ void HexGrid::ReadGrid() {
 std::vector<Hex> HexGrid::Neighbors(Hex& hex) {
 	std::vector<Hex> neighbors;
 
-	for (const auto& dir : DIRS) {
+	for (const auto& dir : HEXDIRS) {
 		Hex next(hex + dir);
 		if (IsInBounds(next)) {
 			neighbors.push_back(next);

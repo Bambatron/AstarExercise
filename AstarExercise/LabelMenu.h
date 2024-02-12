@@ -4,22 +4,6 @@
 
 #include<SFML/Graphics.hpp>
 
-void DrawParametersHelper(std::vector<std::string>& tmp) {
-    // This function does nothing when there are no parameters left
-}
-
-template<typename T, typename... Args>
-void DrawParametersHelper(std::vector<std::string>& tmp, const T& parameter, const Args&... args) {
-    // Convert the parameter to a string and add it to the vector
-    std::ostringstream oss;
-    oss << parameter;
-    tmp.push_back(oss.str());
-    
-
-    // Call DrawParameterHelper recursively to process the remaining parameters
-    DrawParametersHelper(tmp, args...);
-}
-
 class LabelMenu {
 public:
     LabelMenu(sf::Vector2f size, sf::Vector2f position, sf::Vector2f _buffer = sf::Vector2f(10, 10), sf::Vector2f _padding = sf::Vector2f(5,5));
@@ -36,6 +20,7 @@ public:
                 return true;
             }
         }
+
         return false;
     }
 
@@ -44,11 +29,15 @@ public:
         body.setPosition(pos);
         text.setPosition(pos.x + padding.x, pos.y + padding.y);
     }
+    
     const sf::Vector2f GetSize() const { return body.getSize(); }
+    
     const sf::Color& GetBackgroundColor() const { return body.getFillColor(); }
     void SetBackgroundColor(sf::Color& color) { body.setFillColor(color); }
+    
     const sf::Color& GetBorderColor() const { return body.getOutlineColor(); }
     void SetBorderColor(sf::Color& color) { body.setOutlineColor(color); }
+    
     const float GetBorderSize() { return -body.getOutlineThickness(); }
     void SetBorderSize(float size) { body.setOutlineThickness(-size); }
 
