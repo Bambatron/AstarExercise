@@ -3,11 +3,55 @@
 #include <typeindex>
 
 #include "SaveOpenUtilities.h"
-#include "Pathfinder.h"
-#include "HexGrid.h"
-#include "SquareGrid.h"
-#include "HexPainter.h"
+#include "Pathfinder/Pathfinder.h"
+#include "Grids/HexGrid.h"
+#include "Grids/SquareGrid.h"
+#include "Painters/HexPainter.h"
 #include "LabelMenu.h"
+
+const std::string Help() {
+    std::ostringstream oss;
+    oss.imbue(std::locale("en_US.UTF-8"));
+
+    oss << "Use directional arrow (\u2190, \u2191, \u2193, \u2192) to move the Camera\n" << std::dec;
+    oss << "\n" << std::dec;
+    oss << "Use R to save the current grid\n" << std::dec;
+    oss << "use T to open a saved grid\n" << std::dec;
+    oss << "\n" << std::dec;
+    oss << "Right mouse click: On a node open/closes additional information on the node\n" << std::dec;
+    oss << "Mouse wheel scroll: Zoom in and out of the grid\n" << std::dec;
+    oss << "F: Show/Hide a visual rectangular grid\n" << std::dec;
+    oss << "G: Show/Hide center of the nodes\n" << std::dec;
+    oss << "H: Show/Hide coordinates of the nodes\n" << std::dec;
+    oss << "J: Show/Hide weight of the nodes\n" << std::dec;
+    oss << "C: Show/Hide the visited nodes in a step of the search\n" << std::dec;
+    oss << "V: Show/Hide the cost of the nodes in a step of the search\n" << std::dec;
+    oss << "B: Show/Hide the discovered nodes in a step of the search\n" << std::dec;
+
+    oss << "\n" << std::dec;
+    oss << "While not searching\n" << std::dec;
+    oss << "ESCape: Close the application\n" << std::dec;
+    oss << "Left mouse click: Select/Deselect a node to be modified\n" << std::dec;
+    oss << "\n" << std::dec;
+    oss << "NumPad +: Increase the weight of the selected node\n" << std::dec;
+    oss << "NumPad -: Decrease the weight of the selected node\n" << std::dec;
+    oss << "\n" << std::dec;
+    oss << "Q: Starts an search using the Astar algorithm\n" << std::dec;
+    oss << "W: Starts an search using the Dijkstra algorithm\n" << std::dec;
+
+    oss << "\n" << std::dec;
+    oss << "While Searching\n" << std::dec;
+    oss << "ESCape: Stop the search and returns to normal state (Will delete progress on search)\n" << std::dec;
+    oss << "Left mouse click: Select a start node and a goal node in this order\n" << std::dec;
+    oss << "P: Switch between manual and automatic progression in shown search record\n" << std::dec;
+    oss << "A: While in manual move back a record\n" << std::dec;
+    oss << "D: While in manual move ahead the record\n" << std::dec;
+    oss << "I: Clear selected start\n" << std::dec;
+    oss << "O: Clear selected goal\n" << std::dec;
+    oss << "R: Clear everything from the search\n" << std::dec;
+
+    return oss.str();
+};
 
 enum GameState {
     Normal,
@@ -32,28 +76,14 @@ int main() {
     float scrollSpeed = 10;
 
     Pathfinder<HexGrid> pathFinder(new AstarStrategy<HexGrid>{});
-    bool _startSelected;
-    Hex start(3,1);
-    bool _goalSelected;
-    Hex goal(3,-1);
-    pathFinder.SetStart(start);
-    pathFinder.SetGoal(goal);
     bool _searchRecordManual = false;
-    while (!pathFinder.MakeStep(grid)) {}
    
-
-    SearchRecord<Hex> record = pathFinder.GetCurrentRecord();
-    int i = 1;
-    bool _keepGoing = true;
-
     LabelMenu label(sf::Vector2f(10, 10), sf::Vector2f(10, 10));
     Hex labeledHex;
-    
-    //std::type_index objType = typeid(pathFinder);
 
     sf::Clock gClcok;
     sf::Time elapsedTime = sf::Time::Zero;
-    sf::Time frameRate = sf::seconds(1.f / 10.f);
+    sf::Time frameRate = sf::seconds(1.f  / 10.f);
     
     while (window.isOpen()) {
         sf::Event e;
@@ -63,18 +93,12 @@ int main() {
             }
 
             if (e.type == sf::Event::KeyPressed) {  //ProcessInputKeyboard(e.key.code);
-                if (e.key.code == sf::Keyboard::Left) {
-                    painter.MoveCamera(+movementSpeed, 0.0f);
-                }
-                if (e.key.code == sf::Keyboard::Up) {
-                    painter.MoveCamera(0.0f, +movementSpeed);
-                }
-                if (e.key.code == sf::Keyboard::Down) {
-                    painter.MoveCamera(0.0f, -movementSpeed);
-                }
-                if (e.key.code == sf::Keyboard::Right) {
-                    painter.MoveCamera(-movementSpeed, 0.0f);
-                }
+                if (e.key.code == sf::Keyboard::F1) { std::cout << Help() << std::endl; }
+
+                if (e.key.code == sf::Keyboard::Left) { painter.MoveCamera(+movementSpeed, 0.0f); }
+                if (e.key.code == sf::Keyboard::Up) { painter.MoveCamera(0.0f, +movementSpeed); }
+                if (e.key.code == sf::Keyboard::Down) { painter.MoveCamera(0.0f, -movementSpeed); }
+                if (e.key.code == sf::Keyboard::Right) { painter.MoveCamera(-movementSpeed, 0.0f); }
 
                 if (e.key.code == sf::Keyboard::R) {
                     SaveGrid(grid);
@@ -86,36 +110,30 @@ int main() {
                     }
                 }
 
-                if (e.key.code == sf::Keyboard::F) {
-                    painter.ToggleVisualGrid();
-                }
-                if (e.key.code == sf::Keyboard::G) {
-                    painter.ToggleHexCenter();
-                }
-                if (e.key.code == sf::Keyboard::H) {
-                    painter.ToggleHexCoordinates();
-                }
+                if (e.key.code == sf::Keyboard::F) { painter.ToggleVisualGrid(); }
+                if (e.key.code == sf::Keyboard::G) { painter.ToggleNodeCenter(); }
+                if (e.key.code == sf::Keyboard::H) { painter.ToggleNodeCoordinates(); }
+                if (e.key.code == sf::Keyboard::J) { painter.ToggleNodeWeights(); }
+
+                if (e.key.code == sf::Keyboard::C) { painter.ToggleRecordedVisiteds(); }
+                if (e.key.code == sf::Keyboard::V) { painter.ToggleRecordedCosts(); }
+                if (e.key.code == sf::Keyboard::B) { painter.ToggleRecordedDiscovereds(); }
 
                 if (gameState == GameState::Normal) {
                     if (e.key.code == sf::Keyboard::Escape) {
                         window.close();
                     }
 
-                    if (e.key.code == sf::Keyboard::Add && _selectedHex) {
-                        grid.Increase(selectedHex);
-                    }
-                    if (e.key.code == sf::Keyboard::Subtract && _selectedHex) {
-                        grid.Decrease(selectedHex);
-                    }
+                    if (e.key.code == sf::Keyboard::Add && _selectedHex) { grid.Increase(selectedHex); }
+                    if (e.key.code == sf::Keyboard::Subtract && _selectedHex) { grid.Decrease(selectedHex); }
 
                     if (e.key.code == sf::Keyboard::Q) {    //Start Astar search
                         pathFinder.SwitchFuntion(new AstarStrategy<HexGrid>);
                         gameState = GameState::Searching;
-                        _keepGoing = true;
                     }
                     if (e.key.code == sf::Keyboard::W) {    //Start Dijkstra search
+                        pathFinder.SwitchFuntion(new DijkstraStrategy<HexGrid>);
                         gameState = GameState::Searching;
-                        _keepGoing = true;
                     }
                 }
                 
@@ -125,29 +143,15 @@ int main() {
                         gameState = GameState::Normal;
                     }
                     
-                    if (e.key.code == sf::Keyboard::P) {
-                        //Switch between Manual or Automatical Search progression
-                        _searchRecordManual = !(_searchRecordManual);
-                        record = pathFinder.GetCurrentRecord();
-                    }
+                    if (e.key.code == sf::Keyboard::P) { _searchRecordManual = !(_searchRecordManual); }
                     if (_searchRecordManual) {
-                        if (e.key.code == sf::Keyboard::A) {    //Move backward a step in the search
-                            pathFinder.MoveBackwardRecord();
-                        }
-                        if (e.key.code == sf::Keyboard::D) {    //Move ahead a step in the search
-                            pathFinder.MoveAheadRecord();
-                        }
+                        if (e.key.code == sf::Keyboard::A) { pathFinder.MoveBackwardRecord(); }
+                        if (e.key.code == sf::Keyboard::D) { pathFinder.MoveAheadRecord(); }
                     }
 
-                    if (e.key.code == sf::Keyboard::I) {
-                        pathFinder.ClearStart();
-                    }
-                    if (e.key.code == sf::Keyboard::O) {
-                        pathFinder.ClearGoal();
-                    }
-                    if (e.key.code == sf::Keyboard::R) {
-                        pathFinder.Reset();
-                    }
+                    if (e.key.code == sf::Keyboard::I) { pathFinder.ClearStart(); }
+                    if (e.key.code == sf::Keyboard::O) { pathFinder.ClearGoal(); }
+                    if (e.key.code == sf::Keyboard::R) {pathFinder.Reset(); }
                 }
             }
 
@@ -168,13 +172,16 @@ int main() {
                         }
                     }
                     else if (gameState == GameState::Searching) {
+                        std::cout << "eee" << std::endl;
                         sf::Vector2i pixelPos = sf::Mouse::getPosition(window); //Get the current mouse position in the window
                         Hex tmp(PixelToHex(sf::Vector2f(pixelPos), painter.GetTile().Radius(), painter.GetWindowCenter()));
 
                         if (!pathFinder.IsStartSelected()) {
+                            std::cout << "Selecting start" << std::endl;
                             pathFinder.SetStart(tmp);
                         }
                         else if(!pathFinder.IsGoalSelected()){
+                            std::cout << "Selecting goal" << std::endl;
                             pathFinder.SetGoal(tmp);
                         }
                     }
@@ -225,20 +232,24 @@ int main() {
             }
         }
 
+
+        if (gameState == GameState::Searching && !pathFinder.IsSearchCompleted()
+            && pathFinder.IsStartSelected() && pathFinder.IsGoalSelected()) {
+            std::cout << "Make search" << std::endl;
+            pathFinder.MakeSearch(grid);
+        }
+
         elapsedTime += gClcok.restart();
+        int i = 0;
         while (elapsedTime >= frameRate) {
-            if (gameState == GameState::Searching && !_searchRecordManual) {
-                if (i % 5 == 0) {
-                    std::cout << "mod " << i << std::endl;
+            
+            if (gameState == GameState::Searching && !_searchRecordManual && pathFinder.IsSearchCompleted()) {
+                if (i % 6 == 0) {
                     pathFinder.MoveAheadRecord();
-                    record = pathFinder.GetCurrentRecord();
                     i = 1;
                 }
-                else {
-                    std::cout << "no mod " << i << std::endl;
+                else
                     i++;
-                }
-
             }
 
             elapsedTime -= frameRate;
@@ -249,34 +260,12 @@ int main() {
         window.clear();
 
         painter.Render(grid, window);
-        if (gameState == GameState::Searching) {
-            //painter.RenderSearchRecord(record);
-            if (_keepGoing) {
-                if (record.completed) {
-                    _keepGoing = false;
-                }
-                std::cout << "Record: " << std::endl;
-                std::cout << "Current node: " << record.currentNode.PrintOut() << std::endl;
-                std::cout << "Frontier: ";
-                for (auto it : record.frontier) {
-                    std::cout << it.PrintOut() << "\t";
-                    HexToPixel(it, painter.GetTile().Radius(), painter.GetWindowCenter());
-                }
-                std::cout << std::endl;
-                std::cout << "Came from: ";
-                for (auto it : record.cameFrom) {
-                    std::cout << it.first.PrintOut() << " to " << it.second.PrintOut() << "\t";
-                }
-                std::cout << std::endl;
-                std::cout << "Came from: ";
-                for (auto it : record.costSoFar) {
-                    std::cout << it.first.PrintOut() << " cost: " << it.second << "\t";
-                }
-                std::cout << std::endl;
-            }
-        }
-        if (label.IsOpen()) { label.Render(window); }
+        
+        if (pathFinder.IsSearchCompleted())
+            painter.RenderSearchRecord(grid, pathFinder.GetCurrentRecord(), window);
 
+        if (label.IsOpen())
+            label.Render(window);
 
         window.display();
     }

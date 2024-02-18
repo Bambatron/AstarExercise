@@ -1,7 +1,7 @@
 #pragma once
 
-#include "HexGrid.h"
-#include "Pathfinder.h"
+#include "Grids/HexGrid.h"
+#include "Pathfinder/Pathfinder.h"
 
 template<typename Graph, typename location> 
 class Map {

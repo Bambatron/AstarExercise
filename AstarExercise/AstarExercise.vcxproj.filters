@@ -13,14 +13,20 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Pathfinding">
-      <UniqueIdentifier>{d7090b88-ec5a-4e6e-990a-0ea02c8b0e37}</UniqueIdentifier>
+    <Filter Include="Header Files\Grids">
+      <UniqueIdentifier>{49af655c-beba-4688-b220-3d5c5956ba5a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Painters">
-      <UniqueIdentifier>{fca562c1-d042-47a7-8bc0-02799ce8c262}</UniqueIdentifier>
+      <UniqueIdentifier>{81b8465c-9048-46e4-89a5-7a1ce3ccc4a2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Grids">
-      <UniqueIdentifier>{4524c007-6720-43f5-b242-100c24381fcb}</UniqueIdentifier>
+    <Filter Include="Header Files\Algorithms">
+      <UniqueIdentifier>{9649df5d-e3d5-4a00-bfe2-2ec297226968}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Algorithms\Tests">
+      <UniqueIdentifier>{e46a74b4-ea7a-410b-9ea2-0ef1dd7cff50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Pathfinder">
+      <UniqueIdentifier>{f2fc6a4d-961d-4205-ac50-6f466ac8cb09}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -29,64 +35,73 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="BasicMap.json">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="BasicMapWeighted.json">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="BasicSquareMap.json">
-      <Filter>Resource Files</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Pathfinding\Astar.h">
-      <Filter>Header Files\Pathfinding</Filter>
+    <ClInclude Include="Grids\SquareGrid.h">
+      <Filter>Header Files\Grids</Filter>
     </ClInclude>
-    <ClInclude Include="Pathfinding\BFS.h">
-      <Filter>Header Files\Pathfinding</Filter>
+    <ClInclude Include="Grids\Hex.h">
+      <Filter>Header Files\Grids</Filter>
     </ClInclude>
-    <ClInclude Include="Pathfinding\DFS.h">
-      <Filter>Header Files\Pathfinding</Filter>
+    <ClInclude Include="Grids\HexGrid.h">
+      <Filter>Header Files\Grids</Filter>
     </ClInclude>
-    <ClInclude Include="Pathfinding\Dijkstra.h">
-      <Filter>Header Files\Pathfinding</Filter>
+    <ClInclude Include="Grids\Node.h">
+      <Filter>Header Files\Grids</Filter>
     </ClInclude>
-    <ClInclude Include="Pathfinding\PathfindingUtilities.h">
-      <Filter>Header Files\Pathfinding</Filter>
+    <ClInclude Include="Grids\Square.h">
+      <Filter>Header Files\Grids</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HexPainter.h">
+    <ClInclude Include="Painters\SquarePainter.h">
       <Filter>Header Files\Painters</Filter>
     </ClInclude>
-    <ClInclude Include="PainterInterface.h">
+    <ClInclude Include="Painters\GridPainter.h">
       <Filter>Header Files\Painters</Filter>
     </ClInclude>
-    <ClInclude Include="SaveOpenUtilities.h">
+    <ClInclude Include="Painters\HexPainter.h">
+      <Filter>Header Files\Painters</Filter>
+    </ClInclude>
+    <ClInclude Include="Pathfinder\Pathfinder.h">
+      <Filter>Header Files\Pathfinder</Filter>
+    </ClInclude>
+    <ClInclude Include="Pathfinder\PathfindingUtilities.h">
+      <Filter>Header Files\Pathfinder</Filter>
+    </ClInclude>
+    <ClInclude Include="json.hpp">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Hex.h">
-      <Filter>Header Files\Grids</Filter>
-    </ClInclude>
-    <ClInclude Include="HexGrid.h">
-      <Filter>Header Files\Grids</Filter>
-    </ClInclude>
-    <ClInclude Include="Square.h">
-      <Filter>Header Files\Grids</Filter>
     </ClInclude>
     <ClInclude Include="LabelMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Pathfinder.h">
-      <Filter>Header Files\Pathfinding</Filter>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SquareGrid.h">
-      <Filter>Header Files\Grids</Filter>
+    <ClInclude Include="SaveOpenUtilities.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SquarePainter.h">
-      <Filter>Header Files\Painters</Filter>
+    <ClInclude Include="Tests\Test.h">
+      <Filter>Header Files\Algorithms\Tests</Filter>
     </ClInclude>
+    <ClInclude Include="Algoritms\Astar.h">
+      <Filter>Header Files\Algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="Algoritms\BFS.h">
+      <Filter>Header Files\Algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="Algoritms\DFS.h">
+      <Filter>Header Files\Algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="Algoritms\Dijkstra.h">
+      <Filter>Header Files\Algorithms</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BasicMap.json">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\BasicMapWeighted.json">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\BasicSquareMap.json">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

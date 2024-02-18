@@ -24,6 +24,7 @@
     <ProjectGuid>{47c58351-a17c-4eb9-bd46-5f62daaf1bc3}</ProjectGuid>
     <RootNamespace>AstarExercise</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>AstarExercise</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -151,27 +152,30 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="BasicMapWeighted.json" />
-    <None Include="BasicMap.json" />
-    <None Include="BasicSquareMap.json" />
+    <ClInclude Include="Algoritms\Astar.h" />
+    <ClInclude Include="Algoritms\BFS.h" />
+    <ClInclude Include="Algoritms\DFS.h" />
+    <ClInclude Include="Algoritms\Dijkstra.h" />
+    <ClInclude Include="Grids\Hex.h" />
+    <ClInclude Include="Grids\HexGrid.h" />
+    <ClInclude Include="Grids\Node.h" />
+    <ClInclude Include="Grids\Square.h" />
+    <ClInclude Include="Grids\SquareGrid.h" />
+    <ClInclude Include="json.hpp" />
+    <ClInclude Include="LabelMenu.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="Painters\GridPainter.h" />
+    <ClInclude Include="Painters\HexPainter.h" />
+    <ClInclude Include="Painters\SquarePainter.h" />
+    <ClInclude Include="Pathfinder\Pathfinder.h" />
+    <ClInclude Include="Pathfinder\PathfindingUtilities.h" />
+    <ClInclude Include="SaveOpenUtilities.h" />
+    <ClInclude Include="Tests\Test.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Hex.h" />
-    <ClInclude Include="HexGrid.h" />
-    <ClInclude Include="Map.h" />
-    <ClInclude Include="HexPainter.h" />
-    <ClInclude Include="LabelMenu.h" />
-    <ClInclude Include="PainterInterface.h" />
-    <ClInclude Include="Pathfinder.h" />
-    <ClInclude Include="Pathfinding\Astar.h" />
-    <ClInclude Include="Pathfinding\BFS.h" />
-    <ClInclude Include="Pathfinding\DFS.h" />
-    <ClInclude Include="Pathfinding\Dijkstra.h" />
-    <ClInclude Include="Pathfinding\PathfindingUtilities.h" />
-    <ClInclude Include="SaveOpenUtilities.h" />
-    <ClInclude Include="Square.h" />
-    <ClInclude Include="SquareGrid.h" />
-    <ClInclude Include="SquarePainter.h" />
+    <None Include="Resources\BasicMap.json" />
+    <None Include="Resources\BasicMapWeighted.json" />
+    <None Include="Resources\BasicSquareMap.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
