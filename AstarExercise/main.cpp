@@ -4,6 +4,7 @@
 
 #include "SaveOpenUtilities.h"
 #include "Pathfinder/Pathfinder.h"
+#include "Algoritms/Tests/AstarTest.h"
 #include "Grids/HexGrid.h"
 #include "Grids/SquareGrid.h"
 #include "Painters/HexPainter.h"
@@ -60,14 +61,16 @@ enum GameState {
 
 int main() {
     std::cout << "Hello world" << std::endl;
-  
+
+    RunAstarTest<HexGrid>();
+
     GameState gameState = GameState::Normal;
     
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
     sf::RenderWindow window(sf::VideoMode(1024, 768), "Hexagon Example", sf::Style::Default, settings);
     
-    HexGrid grid("BasicMapWeighted.json");
+    HexGrid grid(std::string("BasicMapWeighted.json"));
     bool _selectedHex = false;
     Hex selectedHex(0, 0);
 

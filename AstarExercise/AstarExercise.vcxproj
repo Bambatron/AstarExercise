@@ -156,6 +156,7 @@
     <ClInclude Include="Algoritms\BFS.h" />
     <ClInclude Include="Algoritms\DFS.h" />
     <ClInclude Include="Algoritms\Dijkstra.h" />
+    <ClInclude Include="Algoritms\Tests\AstarTest.h" />
     <ClInclude Include="Grids\Hex.h" />
     <ClInclude Include="Grids\HexGrid.h" />
     <ClInclude Include="Grids\Node.h" />
@@ -170,9 +171,9 @@
     <ClInclude Include="Pathfinder\Pathfinder.h" />
     <ClInclude Include="Pathfinder\PathfindingUtilities.h" />
     <ClInclude Include="SaveOpenUtilities.h" />
-    <ClInclude Include="Tests\Test.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="AstarHexTest.json" />
     <None Include="Resources\BasicMap.json" />
     <None Include="Resources\BasicMapWeighted.json" />
     <None Include="Resources\BasicSquareMap.json" />

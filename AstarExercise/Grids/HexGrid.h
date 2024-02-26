@@ -21,16 +21,19 @@ const std::array<Hex, 6> HEXDIRS = {
 
 class HexGrid {
 public:
-	using Location = Hex;
-	using Cost_t = unsigned int;
-	using Tile = HexTile;
+	using location = Hex;
+	using cost_t = unsigned int;
+	using tile = HexTile;
 
 	HexGrid(const std::string& jsonFilePath = "BasicMapWeighted.json");
+	HexGrid(const nlohmann::json& jsonObject);
 	HexGrid(int _radius, Hex _origin, bool _weighted);
 
 	void MakeGraph();
 	void MakeRandomGraph();
 	unsigned int RandomWeight();
+	
+	void LoadFromString(const nlohmann::json& jsonObject);
 
 	void ReadGrid();
 
@@ -55,11 +58,11 @@ public:
 		return false;
 	}
 
-	unsigned int  Weight(Hex& hex) {
+	unsigned int Weight(Hex& hex) {
 		if (weighted) return nodes[hex];
 		else return 1;
 	}
-	unsigned int  Cost(Hex& start, Hex& goal) {
+	unsigned int Cost(Hex& start, Hex& goal) {
 		if (weighted) return nodes[start] + nodes[goal];
 		else return 1;
 	}
@@ -74,7 +77,7 @@ public:
 
 private:
 	int radius;
-	Location origin;
+	Hex origin;
 
 	bool weighted;
 
@@ -91,29 +94,15 @@ HexGrid::HexGrid(const std::string& jsonFilePath) : radius(0), origin(Hex(0, 0))
 	try {
 		file >> jsonData;
 
-		int q = jsonData["origin"]["q"];
-		int r = jsonData["origin"]["r"];
-		this->origin = Hex(q, r);
-		nodes[origin] = 1;
-
-		this->radius = jsonData["radius"];
-
-		MakeGraph();
-
-		if (jsonData.find("weightedNodes") != jsonData.end()) {
-			weighted = true;
-			for (const auto& wHex : jsonData["weightedNodes"]) {
-				Hex hex{ wHex["q"], wHex["r"] };
-				nodes[hex] = wHex["w"];
-			}
-		}
-		else {
-			weighted = false;
-		}
+		LoadFromString(jsonData);
 	}
 	catch (const std::exception& e) {
 		std::cerr << "Error parsing JSON: " << e.what() << std::endl;
 	}
+}
+
+HexGrid::HexGrid(const nlohmann::json& jsonObject) {
+	LoadFromString(jsonObject);
 }
 
 HexGrid::HexGrid(int _radius, Hex _origin, bool _weighted) : radius(_radius), origin(_origin), weighted(_weighted) {
@@ -192,6 +181,28 @@ unsigned int HexGrid::RandomWeight() {
 	}
 
 	return ret;
+}
+
+void HexGrid::LoadFromString(const nlohmann::json& jsonObject) {
+	int q = jsonObject["origin"]["q"];
+	int r = jsonObject["origin"]["r"];
+	this->origin = Hex(q, r);
+	nodes[origin] = 1;
+
+	this->radius = jsonObject["radius"];
+
+	MakeGraph();
+
+	if (jsonObject.find("weightedNodes") != jsonObject.end()) {
+		weighted = true;
+		for (const auto& wHex : jsonObject["weightedNodes"]) {
+			Hex hex{ wHex["q"], wHex["r"] };
+			nodes[hex] = wHex["w"];
+		}
+	}
+	else {
+		weighted = false;
+	}
 }
 
 void HexGrid::ReadGrid() {

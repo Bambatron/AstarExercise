@@ -18,8 +18,11 @@ struct Hex {
 	}
 
 	Hex(int _q = 0, int _r = 0) : Hex(_q, _r, -_q - _r) {}	//Axial constructor
-
 	Hex(const Hex& original) : q(original.q), r(original.r), s(original.s) {
+		assert(q + r + s == 0);
+	}
+	Hex(const nlohmann::json& obj) : q(obj["q"]), r(obj["r"]) {
+		s = -q - r;
 		assert(q + r + s == 0);
 	}
 

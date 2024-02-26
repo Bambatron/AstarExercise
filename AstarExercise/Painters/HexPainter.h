@@ -9,7 +9,7 @@ public:
     HexPainter(int tileSize = 30, sf::Vector2u _windowSize = sf::Vector2u(1024, 768), unsigned int maxZoomFactor = 4, unsigned int minZoomFactor = 40);
 
     void Render(const HexGrid& grid, sf::RenderWindow& target) override;
-    void RenderSearchRecord(const HexGrid& grid, const SearchRecord<typename HexGrid::Location>& record, sf::RenderWindow& target) override;
+    void RenderSearchRecord(const HexGrid& grid, const SearchRecord<HexGrid>& record, sf::RenderWindow& target) override;
     //Changes the radius of the tile by factor to aminimum of min(window height, window width) / 20
     void Zoom(float factor) override;
 };
@@ -102,8 +102,8 @@ void HexPainter::Render(const HexGrid& grid, sf::RenderWindow& target) {
     }
 }
 
-void HexPainter::RenderSearchRecord(const HexGrid& grid, const SearchRecord<typename HexGrid::Location>& record, sf::RenderWindow& target) {
-    sf::Font font;
+void HexPainter::RenderSearchRecord(const HexGrid& grid, const SearchRecord<HexGrid>& record, sf::RenderWindow& target) {
+    /*sf::Font font;
     if (!font.loadFromFile("wowsers.ttf")) {    //Error
         std::cout << "Error loading map font" << std::endl;
     }
@@ -163,7 +163,7 @@ void HexPainter::RenderSearchRecord(const HexGrid& grid, const SearchRecord<type
             text.setString(std::to_string(it.second));
             target.draw(text);
         }
-    }
+    }*/
 }
 
 void HexPainter::Zoom(float factor) {

@@ -2,6 +2,7 @@
 #pragma once
 
 #include <vector>
+#include "../json.hpp"
 
 struct Node {
 public:

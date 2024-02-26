@@ -10,7 +10,7 @@ public:
 
 	void Render(const SquareGrid& grid, sf::RenderWindow& target) override;
     
-    void RenderSearchRecord(const SquareGrid& grid, const SearchRecord<typename SquareGrid::Location>& record, sf::RenderWindow& target) override;
+    void RenderSearchRecord(const SquareGrid& grid, const SearchRecord<typename SquareGrid::location>& record, sf::RenderWindow& target) override;
 
 	void Zoom(float factor) override;
 };
@@ -89,7 +89,7 @@ void SquarePainter::Render(const SquareGrid& grid, sf::RenderWindow& target) {
     }
 }
 
-void SquarePainter::RenderSearchRecord(const SquareGrid& grid, const SearchRecord<typename SquareGrid::Location>& record, sf::RenderWindow& target) {
+void SquarePainter::RenderSearchRecord(const SquareGrid& grid, const SearchRecord<typename SquareGrid::location>& record, sf::RenderWindow& target) {
     sf::Font font;
     if (!font.loadFromFile("wowsers.ttf")) {    //Error
         std::cout << "Error loading map font" << std::endl;

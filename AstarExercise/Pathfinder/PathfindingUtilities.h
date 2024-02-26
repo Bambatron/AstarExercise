@@ -3,6 +3,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <set>
+#include <vector>
 #include <stack>
 #include <queue>
 
@@ -48,16 +49,31 @@ std::vector<Location> ReconstructPath(Location start, Location goal, std::unorde
 }
 
 
+
+template<typename Graph>
+struct SearchRecord {
+    using location = typedef typename Graph::location;
+    using cost_t = typedef typename Graph::cost_t;
+
+    bool completed;
+    location currentNode;
+
+    std::vector<std::pair<location, cost_t>> toBeVisited;
+    std::vector<std::pair<location, cost_t>> alreadyVisited;
+};
+
+
+
 // Interface for 
 template<typename Graph>
 class PathfindingStrategy {
 public:
- //   static virtual PathfindingStrategy* CreateInstace(Graph& graph, Location& loc) = 0;
-    
-    virtual bool MakeStep(Graph& graph, typename Graph::Location& goal,
-        std::unordered_map<typename Graph::Location, typename Graph::Location>& cameFrom,
-        std::unordered_map<typename Graph::Location, typename Graph::Cost_t>& costSoFar,
-        PriorityQueue<typename Graph::Location, typename Graph::Cost_t>& frontier) = 0;
+    virtual bool MakeStep(Graph& graph, typename Graph::location& goal,
+        std::unordered_map<typename Graph::location, typename Graph::location>& cameFrom,
+        std::unordered_map<typename Graph::location, typename Graph::cost_t>& costSoFar,
+        PriorityQueue<typename Graph::location, typename Graph::cost_t>& frontier) = 0;
 
-    virtual ~PathfindingStrategy() {} // Virtual destructor for polymorphism
+    virtual std::vector<SearchRecord<Graph>> MakeSearch(Graph& graph, typename Graph::location& start, typename Graph::location& goal, std::vector<typename Graph::location>& pathTaken) = 0;
+
+        virtual ~PathfindingStrategy() {} // Virtual destructor for polymorphism
 };

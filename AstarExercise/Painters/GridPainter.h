@@ -7,13 +7,13 @@
 template<typename Grid>
 class GridPainter {
 public:
-    using Tile = typename Grid::Tile;
+    using tile_t = typename Grid::tile;
 
-    GridPainter(const Tile& initialTile, sf::Vector2u _windowSize = sf::Vector2u(1024, 768), unsigned int maxZoomFactor = 4, unsigned int minZoomFactor = 40);
+    GridPainter(const tile_t& initialTile, sf::Vector2u _windowSize = sf::Vector2u(1024, 768), unsigned int maxZoomFactor = 4, unsigned int minZoomFactor = 40);
     virtual ~GridPainter() {}
 
 	virtual void Render(const Grid& grid, sf::RenderWindow& target) = 0;
-    virtual void RenderSearchRecord(const Grid& grid, const SearchRecord<typename Grid::Location>& record, sf::RenderWindow& target) = 0;
+    virtual void RenderSearchRecord(const Grid& grid, const SearchRecord<Grid>& record, sf::RenderWindow& target) = 0;
 
     void ToggleVisualGrid() { _showVisualGrid = !(_showVisualGrid); }
     void ToggleNodeCenter() { _showNodeCenter = !(_showNodeCenter); }
@@ -40,7 +40,7 @@ public:
 
     const sf::Vector2i GetWindowCenter() { return windowCenter; }
 
-    Tile& GetTile() { return tile; }
+    tile_t& GetTile() { return tile; }
 
 protected:
     sf::Vector2u windowSize;
@@ -57,11 +57,11 @@ protected:
     bool _showRecordedCosts;
     bool _showRecordedDiscovereds;
 
-	Tile tile;
+    tile_t tile;
 };
 
 template<typename Grid>
-GridPainter<Grid>::GridPainter(const typename Grid::Tile& initialTile, sf::Vector2u _windowSize, unsigned int maxZoomFactor, unsigned int minZoomFactor) : tile(initialTile), windowSize(_windowSize) {
+GridPainter<Grid>::GridPainter(const typename Grid::tile& initialTile, sf::Vector2u _windowSize, unsigned int maxZoomFactor, unsigned int minZoomFactor) : tile(initialTile), windowSize(_windowSize) {
     windowCenter = sf::Vector2i(_windowSize.x / 2, _windowSize.y / 2);
 
     SetMaxZoom(maxZoomFactor);

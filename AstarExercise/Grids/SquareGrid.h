@@ -18,9 +18,9 @@ const std::array<Square, 4> SQUAREDIRS = {
 
 class SquareGrid  {
 public:
-	using Location = Square;
-	using Cost_t = unsigned int;
-	using Tile = SquareTile;
+	using location = Square;
+	using cost_t = unsigned int;
+	using tile = SquareTile;
 
 	SquareGrid(const std::string& jsonFilePath = "BasicSquareMap.json");
 	SquareGrid(unsigned	int _rows, unsigned int _cols, bool _weighted);

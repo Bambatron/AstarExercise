@@ -77,9 +77,6 @@
     <ClInclude Include="SaveOpenUtilities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Tests\Test.h">
-      <Filter>Header Files\Algorithms\Tests</Filter>
-    </ClInclude>
     <ClInclude Include="Algoritms\Astar.h">
       <Filter>Header Files\Algorithms</Filter>
     </ClInclude>
@@ -92,6 +89,9 @@
     <ClInclude Include="Algoritms\Dijkstra.h">
       <Filter>Header Files\Algorithms</Filter>
     </ClInclude>
+    <ClInclude Include="Algoritms\Tests\AstarTest.h">
+      <Filter>Header Files\Algorithms\Tests</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\BasicMap.json">
@@ -101,6 +101,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="Resources\BasicSquareMap.json">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="AstarHexTest.json">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

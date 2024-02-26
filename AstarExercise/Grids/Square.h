@@ -14,6 +14,7 @@ struct Square {
 
 	Square(int _x = 0, int _y = 0) : x(_x), y(_y) {}
 	Square(const Square& original) : x(original.x), y(original.y) {}
+	Square(const nlohmann::json& obj): x(obj["x"]), y(obj["y"]) {}
 
 	bool operator == (const Square& other) const {
 		return (this->x == other.x &&
