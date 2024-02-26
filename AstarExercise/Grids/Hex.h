@@ -7,8 +7,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Node.h"
-
 //Cube coordinates
 struct Hex {
 	int q, r, s;
@@ -101,7 +99,7 @@ Hex HexRound(double fractQ, double fractR, double fractS) {
 	double s_diff = abs(s - fractS);
 
 	// Adjust the ccordinates
-	if (q_diff > r_diff and q_diff > s_diff) {
+	if (q_diff > r_diff && q_diff > s_diff) {
 		q = -r - s;
 	}
 	else if (r_diff > s_diff) {

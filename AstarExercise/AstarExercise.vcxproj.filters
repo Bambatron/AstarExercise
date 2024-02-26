@@ -22,9 +22,6 @@
     <Filter Include="Header Files\Algorithms">
       <UniqueIdentifier>{9649df5d-e3d5-4a00-bfe2-2ec297226968}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Algorithms\Tests">
-      <UniqueIdentifier>{e46a74b4-ea7a-410b-9ea2-0ef1dd7cff50}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Pathfinder">
       <UniqueIdentifier>{f2fc6a4d-961d-4205-ac50-6f466ac8cb09}</UniqueIdentifier>
     </Filter>
@@ -42,9 +39,6 @@
       <Filter>Header Files\Grids</Filter>
     </ClInclude>
     <ClInclude Include="Grids\HexGrid.h">
-      <Filter>Header Files\Grids</Filter>
-    </ClInclude>
-    <ClInclude Include="Grids\Node.h">
       <Filter>Header Files\Grids</Filter>
     </ClInclude>
     <ClInclude Include="Grids\Square.h">
@@ -89,8 +83,8 @@
     <ClInclude Include="Algoritms\Dijkstra.h">
       <Filter>Header Files\Algorithms</Filter>
     </ClInclude>
-    <ClInclude Include="Algoritms\Tests\AstarTest.h">
-      <Filter>Header Files\Algorithms\Tests</Filter>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -101,9 +95,6 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="Resources\BasicSquareMap.json">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="AstarHexTest.json">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

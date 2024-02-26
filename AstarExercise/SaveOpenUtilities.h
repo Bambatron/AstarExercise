@@ -11,7 +11,7 @@
 #include <locale>
 #include <codecvt>
 
-#include "json.hpp"
+#include "../Common/json.hpp"
 
 std::string OpenGrid() {
     wchar_t filename[MAX_PATH];

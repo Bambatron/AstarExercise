@@ -7,8 +7,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Node.h"
-
 struct Square {
 	int x, y;
 

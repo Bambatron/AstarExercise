@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <random>
 
-#include "../json.hpp"
+#include "../../Common/json.hpp"
 
 #include "Square.h"
 

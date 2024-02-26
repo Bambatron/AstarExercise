@@ -18,6 +18,7 @@ std::vector<SearchRecord<Graph>> AstarSearchRecorded(Graph& graph, typename Grap
         throw std::runtime_error("Search Failed: Start node is not in the graph");
     }
     if (!graph.IsInBounds(goal)) {
+
         throw std::runtime_error("Search failed: Goal node is not in the graph");
     }
 

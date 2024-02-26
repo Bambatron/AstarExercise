@@ -4,7 +4,6 @@
 
 #include "SaveOpenUtilities.h"
 #include "Pathfinder/Pathfinder.h"
-#include "Algoritms/Tests/AstarTest.h"
 #include "Grids/HexGrid.h"
 #include "Grids/SquareGrid.h"
 #include "Painters/HexPainter.h"
@@ -61,8 +60,6 @@ enum GameState {
 
 int main() {
     std::cout << "Hello world" << std::endl;
-
-    RunAstarTest<HexGrid>();
 
     GameState gameState = GameState::Normal;
     
