@@ -106,12 +106,12 @@ bool Pathfinder<Graph>::MakeStep(Graph& graph) {
     cRecord.completed = strategy->MakeStep(graph, goal, cameFrom, costSoFar, frontier);
     
     for (auto it : costSoFar) {
-        cRecord.alreadyVisited.push_back(std::make_pair(it.first, it.second));
+        cRecord.visited.push_back(std::make_pair(it.first, it.second));
     }
     PriorityQueue<location, cost_t > tmp = frontier;
     while (!tmp.isEmpty()) { //Render discovered and open nodes
         location it = tmp.get();
-        cRecord.toBeVisited.push_back(std::make_pair(it, graph.Weight(it)));
+        cRecord.discovered.push_back(std::make_pair(it, graph.Weight(it)));
     }
 
     record.push_back(cRecord);

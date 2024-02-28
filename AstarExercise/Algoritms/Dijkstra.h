@@ -40,7 +40,7 @@ std::vector<SearchRecord<Graph>> DijkstraSearchRecorded(Graph& graph, typename G
         currentRecord.completed = false;
 
         for (auto it : costSoFar) {
-            currentRecord.alreadyVisited.push_back(std::make_pair(it.first, it.second));
+            currentRecord.visited.push_back(std::make_pair(it.first, it.second));
         }
 
         for (location next : graph.Neighbors(current)) {
@@ -57,8 +57,10 @@ std::vector<SearchRecord<Graph>> DijkstraSearchRecorded(Graph& graph, typename G
         auto tmp = frontier;    //frontier is a queue so it cannot be visited without destroying it
         while (!tmp.isEmpty()) {
             location it = tmp.get();
-            currentRecord.toBeVisited.push_back(std::make_pair(it, graph.Weight(it)));
+            currentRecord.discovered.push_back(std::make_pair(it, graph.Weight(it)));
         }
+
+        result.push_back(currentRecord);
     }
 
     pathTaken = ReconstructPath(start, goal, cameFrom);

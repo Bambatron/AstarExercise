@@ -58,8 +58,8 @@ struct SearchRecord {
     bool completed;
     location currentNode;
 
-    std::vector<std::pair<location, cost_t>> toBeVisited;
-    std::vector<std::pair<location, cost_t>> alreadyVisited;
+    std::vector<std::pair<location, cost_t>> discovered;    //Seen but not entered
+    std::vector<std::pair<location, cost_t>> visited;   //Seen and entered
 };
 
 

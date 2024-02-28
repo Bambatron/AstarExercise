@@ -28,8 +28,8 @@ void SquarePainter::Render(const SquareGrid& grid, sf::RenderWindow& target) {
     }
 
     sf::Font font;
-    if (!font.loadFromFile("wowsers.ttf")) {    //Error
-        std::cout << "Error loading map font" << std::endl;
+    if (!font.loadFromFile("../Common/wowsers.ttf")) {    //Error
+        std::cout << "SquarePainter::Render: Error loading map font" << std::endl;
     }
     sf::Text text;
     text.setFont(font);
@@ -91,8 +91,8 @@ void SquarePainter::Render(const SquareGrid& grid, sf::RenderWindow& target) {
 
 void SquarePainter::RenderSearchRecord(const SquareGrid& grid, const SearchRecord<typename SquareGrid::location>& record, sf::RenderWindow& target) {
     sf::Font font;
-    if (!font.loadFromFile("wowsers.ttf")) {    //Error
-        std::cout << "Error loading map font" << std::endl;
+    if (!font.loadFromFile("../Common/wowsers.ttf")) {    //Error
+        std::cout << "SquarePainter::RenderSearchRecord: Error loading map font" << std::endl;
     }
     sf::Text text;
     text.setFont(font);

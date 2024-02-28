@@ -93,8 +93,8 @@ LabelMenu::LabelMenu(sf::Vector2f size, sf::Vector2f position, sf::Vector2f _buf
     
     _openend = false;
 
-    if (!font.loadFromFile("wowsers.ttf")) {    //Error
-        std::cout << "Error loading map font" << std::endl;
+    if (!font.loadFromFile("../Common/wowsers.ttf")) {    //Error
+        std::cout << "LabelMenu::LabelMenu: Error loading map font" << std::endl;
     }
     text.setFont(font);
     float textSize = 15;

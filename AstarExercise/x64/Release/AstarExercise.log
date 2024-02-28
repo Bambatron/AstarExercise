@@ -85,7 +85,22 @@ C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(75,63): warning C
 C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(75,43): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(77,36): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(82,51): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(170,22): warning C4244: 'initializing': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(112,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(113,44): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(113,29): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(117,27): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(119,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Pathfinder\PathfindingUtilities.h(55): warning C4091: 'typedef ': ignored on left of 'Hex' when no variable is declared
+C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(126): message : see reference to class template instantiation 'SearchRecord<Grid>' being compiled
+          with
+          [
+              Grid=HexGrid
+          ]
+C:\Workspace\AstarExercise\AstarExercise\Pathfinder\PathfindingUtilities.h(56): warning C4091: 'typedef ': ignored on left of 'unsigned int' when no variable is declared
+C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(128,64): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(143,64): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(157,66): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(163,22): warning C4244: 'initializing': conversion from 'float' to 'unsigned int', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\LabelMenu.h(90,46): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\LabelMenu.h(102,27): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\main.cpp(16,12): warning C4566: character represented by universal-character-name '\u2190' cannot be represented in the current code page (1252)
@@ -93,45 +108,22 @@ C:\Workspace\AstarExercise\AstarExercise\main.cpp(16,12): warning C4566: charact
 C:\Workspace\AstarExercise\AstarExercise\main.cpp(16,12): warning C4566: character represented by universal-character-name '\u2193' cannot be represented in the current code page (1252)
 C:\Workspace\AstarExercise\AstarExercise\main.cpp(16,12): warning C4566: character represented by universal-character-name '\u2192' cannot be represented in the current code page (1252)
 C:\Workspace\AstarExercise\AstarExercise\Pathfinder\Pathfinder.h(11): warning C4091: 'typedef ': ignored on left of 'Hex' when no variable is declared
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(78): message : see reference to class template instantiation 'Pathfinder<HexGrid>' being compiled
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(79): message : see reference to class template instantiation 'Pathfinder<HexGrid>' being compiled
 C:\Workspace\AstarExercise\AstarExercise\Pathfinder\Pathfinder.h(12): warning C4091: 'typedef ': ignored on left of 'unsigned int' when no variable is declared
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(98,92): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(98,76): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(99,80): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(99,74): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(100,82): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(100,76): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(101,93): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(101,77): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(163,92): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(177,92): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(193,88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Pathfinder\PathfindingUtilities.h(55): warning C4091: 'typedef ': ignored on left of 'Hex' when no variable is declared
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(1752): message : see reference to class template instantiation 'SearchRecord<Grid>' being compiled
-          with
-          [
-              Grid=HexGrid
-          ]
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(1742): message : while compiling class template member function 'void std::vector<SearchRecord<Grid>,std::allocator<SearchRecord<Grid>>>::_Tidy(void) noexcept'
-          with
-          [
-              Grid=HexGrid
-          ]
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(699): message : see reference to function template instantiation 'void std::vector<SearchRecord<Grid>,std::allocator<SearchRecord<Grid>>>::_Tidy(void) noexcept' being compiled
-          with
-          [
-              Grid=HexGrid
-          ]
-C:\Workspace\AstarExercise\AstarExercise\Pathfinder\Pathfinder.h(89): message : see reference to class template instantiation 'std::vector<SearchRecord<Grid>,std::allocator<SearchRecord<Grid>>>' being compiled
-          with
-          [
-              Grid=HexGrid
-          ]
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(78): message : see reference to class template instantiation 'Pathfinder<HexGrid>' being compiled
-C:\Workspace\AstarExercise\AstarExercise\Pathfinder\PathfindingUtilities.h(56): warning C4091: 'typedef ': ignored on left of 'unsigned int' when no variable is declared
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(99,92): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(99,76): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(100,80): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(100,74): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(101,82): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(101,76): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(102,93): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(102,77): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(166,92): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(179,92): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(196,88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   Generating code
-  0 of 2406 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+  1 of 2418 functions (<0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    4 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   AstarExercise.vcxproj -> C:\Workspace\AstarExercise\x64\Release\AstarExercise.exe

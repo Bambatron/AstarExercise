@@ -72,8 +72,8 @@ GridPainter<Grid>::GridPainter(const typename Grid::tile& initialTile, sf::Vecto
     _showNodeCoordinates = false;
     _showNodeWeights = true;
 
-    _showRecordedVisiteds = false;
-    _showRecordedCosts = false;
+    _showRecordedVisiteds = true;
+    _showRecordedCosts = true;
     _showRecordedDiscovereds = true;
 }
 

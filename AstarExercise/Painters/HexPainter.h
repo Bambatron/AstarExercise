@@ -29,8 +29,8 @@ void HexPainter::Render(const HexGrid& grid, sf::RenderWindow& target) {
 
     //Resetting view to graw non blurry text
     sf::Font font;
-    if (!font.loadFromFile("wowsers.ttf")) {    //Error
-        std::cout << "Error loading map font" << std::endl;
+    if (!font.loadFromFile("../Common/wowsers.ttf")) {    //Error
+        std::cout << "HexPainter::Render: Error loading map font" << std::endl;
     }
     sf::Text text;
     text.setFont(font);
@@ -103,9 +103,9 @@ void HexPainter::Render(const HexGrid& grid, sf::RenderWindow& target) {
 }
 
 void HexPainter::RenderSearchRecord(const HexGrid& grid, const SearchRecord<HexGrid>& record, sf::RenderWindow& target) {
-    /*sf::Font font;
-    if (!font.loadFromFile("wowsers.ttf")) {    //Error
-        std::cout << "Error loading map font" << std::endl;
+    sf::Font font;
+    if (!font.loadFromFile("../Common/wowsers.ttf")) {    //Error
+        std::cout << "HexPainter::RenderSearchRecord :Error loading map font" << std::endl;
     }
     sf::Text text;
     text.setFont(font);
@@ -122,48 +122,41 @@ void HexPainter::RenderSearchRecord(const HexGrid& grid, const SearchRecord<HexG
     circle.setOutlineColor(sf::Color::Black);
     circle.setOutlineThickness(1.5);
 
-    if (_showRecordedVisiteds) {
+    if (_showRecordedVisiteds) {    //Visited node
         for (auto it : record.visited) {
-            //Discovered nodes
-            circle.setFillColor(sf::Color{ 255, 0, 255, 128 }); //Fucsia
+            circle.setFillColor(sf::Color{0, 255, 255, 196}); //Light blue
             sf::Vector2f pos = HexToPixel(it.first, tile.Radius(), windowCenter);
             circle.setPosition(pos);
             target.draw(circle);
 
-            //Currently visited nodes
-            circle.setFillColor(sf::Color{ 0, 255, 255, 128 }); //Light blue
-            pos = HexToPixel(it.second, tile.Radius(), windowCenter);
-            circle.setPosition(pos);
-            target.draw(circle);
+            if (_showRecordedCosts) {
+                text.setPosition(pos);
+                text.setString(std::to_string(it.second));
+                target.draw(text);
+            }
         }
     }
 
     if (_showRecordedDiscovereds) { //To be visited
-        circle.setFillColor(sf::Color{ 0,255,0,128 });
+        circle.setFillColor(sf::Color{0, 255, 0, 196});
         for (auto it : record.discovered) {
-            sf::Vector2f pos = HexToPixel(it, tile.Radius(), windowCenter);
+            sf::Vector2f pos = HexToPixel(it.first, tile.Radius(), windowCenter);
             circle.setPosition(pos);
             target.draw(circle);
+            
+            if (_showRecordedCosts) {
+                text.setPosition(pos);
+                text.setString(std::to_string(it.second));
+                target.draw(text);
+            }
         }
+       
     }
 
     circle.setFillColor(sf::Color::Red);
     sf::Vector2f pos = HexToPixel(record.currentNode, tile.Radius(), windowCenter);
     circle.setPosition(pos);
     target.draw(circle);
-
-    //All visited and discovered with cost
-    if (_showRecordedCosts) {
-        circle.setFillColor(sf::Color{ 255, 255, 0, 128 });
-        for (auto it : record.costSoFar) {
-            sf::Vector2f pos = HexToPixel(it.first, tile.Radius(), windowCenter);
-            circle.setPosition(pos);
-            target.draw(circle);
-            text.setPosition(pos);
-            text.setString(std::to_string(it.second));
-            target.draw(text);
-        }
-    }*/
 }
 
 void HexPainter::Zoom(float factor) {

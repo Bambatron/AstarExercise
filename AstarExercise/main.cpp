@@ -67,7 +67,8 @@ int main() {
     settings.antialiasingLevel = 8;
     sf::RenderWindow window(sf::VideoMode(1024, 768), "Hexagon Example", sf::Style::Default, settings);
     
-    HexGrid grid(std::string("BasicMapWeighted.json"));
+    HexGrid grid;
+    grid.LoadFromFile("Resources/BasicMapWeighted.json");
     bool _selectedHex = false;
     Hex selectedHex(0, 0);
 
@@ -106,7 +107,7 @@ int main() {
                 if (e.key.code == sf::Keyboard::T) {
                     std::string filename = OpenGrid();
                     if (!filename.empty()) {
-                        grid = HexGrid(filename);
+                        grid.LoadFromFile(filename);
                     }
                 }
 
@@ -130,10 +131,14 @@ int main() {
                     if (e.key.code == sf::Keyboard::Q) {    //Start Astar search
                         pathFinder.SwitchFuntion(new AstarStrategy<HexGrid>);
                         gameState = GameState::Searching;
+                        std::cout << "Starting Astar search" << std::endl;
+                        std::cout << "Select start: \t";
                     }
                     if (e.key.code == sf::Keyboard::W) {    //Start Dijkstra search
                         pathFinder.SwitchFuntion(new DijkstraStrategy<HexGrid>);
                         gameState = GameState::Searching;
+                        std::cout << "Starting Dijkstra search" << std::endl;
+                        std::cout << "Select start: \t";
                     }
                 }
                 
@@ -172,16 +177,16 @@ int main() {
                         }
                     }
                     else if (gameState == GameState::Searching) {
-                        std::cout << "eee" << std::endl;
                         sf::Vector2i pixelPos = sf::Mouse::getPosition(window); //Get the current mouse position in the window
                         Hex tmp(PixelToHex(sf::Vector2f(pixelPos), painter.GetTile().Radius(), painter.GetWindowCenter()));
 
                         if (!pathFinder.IsStartSelected()) {
-                            std::cout << "Selecting start" << std::endl;
+                            std::cout << "Selected start: " << tmp.PrintOut() << std::endl;
                             pathFinder.SetStart(tmp);
+                            std::cout << "Select goal: \t";
                         }
                         else if(!pathFinder.IsGoalSelected()){
-                            std::cout << "Selecting goal" << std::endl;
+                            std::cout << "Selected goal: " << tmp.PrintOut() << std::endl;
                             pathFinder.SetGoal(tmp);
                         }
                     }

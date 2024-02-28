@@ -25,15 +25,14 @@ public:
 	using cost_t = unsigned int;
 	using tile = HexTile;
 
-	HexGrid(const std::string& jsonFilePath = "BasicMapWeighted.json");
-	HexGrid(const nlohmann::json& jsonObject);
-	HexGrid(int _radius, Hex _origin, bool _weighted);
+	HexGrid(int _radius = 0, Hex _origin = Hex(0, 0), bool _weighted = false);
+
+	void LoadFromString(const nlohmann::json& jsonObject);
+	void LoadFromFile(const std::string& jsonFilePath = "BasicMapWeighted.json");
 
 	void MakeGraph();
 	void MakeRandomGraph();
 	unsigned int RandomWeight();
-	
-	void LoadFromString(const nlohmann::json& jsonObject);
 
 	void ReadGrid();
 
@@ -84,7 +83,21 @@ private:
 	std::unordered_map<Hex, unsigned int> nodes;
 };
 
-HexGrid::HexGrid(const std::string& jsonFilePath) : radius(0), origin(Hex(0, 0)) {
+
+
+HexGrid::HexGrid(int _radius, Hex _origin, bool _weighted) : radius(_radius), origin(_origin), weighted(_weighted) {
+	if (weighted)
+		MakeRandomGraph();
+	else
+		MakeGraph();
+}
+
+void HexGrid::LoadFromFile(const std::string& jsonFilePath) {
+	radius = 0;
+	origin = Hex{ 0, 0 };
+	weighted = false;
+	nodes.clear();
+
 	std::ifstream file(jsonFilePath);
 	if (!file.is_open()) {
 		std::cerr << "Error opening file: " << jsonFilePath << std::endl;
@@ -101,15 +114,31 @@ HexGrid::HexGrid(const std::string& jsonFilePath) : radius(0), origin(Hex(0, 0))
 	}
 }
 
-HexGrid::HexGrid(const nlohmann::json& jsonObject) {
-	LoadFromString(jsonObject);
-}
+void HexGrid::LoadFromString(const nlohmann::json& jsonObject) {
+	radius = 0;
+	origin = Hex{ 0, 0 };
+	weighted = false;
+	nodes.clear();
 
-HexGrid::HexGrid(int _radius, Hex _origin, bool _weighted) : radius(_radius), origin(_origin), weighted(_weighted) {
-	if (weighted)
-		MakeRandomGraph();
-	else
-		MakeGraph();
+	int q = jsonObject["origin"]["q"];
+	int r = jsonObject["origin"]["r"];
+	this->origin = Hex(q, r);
+	nodes[origin] = 1;
+
+	this->radius = jsonObject["radius"];
+
+	MakeGraph();
+
+	if (jsonObject.find("weightedNodes") != jsonObject.end()) {
+		weighted = true;
+		for (const auto& wHex : jsonObject["weightedNodes"]) {
+			Hex hex{ wHex["q"], wHex["r"] };
+			nodes[hex] = wHex["w"];
+		}
+	}
+	else {
+		weighted = false;
+	}
 }
 
 void HexGrid::MakeGraph() {
@@ -183,27 +212,7 @@ unsigned int HexGrid::RandomWeight() {
 	return ret;
 }
 
-void HexGrid::LoadFromString(const nlohmann::json& jsonObject) {
-	int q = jsonObject["origin"]["q"];
-	int r = jsonObject["origin"]["r"];
-	this->origin = Hex(q, r);
-	nodes[origin] = 1;
 
-	this->radius = jsonObject["radius"];
-
-	MakeGraph();
-
-	if (jsonObject.find("weightedNodes") != jsonObject.end()) {
-		weighted = true;
-		for (const auto& wHex : jsonObject["weightedNodes"]) {
-			Hex hex{ wHex["q"], wHex["r"] };
-			nodes[hex] = wHex["w"];
-		}
-	}
-	else {
-		weighted = false;
-	}
-}
 
 void HexGrid::ReadGrid() {
 	std::cout << "Weighted Grid" << std::endl;

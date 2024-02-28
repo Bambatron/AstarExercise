@@ -41,7 +41,7 @@ std::vector<SearchRecord<Graph>> AstarSearchRecorded(Graph& graph, typename Grap
         currentRecord.completed = false;
 
         for (auto it : costSoFar) {
-            currentRecord.alreadyVisited.push_back(std::make_pair(it.first, it.second));
+            currentRecord.visited.push_back(std::make_pair(it.first, it.second));
         }
 
 		for (location next : graph.Neighbors(current)) {
@@ -60,7 +60,7 @@ std::vector<SearchRecord<Graph>> AstarSearchRecorded(Graph& graph, typename Grap
         while (!tmp.isEmpty()) {
 			location it = tmp.get();
 			std::pair<location, cost_t> nPair = std::make_pair(it, graph.Weight(it));
-            currentRecord.toBeVisited.push_back(nPair);
+            currentRecord.discovered.push_back(nPair);
         }
 
 		result.push_back(currentRecord);
