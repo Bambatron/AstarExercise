@@ -156,14 +156,12 @@
     <ClInclude Include="Algoritms\BFS.h" />
     <ClInclude Include="Algoritms\DFS.h" />
     <ClInclude Include="Algoritms\Dijkstra.h" />
-    <ClInclude Include="Game.h" />
     <ClInclude Include="Grids\Hex.h" />
     <ClInclude Include="Grids\HexGrid.h" />
     <ClInclude Include="Grids\Square.h" />
     <ClInclude Include="Grids\SquareGrid.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="LabelMenu.h" />
-    <ClInclude Include="Map.h" />
     <ClInclude Include="Painters\GridPainter.h" />
     <ClInclude Include="Painters\HexPainter.h" />
     <ClInclude Include="Painters\SquarePainter.h" />

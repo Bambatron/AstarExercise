@@ -212,8 +212,6 @@ unsigned int HexGrid::RandomWeight() {
 	return ret;
 }
 
-
-
 void HexGrid::ReadGrid() {
 	std::cout << "Weighted Grid" << std::endl;
 	for (const auto& it : nodes) {
