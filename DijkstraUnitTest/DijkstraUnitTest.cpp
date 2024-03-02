@@ -54,8 +54,9 @@ namespace DijkstraUnitTest
                 }
             }
 
-            // Test
             Assert::AreEqual(finalCost, expectedCost);
+            Logger::WriteMessage("Dijkstra Test: valid path is passed");
+            std::cout << "Dijkstra Test: valid path is passed" << std::endl;
         }
 
         TEST_METHOD(OutOfBoundStart) {
@@ -68,6 +69,8 @@ namespace DijkstraUnitTest
             std::vector<location> pathTaken;
 
             Assert::ExpectException<std::runtime_error>([&]() { DijkstraSearchRecorded(graph, start, goal, pathTaken); });
+            Logger::WriteMessage("Dijkstra Test: invalid path is passed");
+            std::cout << "Dijkstra Test: invalid path is passed" << std::endl;
         }
 
         TEST_METHOD(OutOfBoundGoal) {
@@ -80,6 +83,8 @@ namespace DijkstraUnitTest
             std::vector<location> pathTaken;
 
             Assert::ExpectException<std::runtime_error>([&]() { DijkstraSearchRecorded(graph, start, goal, pathTaken); });
+            Logger::WriteMessage("Dijkstra Test: invalid path is passed");
+            std::cout << "Dijkstra Test: invalid path is passed" << std::endl;
         }
 	};
 }

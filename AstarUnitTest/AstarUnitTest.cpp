@@ -59,6 +59,8 @@ namespace AstarUnitTest {
 
             // Test
             Assert::AreEqual(finalCost, expectedCost);
+            Logger::WriteMessage("Astar Test: valid path is passed");
+            std::cout << "Astar Test: valid path is passed" << std::endl;
         }
 
         TEST_METHOD(OutOfBoundStart) {
@@ -71,6 +73,8 @@ namespace AstarUnitTest {
             std::vector<location> pathTaken;
 
             Assert::ExpectException<std::runtime_error>([&]() { AstarSearchRecorded(graph, start, goal, pathTaken); });
+            Logger::WriteMessage("Astar Test: invalid path is passed");
+            std::cout << "Astar Test: invalid path is passed" << std::endl;
         }
 
         TEST_METHOD(OutOfBoundGoal) {
@@ -83,6 +87,8 @@ namespace AstarUnitTest {
             std::vector<location> pathTaken;
 
             Assert::ExpectException<std::runtime_error>([&]() { AstarSearchRecorded(graph, start, goal, pathTaken); });
+            Logger::WriteMessage("Astar Test: invalid path is passed");
+            std::cout << "Astar Test: invalid path is passed" << std::endl;
         }
 	};
 }
