@@ -32,6 +32,8 @@ struct PriorityQueue {
     }
 };
 
+
+
 template<typename Location>
 std::vector<Location> ReconstructPath(Location start, Location goal, std::unordered_map<Location, Location> cameFrom) {
     std::vector<Location> path;
@@ -64,7 +66,7 @@ struct SearchRecord {
 
 
 
-// Interface for 
+// Interface for the strategies
 template<typename Graph>
 class PathfindingStrategy {
 public:

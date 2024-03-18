@@ -1,7 +1,7 @@
 ﻿  main.cpp
-C:\Workspace\AstarExercise\AstarExercise\Pathfinder\PathfindingUtilities.h(55): warning C4091: 'typedef ': ignored on left of 'Graph::location' when no variable is declared
-C:\Workspace\AstarExercise\AstarExercise\Pathfinder\PathfindingUtilities.h(63): message : see reference to class template instantiation 'SearchRecord<Graph>' being compiled
-C:\Workspace\AstarExercise\AstarExercise\Pathfinder\PathfindingUtilities.h(56): warning C4091: 'typedef ': ignored on left of 'Graph::cost_t' when no variable is declared
+C:\Workspace\AstarExercise\AstarExercise\Pathfinder\PathfindingUtilities.h(57): warning C4091: 'typedef ': ignored on left of 'Graph::location' when no variable is declared
+C:\Workspace\AstarExercise\AstarExercise\Pathfinder\PathfindingUtilities.h(65): message : see reference to class template instantiation 'SearchRecord<Graph>' being compiled
+C:\Workspace\AstarExercise\AstarExercise\Pathfinder\PathfindingUtilities.h(58): warning C4091: 'typedef ': ignored on left of 'Graph::cost_t' when no variable is declared
 C:\Workspace\AstarExercise\AstarExercise\Pathfinder\Pathfinder.h(11): warning C4091: 'typedef ': ignored on left of 'Graph::location' when no variable is declared
 C:\Workspace\AstarExercise\AstarExercise\Pathfinder\Pathfinder.h(91): message : see reference to class template instantiation 'Pathfinder<Graph>' being compiled
 C:\Workspace\AstarExercise\AstarExercise\Pathfinder\Pathfinder.h(12): warning C4091: 'typedef ': ignored on left of 'Graph::cost_t' when no variable is declared
@@ -90,13 +90,13 @@ C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(113,44): warning 
 C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(113,29): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(117,27): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(119,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Pathfinder\PathfindingUtilities.h(55): warning C4091: 'typedef ': ignored on left of 'Hex' when no variable is declared
+C:\Workspace\AstarExercise\AstarExercise\Pathfinder\PathfindingUtilities.h(57): warning C4091: 'typedef ': ignored on left of 'Hex' when no variable is declared
 C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(126): message : see reference to class template instantiation 'SearchRecord<Grid>' being compiled
           with
           [
               Grid=HexGrid
           ]
-C:\Workspace\AstarExercise\AstarExercise\Pathfinder\PathfindingUtilities.h(56): warning C4091: 'typedef ': ignored on left of 'unsigned int' when no variable is declared
+C:\Workspace\AstarExercise\AstarExercise\Pathfinder\PathfindingUtilities.h(58): warning C4091: 'typedef ': ignored on left of 'unsigned int' when no variable is declared
 C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(128,64): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(143,64): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(157,66): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
@@ -121,30 +121,9 @@ C:\Workspace\AstarExercise\AstarExercise\main.cpp(102,77): warning C4244: 'argum
 C:\Workspace\AstarExercise\AstarExercise\main.cpp(168,92): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\main.cpp(181,92): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\main.cpp(198,88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Pathfinder\PathfindingUtilities.h(55): warning C4091: 'typedef ': ignored on left of 'Graph::location' when no variable is declared
-C:\Workspace\AstarExercise\AstarExercise\Pathfinder\PathfindingUtilities.h(63): message : see reference to class template instantiation 'SearchRecord<Graph>' being compiled
-C:\Workspace\AstarExercise\AstarExercise\Pathfinder\PathfindingUtilities.h(56): warning C4091: 'typedef ': ignored on left of 'Graph::cost_t' when no variable is declared
-C:\Workspace\AstarExercise\AstarExercise\Pathfinder\Pathfinder.h(11): warning C4091: 'typedef ': ignored on left of 'Graph::location' when no variable is declared
-C:\Workspace\AstarExercise\AstarExercise\Pathfinder\Pathfinder.h(91): message : see reference to class template instantiation 'Pathfinder<Graph>' being compiled
-C:\Workspace\AstarExercise\AstarExercise\Pathfinder\Pathfinder.h(12): warning C4091: 'typedef ': ignored on left of 'Graph::cost_t' when no variable is declared
-C:\Workspace\AstarExercise\AstarExercise\Pathfinder\PathfindingUtilities.h(55): warning C4091: 'typedef ': ignored on left of 'Hex' when no variable is declared
-C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(126): message : see reference to class template instantiation 'SearchRecord<Grid>' being compiled
-          with
-          [
-              Grid=HexGrid
-          ]
-C:\Workspace\AstarExercise\AstarExercise\Pathfinder\PathfindingUtilities.h(56): warning C4091: 'typedef ': ignored on left of 'unsigned int' when no variable is declared
-C:\Workspace\AstarExercise\AstarExercise\Pathfinder\Pathfinder.h(11): warning C4091: 'typedef ': ignored on left of 'Hex' when no variable is declared
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(79): message : see reference to class template instantiation 'Pathfinder<HexGrid>' being compiled
-C:\Workspace\AstarExercise\AstarExercise\Pathfinder\Pathfinder.h(12): warning C4091: 'typedef ': ignored on left of 'unsigned int' when no variable is declared
   Generating code
-  Previous IPDB not found, fall back to full compilation.
-  All 2486 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  0 of 2486 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   AstarExercise.vcxproj -> C:\Workspace\AstarExercise\x64\Release\AstarExercise.exe
-C:\Workspace\SFML\include\SFML\Graphics\Glyph.hpp(49): warning C26495: Variable 'sf::Glyph::lsbDelta' is uninitialized. Always initialize a member variable (type.6).
-C:\Workspace\SFML\include\SFML\Graphics\VertexArray.hpp(192): warning C26812: The enum type 'sf::PrimitiveType' is unscoped. Prefer 'enum class' over 'enum' (Enum.3).
-C:\Workspace\AstarExercise\AstarExercise\SaveOpenUtilities.h(72): warning C6031: Return value ignored: 'CoInitializeEx'.
-C:\Workspace\AstarExercise\AstarExercise\Pathfinder\PathfindingUtilities.h(63): warning C26495: Variable 'SearchRecord<HexGrid>::completed' is uninitialized. Always initialize a member variable (type.6).
-C:\Workspace\AstarExercise\Common\json.hpp(18931): warning C28020: The expression '0<=_Param_(1)&&_Param_(1)<=400-1' is not true at this call.
-C:\Workspace\AstarExercise\Common\json.hpp(20443): warning C26495: Variable 'nlohmann::json_abi_v3_11_3::basic_json<std::map,std::vector,std::basic_string<char,std::char_traits<char>,std::allocator<char> >,bool,__int64,unsigned __int64,double,std::allocator,nlohmann::json_abi_v3_11_3::adl_serializer,std::vector<unsigned char,std::allocator<unsigned char> >,void>::m_data' is uninitialized. Always initialize a member variable (type.6).
