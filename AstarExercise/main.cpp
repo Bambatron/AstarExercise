@@ -44,8 +44,8 @@ const std::string Help() {
     oss << "ESCape: Stop the search and returns to normal state (Will delete progress on search)\n" << std::dec;
     oss << "Left mouse click: Select a start node and a goal node in this order\n" << std::dec;
     oss << "P: Switch between manual and automatic progression in shown search record\n" << std::dec;
-    oss << "A: While in manual move back a record\n" << std::dec;
-    oss << "D: While in manual move ahead the record\n" << std::dec;
+    oss << "A: While in manual progression move back a record\n" << std::dec;
+    oss << "D: While in manual progression move ahead the record\n" << std::dec;
     oss << "I: Clear selected start\n" << std::dec;
     oss << "O: Clear selected goal\n" << std::dec;
     oss << "R: Clear everything from the search\n" << std::dec;
@@ -53,7 +53,7 @@ const std::string Help() {
     return oss.str();
 };
 
-enum GameState {
+enum class GameState {
     Normal,
     Searching,
 };
@@ -156,7 +156,7 @@ int main() {
 
                     if (e.key.code == sf::Keyboard::I) { pathFinder.ClearStart(); }
                     if (e.key.code == sf::Keyboard::O) { pathFinder.ClearGoal(); }
-                    if (e.key.code == sf::Keyboard::R) {pathFinder.Reset(); }
+                    if (e.key.code == sf::Keyboard::R) { pathFinder.Reset(); }
                 }
             }
 
@@ -249,7 +249,7 @@ int main() {
         while (elapsedTime >= frameRate) {
             
             if (gameState == GameState::Searching && !_searchRecordManual && pathFinder.IsSearchCompleted()) {
-                if (i % 6 == 0) {
+                if (i % 10 == 0) {
                     pathFinder.MoveAheadRecord();
                     i = 1;
                 }

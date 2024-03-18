@@ -17,6 +17,8 @@ namespace AstarUnitTest {
 	{
 	public:        
         TEST_METHOD(ValidPath) {
+            std::cout << "Astar Test: starting valid path test" << std::endl;
+            Logger::WriteMessage("Astar Test: starting valid path test");
             //Make graph
             HexGrid graph;
             graph.LoadFromString(nlohmann::json{
@@ -58,12 +60,18 @@ namespace AstarUnitTest {
             }
 
             // Test
+            if (finalCost == expectedCost) {
+                Logger::WriteMessage("Astar Test: valid path is passed");
+                std::cout << "Astar Test: valid path is passed" << std::endl;
+            }
             Assert::AreEqual(finalCost, expectedCost);
-            Logger::WriteMessage("Astar Test: valid path is passed");
-            std::cout << "Astar Test: valid path is passed" << std::endl;
+            
         }
 
         TEST_METHOD(OutOfBoundStart) {
+            std::cout << "Astar Test: starting out of bound start test" << std::endl;
+            Logger::WriteMessage("Astar Test: starting out of bound start test");
+
             HexGrid graph(2, Hex(0, 0), true);
             typedef typename HexGrid::location location;
             typedef typename HexGrid::cost_t cost;
@@ -72,12 +80,29 @@ namespace AstarUnitTest {
             location goal(0, 0);
             std::vector<location> pathTaken;
 
-            Assert::ExpectException<std::runtime_error>([&]() { AstarSearchRecorded(graph, start, goal, pathTaken); });
-            Logger::WriteMessage("Astar Test: invalid path is passed");
-            std::cout << "Astar Test: invalid path is passed" << std::endl;
+
+            try {
+                AstarSearchRecorded(graph, start, goal, pathTaken);
+                // If the method didn't throw any exception, the test should fail
+                std::cout << "Astar Test: invalid path is not passed. Exception was not thrown" << std::endl;
+                Logger::WriteMessage("Astar Test: invalid path is not passed. Exception was not thrown");
+                Assert::Fail(L"Expected exception was not thrown.");
+            }
+            catch (std::runtime_error e) {
+                std::cout << "Astar Test: invalid path is passed" << std::endl;
+                Logger::WriteMessage("Astar Test: invalid path is passed");
+                //Assert::AreEqual("ExpectedExceptionMessage", ex.what()); // Check the exception message if needed
+            }
+            catch (...) {
+                std::cout << "Astar Test: invalid path is not passed. Unknown exception was thrown" << std::endl;
+                Logger::WriteMessage("Astar Test: invalid path is not passed. Unknown exception was thrown");
+                Assert::Fail(L"Unexpected exception was caught.");
+            }
         }
 
         TEST_METHOD(OutOfBoundGoal) {
+            std::cout << "Astar Test: starting out of bounf goal test" << std::endl;
+            Logger::WriteMessage("Astar Test: starting out of bound goal test");
             HexGrid graph(2, Hex(0, 0), true);
             typedef typename HexGrid::location location;
             typedef typename HexGrid::cost_t cost;
@@ -86,9 +111,24 @@ namespace AstarUnitTest {
             location goal(-3, 0);
             std::vector<location> pathTaken;
 
-            Assert::ExpectException<std::runtime_error>([&]() { AstarSearchRecorded(graph, start, goal, pathTaken); });
-            Logger::WriteMessage("Astar Test: invalid path is passed");
-            std::cout << "Astar Test: invalid path is passed" << std::endl;
+
+            try {
+                AstarSearchRecorded(graph, start, goal, pathTaken);
+                // If the method didn't throw any exception, the test should fail
+                std::cout << "Astar Test: invalid path is not passed. Exception was not thrown" << std::endl;
+                Logger::WriteMessage("Astar Test: invalid path is not passed. Exception was not thrown");
+                Assert::Fail(L"Expected exception was not thrown.");
+            }
+            catch (std::runtime_error e) {
+                std::cout << "Astar Test: invalid path is passed" << std::endl;
+                Logger::WriteMessage("Astar Test: invalid path is passed");
+                //Assert::AreEqual("ExpectedExceptionMessage", ex.what()); // Check the exception message if needed
+            }
+            catch (...) {
+                std::cout << "Astar Test: invalid path is not passed. Unknown exception was thrown" << std::endl;
+                Logger::WriteMessage("Astar Test: invalid path is not passed. Unknown exception was thrown");
+                Assert::Fail(L"Unexpected exception was caught.");
+            }
         }
 	};
 }
