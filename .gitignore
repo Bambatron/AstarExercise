@@ -396,8 +396,3 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-*.ipch
-.vs/AstarExercise/v16/ipch/AutoPCH/9ef04984b9ccbc53/MAIN.ipch
-*.ipch
-*.ipch
-*.ipch

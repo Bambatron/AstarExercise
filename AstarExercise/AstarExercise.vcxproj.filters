@@ -80,6 +80,9 @@
     <ClInclude Include="Algoritms\Dijkstra.h">
       <Filter>Header Files\Algorithms</Filter>
     </ClInclude>
+    <ClInclude Include="Grids\Graph.h">
+      <Filter>Header Files\Grids</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\BasicMap.json">

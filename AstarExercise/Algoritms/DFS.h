@@ -3,24 +3,24 @@
 #include "../Pathfinder/PathfindingUtilities.h"
 
 template<typename Graph>
-void DepthFirstSearch(Graph& graph, typename Graph::location& start) {
-    typedef typename Graph::location location;
+void DepthFirstSearch(Graph& graph, typename Graph::location_t& start) {
+    typedef typename Graph::location_t location_t;
 
-    std::stack<location> frontier;
+    std::stack<location_t> frontier;
     frontier.push(start);
 
-    std::set<location> reached;
+    std::set<location_t> reached;
     reached.insert(start);
 
     while (!frontier.empty()) {
-        // Pop the current location from the top of the stack
-        location current = frontier.top();
+        // Pop the current location_t from the top of the stack
+        location_t current = frontier.top();
         frontier.pop();
 
-        std::cout << "looking at: " << current.PrintOut() << std::endl;	 // Visualize the current location
+        std::cout << "looking at: " << current.PrintOut() << std::endl;	 // Visualize the current location_t
 
         // For each neighbor if it has not been reached before
-        for (location next : graph.Neighbors(current)) {
+        for (location_t next : graph.Neighbors(current)) {
             if (reached.find(next) == reached.end()) {
                 std::cout << "Found not dicovered neighbor: " << next.PrintOut() << "\t";
                 // Add the neighbor to the stack and mark it as reached
@@ -33,14 +33,14 @@ void DepthFirstSearch(Graph& graph, typename Graph::location& start) {
 }
 
 template<typename Graph>
-void DFSRecursiveStep(Graph& graph, typename Graph::location& current, std::set<typename Graph::location>& reached) {
-    typedef typename Graph::location location;
+void DFSRecursiveStep(Graph& graph, typename Graph::location_t& current, std::set<typename Graph::location_t>& reached) {
+    typedef typename Graph::location_t location_t;
     
     current.Read(); // Visualize the current location
     reached.insert(current);
 
     // For each neighbor if it has not been reached before
-    for (location next : graph.Neighbors(current)) {
+    for (location_t next : graph.Neighbors(current)) {
         if (reached.find(next) == reached.end()) {
             // Recursively perform DFS on the neighbor
             DFSRecursiveStep(graph, next, reached);
@@ -49,24 +49,24 @@ void DFSRecursiveStep(Graph& graph, typename Graph::location& current, std::set<
 }
 
 template<typename Graph>
-void DFSRecursive(Graph& graph, typename Graph::location& start) {
+void DFSRecursive(Graph& graph, typename Graph::locatlocation_tion& start) {
     std::set<typename Graph::location> reached;
     DFSRecursiveStep(graph, start, reached);
 }
 
 template<typename Graph>
-void DFSToGoal(Graph& graph, typename Graph::location& start, typename Graph::location& goal) {
-    typedef typename Graph::location location;
+void DFSToGoal(Graph& graph, typename Graph::location_t& start, typename Graph::location_t& goal) {
+    typedef typename Graph::location_t location_t;
     
-    std::stack<location> frontier;
+    std::stack<location_t> frontier;
     frontier.push(start);
 
-    std::set<location> reached;
+    std::set<location_t> reached;
     reached.insert(start);
 
     while (!frontier.empty()) {
         // Pop the current location from the top of the stack
-        location current = frontier.top();
+        location_t current = frontier.top();
         frontier.pop();
 
         std::cout << "looking at: " << current.PrintOut() << std::endl;  // Visualize the current location
@@ -78,7 +78,7 @@ void DFSToGoal(Graph& graph, typename Graph::location& start, typename Graph::lo
         }
 
         // For each neighbor if it has not been reached before
-        for (location next : graph.Neighbors(current)) {
+        for (location_t next : graph.Neighbors(current)) {
             if (reached.find(next) == reached.end()) {
                 std::cout << "Found not discovered neighbor: " << next.PrintOut() << "\t";
                 // Add the neighbor to the stack and mark it as reached
@@ -93,15 +93,15 @@ void DFSToGoal(Graph& graph, typename Graph::location& start, typename Graph::lo
 }
 
 template<typename Graph>
-bool DFSToGoalStep(Graph& graph, typename Graph::location& goal, std::set<typename Graph::location>& reached, std::stack<typename Graph::location>& frontier) {
-    typedef typename Graph::location location;
+bool DFSToGoalStep(Graph& graph, typename Graph::location_t& goal, std::set<typename Graph::location_t>& reached, std::stack<typename Graph::location_t>& frontier) {
+    typedef typename Graph::location_t location_t;
     
     if (frontier.empty()) {
         std::cout << "Frontier is empty" << std::endl;
         return true;
     }
 
-    location current = frontier.top();
+    location_t current = frontier.top();
     frontier.pop();
     std::cout << "Looking at: " << current.PrintOut() << "\t"; // Visualize the current location
 
@@ -112,7 +112,7 @@ bool DFSToGoalStep(Graph& graph, typename Graph::location& goal, std::set<typena
     }
 
     // For each neighbor if it has not been reached before
-    for (location next : graph.Neighbors(current)) {
+    for (location_t next : graph.Neighbors(current)) {
         if (reached.find(next) == reached.end()) {
             std::cout << "Found not dicovered neighbor: " << next.PrintOut() << "\t";
             // Add the neighbor to the stack and mark it as reached
@@ -125,20 +125,20 @@ bool DFSToGoalStep(Graph& graph, typename Graph::location& goal, std::set<typena
 }
 
 template<typename Graph>
-void DFSToGoalHelper(Graph& graph, typename Graph::location& goal, std::set<typename Graph::location>& reached, std::stack<typename Graph::location>& frontier) {
+void DFSToGoalHelper(Graph& graph, typename Graph::location_t& goal, std::set<typename Graph::location_t>& reached, std::stack<typename Graph::location_t>& frontier) {
     if (!DFSToGoalStep(graph, goal, reached, frontier)) {
         DFSToGoalHelper(graph, goal, reached, frontier);
     }
 }
 
 template<typename Graph>
-void DFSToGoalRecursive(Graph& graph, typename Graph::location& start, typename Graph::location& goal) {
-    typedef typename Graph::location location;
+void DFSToGoalRecursive(Graph& graph, typename Graph::location_t& start, typename Graph::location_t& goal) {
+    typedef typename Graph::location_t location_t;
 
-    std::stack<location> frontier;
+    std::stack<location_t> frontier;
     frontier.push(start);
 
-    std::set<location> reached;
+    std::set<location_t> reached;
     reached.insert(start);
 
     DFSToGoalHelper(graph, goal, reached, frontier);

@@ -156,6 +156,7 @@
     <ClInclude Include="Algoritms\BFS.h" />
     <ClInclude Include="Algoritms\DFS.h" />
     <ClInclude Include="Algoritms\Dijkstra.h" />
+    <ClInclude Include="Grids\Graph.h" />
     <ClInclude Include="Grids\Hex.h" />
     <ClInclude Include="Grids\HexGrid.h" />
     <ClInclude Include="Grids\Square.h" />

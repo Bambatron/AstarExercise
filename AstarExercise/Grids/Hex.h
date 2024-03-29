@@ -38,21 +38,21 @@ struct Hex {
 			(this->q == other.q && this->r == other.r && this->s < other.s));
 	}
 
-	Hex operator+(const Hex& other) {
+	Hex operator+(const Hex& other) const {
 		return Hex(
 			this->q + other.q,
 			this->r + other.r,
 			this->s + other.s);
 	}
 
-	Hex operator-(const Hex& other) {
+	Hex operator-(const Hex& other) const {
 		return Hex(
 			this->q - other.q,
 			this->r - other.r,
 			this->s - other.s);
 	}
 
-	Hex operator* (int k) {
+	Hex operator* (int k) const {
 		return Hex(
 			this->q * k,
 			this->r * k,

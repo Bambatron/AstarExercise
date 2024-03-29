@@ -7,6 +7,7 @@
 #include "../../Common/json.hpp"
 
 #include "Square.h"
+#include "Graph.h"
 
 //Counter-clock wise
 const std::array<Square, 4> SQUAREDIRS = {
@@ -16,11 +17,11 @@ const std::array<Square, 4> SQUAREDIRS = {
 	Square(1, 0),	//Right
 };
 
-class SquareGrid  {
+class SquareGrid : public Graph<Square, unsigned int, SquareTile>{
 public:
-	using location = Square;
+	using location_t = Square;
 	using cost_t = unsigned int;
-	using tile = SquareTile;
+	using tile_t = SquareTile;
 
 	SquareGrid(const std::string& jsonFilePath = "BasicSquareMap.json");
 	SquareGrid(unsigned	int _rows, unsigned int _cols, bool _weighted);
@@ -31,32 +32,32 @@ public:
 
 	void ReadGrid();
 
-	std::vector<Square> Neighbors(Square& square);
+	std::vector<Square> Neighbors(const Square& loc) const override;
 
 	void Increase(const Square& square) { nodes[square]++; }
 	void Decrease(const Square& square) { (nodes[square] > 1) ? nodes[square]-- : nodes[square] == 1; }
 
-	const unsigned int Rows() const { return rows; }
-	const unsigned int Cols() const { return cols; }
+	unsigned int Rows() const { return rows; }
+	unsigned int Cols() const { return cols; }
 
-	bool IsInBounds(Square& square) {
-		if (square.x >= 0 && square.x < cols &&
-			square.y >= 0 && square.y < rows) {
+	bool IsInBounds(const Square& loc) const  {
+		if (loc.x >= 0 && loc.x < cols &&
+			loc.y >= 0 && loc.y < rows) {
 			return true;
 		}
 		return false;
 	}
 
-	unsigned int Weight(Square& square) {
-		if (weighted) return nodes[square];
+	unsigned int Weight(const Square& loc) const override {
+		if (weighted) return nodes[loc];
 		else return 1;
 	}
-	unsigned int Cost(Square& start, Square& goal) {
+	unsigned int Cost(const Square& start, const Square& goal) const override {
 		if (weighted) return nodes[start] + nodes[goal];
 		else return 1;
 	}
 
-	inline unsigned int Heuristic(Square& start, Square& goal) {
+	unsigned int Heuristic(const Square& start, const Square& goal) const override {
 		return (std::abs(start.x - goal.x) + std::abs(start.y - goal.y)) / 2;
 	}
 
@@ -66,13 +67,9 @@ public:
 
 private:
 	unsigned int rows, cols;
-
-	bool weighted;
-
-	std::unordered_map<Square, unsigned int> nodes;
 };
 
-SquareGrid::SquareGrid(const std::string& jsonFilePath) : rows(1), cols(1) {
+SquareGrid::SquareGrid(const std::string& jsonFilePath) : Graph(), rows(1), cols(1) {
 	std::ifstream file(jsonFilePath);
 	if (!file.is_open()) {
 		std::cerr << "Error opening file: " << jsonFilePath << std::endl;
@@ -103,7 +100,7 @@ SquareGrid::SquareGrid(const std::string& jsonFilePath) : rows(1), cols(1) {
 	}
 }
 
-SquareGrid::SquareGrid(unsigned	int _rows, unsigned int _cols, bool _weighted) : rows(_rows), cols(_cols), weighted(_weighted ){
+SquareGrid::SquareGrid(unsigned	int _rows, unsigned int _cols, bool _weighted) : Graph(_weighted), rows(_rows), cols(_cols) {
 	if (weighted)
 		MakeRandomGraph();
 	else
@@ -183,11 +180,11 @@ void SquareGrid::ReadGrid() {
 	}
 }
 
-std::vector<Square> SquareGrid::Neighbors(Square& square) {
+std::vector<Square> SquareGrid::Neighbors(const Square& loc) const {
 	std::vector<Square> neighbors;
 
 	for (const auto& dir : SQUAREDIRS) {
-		Square next(square + dir);
+		Square next(loc + dir);
 		if (IsInBounds(next)) {
 			neighbors.push_back(next);
 		}

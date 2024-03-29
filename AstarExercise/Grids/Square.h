@@ -26,19 +26,19 @@ struct Square {
 			(this->x == other.x && this->y < other.y));
 	}
 
-	Square operator+ (const Square& other) {
+	Square operator+ (const Square& other) const {
 		return Square(
 			this->x + other.x,
 			this->y + other.y);
 	}
 
-	Square operator- (const Square& other) {
+	Square operator- (const Square& other) const {
 		return Square(
 			this->x - other.x,
 			this->y - other.y);
 	}
 
-	Square operator* (int k) {
+	Square operator* (int k) const {
 		return Square(
 			this->x * k,
 			this->y * k);

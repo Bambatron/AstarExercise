@@ -8,6 +8,7 @@
 #include "../../Common/json.hpp"
 
 #include "Hex.h"
+#include "Graph.h"
 
 //Counter-clock wise
 const std::array<Hex, 6> HEXDIRS = {
@@ -19,11 +20,11 @@ const std::array<Hex, 6> HEXDIRS = {
 	Hex(0, 1, -1)	//Pointy: down-right| Flat: down
 };
 
-class HexGrid {
+class HexGrid : public Graph<Hex, unsigned int, HexTile>{
 public:
-	using location = Hex;
+	using location_t = Hex;
 	using cost_t = unsigned int;
-	using tile = HexTile;
+	using tile_t = HexTile;
 
 	HexGrid(int _radius = 0, Hex _origin = Hex(0, 0), bool _weighted = false);
 
@@ -36,7 +37,7 @@ public:
 
 	void ReadGrid();
 
-	std::vector<Hex> Neighbors(Hex& hex);
+	std::vector<Hex> Neighbors(const Hex& loc) const override;
 
 	void Increase(const Hex& hex) { nodes[hex]++; }
 	void Decrease(const Hex& hex) { (nodes[hex] > 1) ? nodes[hex]-- : nodes[hex] == 1; }
@@ -44,29 +45,29 @@ public:
 	const int Radius() const { return radius; }
 	const Hex& Origin() const { return origin; }
 
-	int Distance(Hex& start, Hex& goal) {
+	int Distance(const Hex& start, const Hex& goal) const {
 		int dist = std::max(abs(start.q - goal.q), abs(start.r - goal.r));
 		dist = std::max(dist, abs(start.s - goal.s));
 		return dist;
 	}
 
-	bool IsInBounds(Hex& hex) {
-		if (Distance(origin, hex) <= radius) {
+	bool IsInBounds(const Hex& loc) const override {
+		if (Distance(origin, loc) <= radius) {
 			return true;
 		}
 		return false;
 	}
 
-	unsigned int Weight(Hex& hex) {
-		if (weighted) return nodes[hex];
+	unsigned int Weight(const Hex& loc) const override {
+		if (weighted) return nodes[loc];
 		else return 1;
 	}
-	unsigned int Cost(Hex& start, Hex& goal) {
+	unsigned int Cost(const Hex& start, const Hex& goal) const override {
 		if (weighted) return nodes[start] + nodes[goal];
 		else return 1;
 	}
 
-	inline unsigned int Heuristic(Hex& start, Hex& goal) {
+	unsigned int Heuristic(const Hex& start, const Hex& goal) const override {
 		return (std::abs(start.q - goal.q) + std::abs(start.r - goal.r) + std::abs(start.s - goal.s)) / 2;
 	}
 
@@ -85,7 +86,7 @@ private:
 
 
 
-HexGrid::HexGrid(int _radius, Hex _origin, bool _weighted) : radius(_radius), origin(_origin), weighted(_weighted) {
+HexGrid::HexGrid(int _radius, Hex _origin, bool _weighted) : Graph(_weighted), radius(_radius), origin(_origin) {
 	if (weighted)
 		MakeRandomGraph();
 	else
@@ -219,11 +220,11 @@ void HexGrid::ReadGrid() {
 	}
 }
 
-std::vector<Hex> HexGrid::Neighbors(Hex& hex) {
+std::vector<Hex> HexGrid::Neighbors(const Hex& loc) const  {
 	std::vector<Hex> neighbors;
 
 	for (const auto& dir : HEXDIRS) {
-		Hex next(hex + dir);
+		Hex next(loc + dir);
 		if (IsInBounds(next)) {
 			neighbors.push_back(next);
 		}
