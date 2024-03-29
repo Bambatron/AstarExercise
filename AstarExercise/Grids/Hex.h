@@ -14,7 +14,6 @@ struct Hex {
 	Hex(int _q, int _r, int _s) : q(_q), r(_r), s(_s) {	//Cube constructor
 		assert(q + r + s == 0);
 	}
-
 	Hex(int _q = 0, int _r = 0) : Hex(_q, _r, -_q - _r) {}	//Axial constructor
 	Hex(const Hex& original) : q(original.q), r(original.r), s(original.s) {
 		assert(q + r + s == 0);
@@ -29,9 +28,7 @@ struct Hex {
 			this->r == other.r &&
 			this->s == other.s);
 	}
-
 	bool operator!=(const Hex& other) { return !(*this == other); }
-
 	bool operator <(const Hex& other) const {
 		return (this->q < other.q ||
 			(this->q == other.q && this->r < other.r) ||
@@ -44,14 +41,12 @@ struct Hex {
 			this->r + other.r,
 			this->s + other.s);
 	}
-
 	Hex operator-(const Hex& other) const {
 		return Hex(
 			this->q - other.q,
 			this->r - other.r,
 			this->s - other.s);
 	}
-
 	Hex operator* (int k) const {
 		return Hex(
 			this->q * k,
@@ -148,38 +143,43 @@ struct HexTile {
 	}
 	HexTile(const HexTile& other) : body(other.body) {}
 
-	void SetOrigin(sf::Vector2f origin) { body.setOrigin(origin); }
-	void SetPosition(sf::Vector2f pos) { body.setPosition(pos); }
-	void SetFillColor(const sf::Color& color) { body.setFillColor(color); }
-	void SetOutlineColor(const sf::Color& color) { body.setOutlineColor(color); }
-	void SetOutlineThickness(float size) { body.setOutlineThickness(size); }
-	sf::Vector2f Position() { return body.getPosition(); }
+	// Getters
+	sf::Vector2f Position() const { return body.getPosition(); }
 
-	void SetRadius(unsigned int radius) {
-		body.setOrigin(-body.getRadius(), -body.getRadius());   //Reset the origin to the top left corner
-		body.setRadius(radius); //Update the radius 
-		body.setOrigin(body.getRadius(), body.getRadius());   //Set the origin to the new center 
-	}
-	float Radius() { return body.getRadius(); }
-	float Apothem() { return ((body.getRadius() * sqrt(3.)) / 2.); }
+	float Radius() const { return body.getRadius(); }
+	float Apothem() const { return ((body.getRadius() * sqrt(3.)) / 2.); }
 
-	sf::Vector2f TopLeftSide() {
+	sf::Vector2f TopLeftSide() const {
 		float a = Apothem();
 		//Should be (-a/2, -a sqrt(3)/2) however it goes outside the tile
 		return sf::Vector2f(
 			(-a / 2.) + 2.,
 			(-a * sqrt(2) / 2.) + 5.);
 	}
-	sf::Vector2f DownLeftSide() {
+	sf::Vector2f DownLeftSide()const {
 		float a = Apothem();
 		//Should be (-a/2, a sqrt(3)/2) however it goes outside the tile
 		return sf::Vector2f(
 			(-a / 2.) + 2.,
 			(a * sqrt(2) / 2.) - 5.);
 	}
-	sf::Vector2f RightSide() {
+	sf::Vector2f RightSide() const {
 		float a = Apothem();
 		//Should be (a, 0) however it goes outside the tile
 		return sf::Vector2f((a * sqrt(2) / 2.) - 2., 0);
+	}
+
+	// Setters
+	void SetOrigin(sf::Vector2f origin) { body.setOrigin(origin); }
+	void SetPosition(sf::Vector2f pos) { body.setPosition(pos); }
+
+	void SetFillColor(const sf::Color& color) { body.setFillColor(color); }
+	void SetOutlineColor(const sf::Color& color) { body.setOutlineColor(color); }
+	
+	void SetOutlineThickness(float size) { body.setOutlineThickness(size); }
+	void SetRadius(unsigned int radius) {
+		body.setOrigin(-body.getRadius(), -body.getRadius());   //Reset the origin to the top left corner
+		body.setRadius(radius); //Update the radius 
+		body.setOrigin(body.getRadius(), body.getRadius());   //Set the origin to the new center 
 	}
 };

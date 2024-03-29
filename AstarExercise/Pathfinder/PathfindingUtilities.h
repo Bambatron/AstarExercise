@@ -34,10 +34,10 @@ struct PriorityQueue {
 
 
 
-template<typename Location>
-std::vector<Location> ReconstructPath(Location start, Location goal, std::unordered_map<Location, Location> cameFrom) {
-    std::vector<Location> path;
-    Location current = goal;
+template<typename location_t>
+std::vector<location_t> ReconstructPath(location_t start, location_t goal, std::unordered_map<location_t, location_t> cameFrom) {
+    std::vector<location_t> path;
+    location_t current = goal;
     if (cameFrom.find(goal) == cameFrom.end()) {
         return path; // no path can be found
     }
@@ -54,14 +54,16 @@ std::vector<Location> ReconstructPath(Location start, Location goal, std::unorde
 
 template<typename Graph>
 struct SearchRecord {
-    using location = typedef typename Graph::location;
+    using location_t = typedef typename Graph::location_t;
     using cost_t = typedef typename Graph::cost_t;
 
     bool completed;
-    location currentNode;
+    location_t currentNode;
 
-    std::vector<std::pair<location, cost_t>> discovered;    //Seen but not entered
-    std::vector<std::pair<location, cost_t>> visited;   //Seen and entered
+    std::vector<std::pair<location_t, cost_t>> discovered;    //Seen but not entered
+    std::vector<std::pair<location_t, cost_t>> visited;   //Seen and entered
+
+    std::vector<location_t> pathToThiPoint;
 };
 
 
@@ -70,12 +72,10 @@ struct SearchRecord {
 template<typename Graph>
 class PathfindingStrategy {
 public:
-    virtual bool MakeStep(Graph& graph, typename Graph::location& goal,
-        std::unordered_map<typename Graph::location, typename Graph::location>& cameFrom,
-        std::unordered_map<typename Graph::location, typename Graph::cost_t>& costSoFar,
-        PriorityQueue<typename Graph::location, typename Graph::cost_t>& frontier) = 0;
+    virtual bool MakeStep(Graph& graph, typename Graph::location_t& goal,
+        std::unordered_map<typename Graph::location_t, typename Graph::location_t>& cameFrom,
+        std::unordered_map<typename Graph::location_t, typename Graph::cost_t>& costSoFar,
+        PriorityQueue<typename Graph::location_t, typename Graph::cost_t>& frontier) = 0;
 
-    virtual std::vector<SearchRecord<Graph>> MakeSearch(Graph& graph, typename Graph::location& start, typename Graph::location& goal, std::vector<typename Graph::location>& pathTaken) = 0;
-
-        virtual ~PathfindingStrategy() {} // Virtual destructor for polymorphism
+    virtual ~PathfindingStrategy() {} // Virtual destructor for polymorphism
 };

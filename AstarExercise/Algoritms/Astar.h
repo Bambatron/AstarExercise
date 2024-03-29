@@ -3,7 +3,7 @@
 #include "../Pathfinder/PathfindingUtilities.h"
 
 template<typename Graph>
-std::vector<SearchRecord<Graph>> AstarSearchRecorded(Graph& graph, typename Graph::location_t& start, typename Graph::location_t& goal, std::vector<typename Graph::location_t>& pathTaken) {
+std::vector<SearchRecord<Graph>> AstarSearchRecorded(Graph& graph, typename Graph::location_t& start, typename Graph::location_t& goal) {
     typedef typename Graph::location_t location_t;
     typedef typename Graph::cost_t cost_t;
 
@@ -11,6 +11,8 @@ std::vector<SearchRecord<Graph>> AstarSearchRecorded(Graph& graph, typename Grap
 
     std::unordered_map<location_t, location_t> cameFrom;
     std::unordered_map<location_t, cost_t> costSoFar;
+
+    std::vector<location_t> pathTaken;
 
     PriorityQueue<location_t, cost_t> frontier;
 
@@ -28,45 +30,45 @@ std::vector<SearchRecord<Graph>> AstarSearchRecorded(Graph& graph, typename Grap
     costSoFar[start] = 0;
 
     while (!frontier.isEmpty()) {
-		location_t current = frontier.get();
+        location_t current = frontier.get();
 
         SearchRecord<Graph> currentRecord;
         currentRecord.currentNode = current;
 
         if (current == goal) {
             currentRecord.completed = true;
-            break;
+        }
+        else {
+            currentRecord.completed = false;
+
+            for (auto it : costSoFar) {
+                currentRecord.visited.push_back(std::make_pair(it.first, it.second));
+            }
+
+            for (location_t next : graph.Neighbors(current)) {
+                cost_t newCost = costSoFar[current] + graph.Cost(current, next);
+                if (costSoFar.find(next) == costSoFar.end() ||
+                    newCost < costSoFar[next]) {
+                    costSoFar[next] = newCost;
+                    cost_t priority = newCost + graph.Heuristic(next, goal);
+                    frontier.put(next, priority);
+                    cameFrom[next] = current;
+                }
+            }
+
+            //currentRecord.toBeVisited = frontier
+            auto tmp = frontier;    //frontier is a queue so it cannot be visited without destroying it
+            while (!tmp.isEmpty()) {
+                location_t it = tmp.get();
+                std::pair<location_t, cost_t> nPair = std::make_pair(it, graph.Weight(it));
+                currentRecord.discovered.push_back(nPair);
+            }
         }
 
-        currentRecord.completed = false;
-
-        for (auto it : costSoFar) {
-            currentRecord.visited.push_back(std::make_pair(it.first, it.second));
-        }
-
-		for (location_t next : graph.Neighbors(current)) {
-			cost_t newCost = costSoFar[current] + graph.Cost(current, next);
-			if (costSoFar.find(next) == costSoFar.end() ||
-				newCost < costSoFar[next]) {
-				costSoFar[next] = newCost;
-				cost_t priority = newCost + graph.Heuristic(next, goal);
-				frontier.put(next, priority);
-				cameFrom[next] = current;
-			}
-		}
-
-        //currentRecord.toBeVisited = frontier
-        auto tmp = frontier;    //frontier is a queue so it cannot be visited without destroying it
-        while (!tmp.isEmpty()) {
-			location_t it = tmp.get();
-			std::pair<location_t, cost_t> nPair = std::make_pair(it, graph.Weight(it));
-            currentRecord.discovered.push_back(nPair);
-        }
+        currentRecord.pathToThiPoint = ReconstructPath(start, current, cameFrom)
 
 		result.push_back(currentRecord);
     }
-
-    pathTaken = ReconstructPath(start, goal, cameFrom);
 
     return result;
 }

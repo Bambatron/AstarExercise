@@ -4,6 +4,17 @@
 
 #include "../Pathfinder/Pathfinder.h"
 
+enum PainterFlags {
+    Visual_Grid,
+    Node_Center,
+    Node_Coordinates,
+    Node_Weights,
+    Visited,
+    Discovered,
+    Costs,
+    Path_Taken
+};
+
 template<typename Grid>
 class GridPainter {
 public:
@@ -15,32 +26,31 @@ public:
 	virtual void Render(const Grid& grid, sf::RenderWindow& target) = 0;
     virtual void RenderSearchRecord(const Grid& grid, const SearchRecord<Grid>& record, sf::RenderWindow& target) = 0;
 
-    void ToggleVisualGrid() { _showVisualGrid = !(_showVisualGrid); }
-    void ToggleNodeCenter() { _showNodeCenter = !(_showNodeCenter); }
-    void ToggleNodeCoordinates() { _showNodeCoordinates = !(_showNodeCoordinates); }
-    void ToggleNodeWeights() { _showNodeWeights = !(_showNodeWeights); }
-    const bool IsShowingVisualGrid() { return _showVisualGrid; }
-    const bool IsShowingNodeCenter() { return _showNodeCenter; }
-    const bool IsShowingNodeCoordinates() { return _showNodeCoordinates; }
-    const bool IsShowingNodeWeights() { return _showNodeWeights; }
+    // Getters
+    bool flag(PainterFlags f)const { return flags.at(f); }
 
-    void ToggleRecordedVisiteds() { _showRecordedVisiteds = !(_showRecordedVisiteds); }
-    void ToggleRecordedCosts() { _showRecordedCosts = !(_showRecordedCosts); }
-    void ToggleRecordedDiscovereds() { _showRecordedDiscovereds = !(_showRecordedDiscovereds); }
-    const bool IsShowingRecordedVisiteds() { return _showRecordedVisiteds; }
-    const bool IsShowingRecordedCosts() { return _showRecordedCosts; }
-    const bool IsShowingRecordedDiscovereds() { return _showRecordedDiscovereds; }
+    bool IsShowingVisualGrid() const { return flag(PainterFlags::Visual_Grid); }
+    bool IsShowingNodeCenter() const { return flag(PainterFlags::Node_Center); }
+    bool IsShowingNodeCoordinates() const { return flag(PainterFlags::Node_Coordinates); }
+    bool IsShowingNodeWeights() const { return flag(PainterFlags::Node_Weights); }
 
-    virtual void Zoom(float factor) = 0;
-    void MoveCamera(sf::Vector2i offset) { windowCenter += offset; }
-    void MoveCamera(int offsetX, int offsetY) { MoveCamera(sf::Vector2i(offsetX, offsetY)); }
-
-    void SetMaxZoom(unsigned int maxZoomFactor) { maxZoom = std::min(windowSize.x, windowSize.y) / maxZoomFactor; }
-    void SetMinZoom(unsigned int minZoomFactor) { minZoom = std::min(windowSize.x, windowSize.y) / minZoomFactor; }
+    bool IsShowingRecordedVisiteds() const { return flag(PainterFlags::Visited); }
+    bool IsShowingRecordedCosts() const { return flag(PainterFlags::Costs); }
+    bool IsShowingRecordedDiscovereds() const { return flag(PainterFlags::Discovered); }
+    bool IsShowingPathTakens() const { return flag(PainterFlags::Path_Taken); }
 
     const sf::Vector2i GetWindowCenter() { return windowCenter; }
 
     tile_t& GetTile() { return tile; }
+
+    // Setters
+    void toggleFlag(PainterFlags f) { flags.at(f) = !(flags.at(f)); }
+
+    void MoveCamera(sf::Vector2i offset) { windowCenter += offset; }
+    void MoveCamera(int offsetX, int offsetY) { MoveCamera(sf::Vector2i(offsetX, offsetY)); }
+    virtual void Zoom(float factor) = 0;
+    void SetMaxZoom(unsigned int maxZoomFactor) { maxZoom = std::min(windowSize.x, windowSize.y) / maxZoomFactor; }
+    void SetMinZoom(unsigned int minZoomFactor) { minZoom = std::min(windowSize.x, windowSize.y) / minZoomFactor; }
 
 protected:
     sf::Vector2u windowSize;
@@ -48,14 +58,7 @@ protected:
 
     unsigned int maxZoom, minZoom;
 
-    bool _showVisualGrid;
-    bool _showNodeCenter;
-    bool _showNodeCoordinates;
-    bool _showNodeWeights;
-
-    bool _showRecordedVisiteds;
-    bool _showRecordedCosts;
-    bool _showRecordedDiscovereds;
+    std::map<PainterFlags, bool> flags;
 
     tile_t tile;
 };
@@ -67,14 +70,14 @@ GridPainter<Grid>::GridPainter(const typename Grid::tile& initialTile, sf::Vecto
     SetMaxZoom(maxZoomFactor);
     SetMinZoom(minZoomFactor);
 
-    _showVisualGrid = false;
-    _showNodeCenter = false;
-    _showNodeCoordinates = false;
-    _showNodeWeights = true;
-
-    _showRecordedVisiteds = true;
-    _showRecordedCosts = true;
-    _showRecordedDiscovereds = true;
+    flags[Visual_Grid] = false;
+    flags[Node_Center] = false;
+    flags[Node_Coordinates] = false;
+    flags[Node_Weights] = true;
+    flags[Visited] = true;
+    flags[Discovered] = true;
+    flags[Costs] = true;
+    flags[Path_Taken] = false;
 }
 
 

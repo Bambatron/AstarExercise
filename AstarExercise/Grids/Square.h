@@ -18,9 +18,7 @@ struct Square {
 		return (this->x == other.x &&
 			this->y == other.y);
 	}
-
 	bool operator !=(const Square& other) const { return !(*this == other); }
-
 	bool operator <(const Square& other) const {
 		return (this->x < other.x ||
 			(this->x == other.x && this->y < other.y));
@@ -31,13 +29,11 @@ struct Square {
 			this->x + other.x,
 			this->y + other.y);
 	}
-
 	Square operator- (const Square& other) const {
 		return Square(
 			this->x - other.x,
 			this->y - other.y);
 	}
-
 	Square operator* (int k) const {
 		return Square(
 			this->x * k,
@@ -92,6 +88,7 @@ Square PixelToSquare(sf::Vector2f pixelPos, int tileSide, sf::Vector2i windowCen
 }
 
 
+
 struct SquareTile {
 	sf::RectangleShape body;
 
@@ -103,24 +100,29 @@ struct SquareTile {
 	}
 	SquareTile(const SquareTile& other) : body(other.body) {}
 
+	//Getters
+	sf::Vector2f Position() const { return body.getPosition(); }
+
+	float Side() const { return body.getSize().x; }
+	float Diagonal() const { return (Side() * sqrt(2.)); }
+
+	sf::Vector2f TopHalfSide() const { return sf::Vector2f(0, -(Side() / 2.)); }
+	sf::Vector2f RightHalfSide() const { return sf::Vector2f((Side() / 2.), 0); }
+	sf::Vector2f BottomHalfSide() const { return sf::Vector2f(0, +(Side() / 2.)); }
+	sf::Vector2f LeftHalfSide() const { return sf::Vector2f(-(Side() / 2.), 0); }
+
+	//Setters
 	void SetOrigin(sf::Vector2f origin) { body.setOrigin(origin); }
 	void SetPosition(sf::Vector2f pos) { body.setPosition(pos); }
+	
 	void SetFillColor(const sf::Color& color) { body.setFillColor(color); }
 	void SetOutlineColor(const sf::Color& color) { body.setOutlineColor(color); }
+	
 	void SetOutlineThickness(float size) { body.setOutlineThickness(size); }
-	sf::Vector2f Position() { return body.getPosition(); }
-
 	void SetSide(float side) {
 		body.setOrigin((-body.getSize().x) / 2., (-body.getSize().x) / 2.);
 		body.setSize(sf::Vector2f(side, side)); 
 		body.setOrigin(side / 2., side / 2.);
 
 	}
-	float Side() { return body.getSize().x; }
-	float Diagonal() { return (Side() * sqrt(2.)); }
-
-	sf::Vector2f TopHalfSide() { return sf::Vector2f(0, -(Side() / 2.)); }
-	sf::Vector2f RightHalfSide() { return sf::Vector2f((Side() / 2.), 0); }
-	sf::Vector2f BottomHalfSide() { return sf::Vector2f(0, +(Side() / 2.)); }
-	sf::Vector2f LeftHalfSide() { return sf::Vector2f(-(Side() / 2.), 0); }
 };

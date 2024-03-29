@@ -39,7 +39,7 @@ void HexPainter::Render(const HexGrid& grid, sf::RenderWindow& target) {
     text.setFillColor(sf::Color::White);
     text.setCharacterSize(textSize);
 
-    if (_showNodeWeights) {
+    if (flag(PainterFlags::Node_Weights)) {
         for (const auto& it : grid.VisitNodes()) {
             sf::Vector2f pos = HexToPixel(it.first, tile.Radius(), windowCenter);
             text.setPosition(pos);
@@ -52,7 +52,7 @@ void HexPainter::Render(const HexGrid& grid, sf::RenderWindow& target) {
     tile.SetOutlineColor(sf::Color::Black);
     tile.SetOutlineThickness(1);
 
-    if (_showNodeCenter) {
+    if (flag(PainterFlags::Node_Center)) {
         float size = tile.Radius() / 5.;
         sf::CircleShape circleTile;
         circleTile.setRadius(size);
@@ -68,7 +68,7 @@ void HexPainter::Render(const HexGrid& grid, sf::RenderWindow& target) {
         }
     }
 
-    if (_showNodeCoordinates) {
+    if (flag(PainterFlags::Node_Coordinates)) {
         sf::Text coordText;
         coordText.setFont(font);
         float coordTextSize = tile.Radius() / 4.;
@@ -80,7 +80,7 @@ void HexPainter::Render(const HexGrid& grid, sf::RenderWindow& target) {
             sf::Vector2f pos;
 
             pos = HexToPixel(it.first, tile.Radius(), windowCenter);
-
+            //drawNodeCoordinates(it, target);
             text.setFillColor(sf::Color::Yellow);
             text.setPosition(pos + tile.TopLeftSide());
             std::string tmp = std::to_string(it.first.q);
@@ -122,14 +122,14 @@ void HexPainter::RenderSearchRecord(const HexGrid& grid, const SearchRecord<HexG
     circle.setOutlineColor(sf::Color::Black);
     circle.setOutlineThickness(1.5);
 
-    if (_showRecordedVisiteds) {    //Visited node
+    if (flag(PainterFlags::Visited)) {    //Visited node
         for (auto it : record.visited) {
             circle.setFillColor(sf::Color{0, 255, 255, 196}); //Light blue
             sf::Vector2f pos = HexToPixel(it.first, tile.Radius(), windowCenter);
             circle.setPosition(pos);
             target.draw(circle);
 
-            if (_showRecordedCosts) {
+            if (flag(PainterFlags::Costs)) {
                 text.setPosition(pos);
                 text.setString(std::to_string(it.second));
                 target.draw(text);
@@ -137,20 +137,26 @@ void HexPainter::RenderSearchRecord(const HexGrid& grid, const SearchRecord<HexG
         }
     }
 
-    if (_showRecordedDiscovereds) { //To be visited
+    if (flag(PainterFlags::Discovered)) { //To be visited
         circle.setFillColor(sf::Color{0, 255, 0, 196});
         for (auto it : record.discovered) {
             sf::Vector2f pos = HexToPixel(it.first, tile.Radius(), windowCenter);
             circle.setPosition(pos);
             target.draw(circle);
             
-            if (_showRecordedCosts) {
+            if (flag(PainterFlags::Costs)) {
                 text.setPosition(pos);
                 text.setString(std::to_string(it.second));
                 target.draw(text);
             }
         }
        
+    }
+
+    if (flag(PainterFlags::Path_Taken) || (!flag(PainterFlags::Path_Taken) && record.completed)) {
+        for (auto l : record.pathToThiPoint) {
+
+        }
     }
 
     circle.setFillColor(sf::Color::Red);

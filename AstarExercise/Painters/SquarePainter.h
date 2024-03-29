@@ -10,7 +10,8 @@ public:
 
 	void Render(const SquareGrid& grid, sf::RenderWindow& target) override;
     
-    void RenderSearchRecord(const SquareGrid& grid, const SearchRecord<typename SquareGrid::location>& record, sf::RenderWindow& target) override;
+    void RenderSearchRecord(const SquareGrid& grid, const SearchRecord<typename SquareGrid>& record, sf::RenderWindow& target) override;
+
 
 	void Zoom(float factor) override;
 };
@@ -49,7 +50,7 @@ void SquarePainter::Render(const SquareGrid& grid, sf::RenderWindow& target) {
     tile.SetOutlineColor(sf::Color::Black);
     tile.SetOutlineThickness(1);
     
-    if (_showNodeCenter) {
+    if (flag(PainterFlags::Node_Center)) {
         float size = tile.Side() / 5.;
         sf::CircleShape circleTile;
         circleTile.setRadius(size);
@@ -65,7 +66,7 @@ void SquarePainter::Render(const SquareGrid& grid, sf::RenderWindow& target) {
         }
     }
 
-    if (_showNodeCoordinates) {
+    if (flag(PainterFlags::Node_Coordinates)) {
         sf::Text coordText;
         coordText.setFont(font);
         float coordTextSize = tile.Side() / 4.;
@@ -89,7 +90,7 @@ void SquarePainter::Render(const SquareGrid& grid, sf::RenderWindow& target) {
     }
 }
 
-void SquarePainter::RenderSearchRecord(const SquareGrid& grid, const SearchRecord<typename SquareGrid::location>& record, sf::RenderWindow& target) {
+void SquarePainter::RenderSearchRecord(const SquareGrid& grid, const SearchRecord<typename SquareGrid>& record, sf::RenderWindow& target) {
     sf::Font font;
     if (!font.loadFromFile("../Common/wowsers.ttf")) {    //Error
         std::cout << "SquarePainter::RenderSearchRecord: Error loading map font" << std::endl;
@@ -109,7 +110,7 @@ void SquarePainter::RenderSearchRecord(const SquareGrid& grid, const SearchRecor
     circle.setOutlineColor(sf::Color::Black);
     circle.setOutlineThickness(1.5);
 
-    if (_showRecordedVisiteds) {
+    if (flag(PainterFlags::Visited)) {
         for (auto it : record.visited) {
             //Discovered nodes
             circle.setFillColor(sf::Color{ 255, 0, 255, 128 }); //Fucsia
@@ -125,10 +126,10 @@ void SquarePainter::RenderSearchRecord(const SquareGrid& grid, const SearchRecor
         }
     }
 
-    if (_showRecordedDiscovereds) { //To be visited
+    if (flag(PainterFlags::Discovered)) { //To be visited
         circle.setFillColor(sf::Color{ 0,255,0,128 });
         for (auto it : record.discovered) {
-            sf::Vector2f pos = SquareToPixel(it, tile.Side(), windowCenter);
+            sf::Vector2f pos = SquareToPixel(it.first, tile.Side(), windowCenter);
             circle.setPosition(pos);
             target.draw(circle);
         }
@@ -138,19 +139,6 @@ void SquarePainter::RenderSearchRecord(const SquareGrid& grid, const SearchRecor
     sf::Vector2f pos = SquareToPixel(record.currentNode, tile.Side(), windowCenter);
     circle.setPosition(pos);
     target.draw(circle);
-
-    //All visited and discovered with cost
-    if (_showRecordedCosts) {
-        circle.setFillColor(sf::Color{ 255, 255, 0, 128 });
-        for (auto it : record.costSoFar) {
-            sf::Vector2f pos = SquareToPixel(it.first, tile.Side(), windowCenter);
-            circle.setPosition(pos);
-            target.draw(circle);
-            text.setPosition(pos);
-            text.setString(std::to_string(it.second));
-            target.draw(text);
-        }
-    }
 }
 
 void SquarePainter::Zoom(float factor) {
