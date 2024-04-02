@@ -83,6 +83,9 @@
     <ClInclude Include="Grids\Graph.h">
       <Filter>Header Files\Grids</Filter>
     </ClInclude>
+    <ClInclude Include="Painters\PaintingUtilities.h">
+      <Filter>Header Files\Painters</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\BasicMap.json">

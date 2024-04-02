@@ -49,11 +49,11 @@ public:
 	}
 
 	unsigned int Weight(const Square& loc) const override {
-		if (weighted) return nodes[loc];
+		if (weighted) return nodes.at(loc);
 		else return 1;
 	}
 	unsigned int Cost(const Square& start, const Square& goal) const override {
-		if (weighted) return nodes[start] + nodes[goal];
+		if (weighted) return nodes.at(start) + nodes.at(goal);
 		else return 1;
 	}
 

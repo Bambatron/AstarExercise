@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "PaintingUtilities.h"
 #include "../Pathfinder/Pathfinder.h"
 
 enum PainterFlags {
@@ -18,7 +19,7 @@ enum PainterFlags {
 template<typename Grid>
 class GridPainter {
 public:
-    using tile_t = typename Grid::tile;
+    using tile_t = typename Grid::tile_t;
 
     GridPainter(const tile_t& initialTile, sf::Vector2u _windowSize = sf::Vector2u(1024, 768), unsigned int maxZoomFactor = 4, unsigned int minZoomFactor = 40);
     virtual ~GridPainter() {}
@@ -64,7 +65,7 @@ protected:
 };
 
 template<typename Grid>
-GridPainter<Grid>::GridPainter(const typename Grid::tile& initialTile, sf::Vector2u _windowSize, unsigned int maxZoomFactor, unsigned int minZoomFactor) : tile(initialTile), windowSize(_windowSize) {
+GridPainter<Grid>::GridPainter(const typename Grid::tile_t& initialTile, sf::Vector2u _windowSize, unsigned int maxZoomFactor, unsigned int minZoomFactor) : tile(initialTile), windowSize(_windowSize) {
     windowCenter = sf::Vector2i(_windowSize.x / 2, _windowSize.y / 2);
 
     SetMaxZoom(maxZoomFactor);

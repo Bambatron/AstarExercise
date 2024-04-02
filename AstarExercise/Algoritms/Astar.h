@@ -65,7 +65,7 @@ std::vector<SearchRecord<Graph>> AstarSearchRecorded(Graph& graph, typename Grap
             }
         }
 
-        currentRecord.pathToThiPoint = ReconstructPath(start, current, cameFrom)
+        currentRecord.pathToThiPoint = ReconstructPath(start, current, cameFrom);
 
 		result.push_back(currentRecord);
     }

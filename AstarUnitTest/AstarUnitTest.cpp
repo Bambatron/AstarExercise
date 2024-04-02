@@ -37,7 +37,7 @@ namespace AstarUnitTest {
                     {{"q", 1}, {"r", 1}, {"w", 7}}
                 }}});
 
-            typedef typename HexGrid::location location;
+            typedef typename HexGrid::location_t location;
             typedef typename HexGrid::cost_t cost;
 
             //Make necessiteies for the search
@@ -48,7 +48,7 @@ namespace AstarUnitTest {
             cost expectedCost = 8;
 
             std::vector<SearchRecord<HexGrid>> searchResult;
-            searchResult = AstarSearchRecorded(graph, start, goal, pathTaken);
+            searchResult = AstarSearchRecorded(graph, start, goal);
 
             // Process path
             SearchRecord<HexGrid> lastRecord = searchResult[searchResult.size() - 1];
@@ -73,7 +73,7 @@ namespace AstarUnitTest {
             Logger::WriteMessage("Astar Test: starting out of bound start test");
 
             HexGrid graph(2, Hex(0, 0), true);
-            typedef typename HexGrid::location location;
+            typedef typename HexGrid::location_t location;
             typedef typename HexGrid::cost_t cost;
             
             location start(3, 0);
@@ -82,7 +82,7 @@ namespace AstarUnitTest {
 
 
             try {
-                AstarSearchRecorded(graph, start, goal, pathTaken);
+                AstarSearchRecorded(graph, start, goal);
                 // If the method didn't throw any exception, the test should fail
                 std::cout << "Astar Test: invalid path is not passed. Exception was not thrown" << std::endl;
                 Logger::WriteMessage("Astar Test: invalid path is not passed. Exception was not thrown");
@@ -104,7 +104,7 @@ namespace AstarUnitTest {
             std::cout << "Astar Test: starting out of bounf goal test" << std::endl;
             Logger::WriteMessage("Astar Test: starting out of bound goal test");
             HexGrid graph(2, Hex(0, 0), true);
-            typedef typename HexGrid::location location;
+            typedef typename HexGrid::location_t location;
             typedef typename HexGrid::cost_t cost;
 
             location start(0, 0);
@@ -113,7 +113,7 @@ namespace AstarUnitTest {
 
 
             try {
-                AstarSearchRecorded(graph, start, goal, pathTaken);
+                AstarSearchRecorded(graph, start, goal);
                 // If the method didn't throw any exception, the test should fail
                 std::cout << "Astar Test: invalid path is not passed. Exception was not thrown" << std::endl;
                 Logger::WriteMessage("Astar Test: invalid path is not passed. Exception was not thrown");

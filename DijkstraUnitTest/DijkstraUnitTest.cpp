@@ -32,7 +32,7 @@ namespace DijkstraUnitTest
                     {{"q", 1}, {"r", 1}, {"w", 7}}
                 }} });
 
-            typedef typename HexGrid::location location;
+            typedef typename HexGrid::location_t location;
             typedef typename HexGrid::cost_t cost;
 
             //Make necessiteies for the search
@@ -61,7 +61,7 @@ namespace DijkstraUnitTest
 
         TEST_METHOD(OutOfBoundStart) {
             HexGrid graph(2, Hex(0, 0), true);
-            typedef typename HexGrid::location location;
+            typedef typename HexGrid::location_t location;
             typedef typename HexGrid::cost_t cost;
 
             location start(3, 0);
@@ -75,7 +75,7 @@ namespace DijkstraUnitTest
 
         TEST_METHOD(OutOfBoundGoal) {
             HexGrid graph(2, Hex(0, 0), true);
-            typedef typename HexGrid::location location;
+            typedef typename HexGrid::location_t location;
             typedef typename HexGrid::cost_t cost;
 
             location start(0, 0);

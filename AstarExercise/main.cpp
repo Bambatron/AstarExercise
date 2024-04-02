@@ -61,6 +61,61 @@ enum class GameState {
 int main() {
     std::cout << "Hello world" << std::endl;
 
+    sf::ContextSettings settings;
+    settings.antialiasingLevel = 8;
+    sf::RenderWindow window(sf::VideoMode(1024, 768), "Hexagon Example", sf::Style::Default, settings);
+
+    Arrow* arrow = NULL;
+    sf::Vector2f start, end;
+    while (window.isOpen()) {
+        sf::Event e;
+        while (window.pollEvent(e)) {
+            if (e.type == sf::Event::Closed) {
+                window.close();
+            }
+            if (e.type == sf::Event::MouseButtonPressed) {  //ProcessInputMouse(e.mouseButton.button)
+                if (e.mouseButton.button == sf::Mouse::Left) {
+                    sf::Vector2i pixelPos = sf::Mouse::getPosition(window); //Get the current mouse position in the window
+                    start = sf::Vector2f(pixelPos.x, pixelPos.y);
+                }
+            }
+            if (e.type == sf::Event::MouseButtonReleased) {  //ProcessInputMouse(e.mouseButton.button)
+                if (e.mouseButton.button == sf::Mouse::Left) {
+                    sf::Vector2i pixelPos = sf::Mouse::getPosition(window); //Get the current mouse position in the window
+                    end = sf::Vector2f(pixelPos.x, pixelPos.y);
+                    arrow = Arrow::makeBasicArrow(start, end);
+                    std::cout << "0: " << arrow->getBody()[0].position.x << " " << arrow->getBody()[0].position.y << std::endl;
+                    std::cout << "1: " << arrow->getBody()[1].position.x << " " << arrow->getBody()[1].position.y << std::endl;
+                    std::cout << "2: " << arrow->getBody()[2].position.x << " " << arrow->getBody()[2].position.y << std::endl;
+                    std::cout << "3: " << arrow->getBody()[3].position.x << " " << arrow->getBody()[3].position.y << std::endl;
+                    std::cout << "4: " << arrow->getBody()[4].position.x << " " << arrow->getBody()[4].position.y << std::endl;
+                    std::cout << "5: " << arrow->getBody()[5].position.x << " " << arrow->getBody()[5].position.y << std::endl;
+                    std::cout << "6: " << arrow->getBody()[6].position.x << " " << arrow->getBody()[6].position.y << std::endl;
+                }
+            }
+        }
+
+        window.clear();
+
+        
+        if (arrow != NULL) {
+            window.draw(arrow->getBody());
+        }
+        sf::CircleShape c(15);
+        c.setFillColor(sf::Color(255, 0, 0, 128));
+        c.setPosition(start);
+        window.draw(c);
+        c.setPosition(end);
+        window.draw(c);
+
+
+        window.display();
+    }
+
+
+    return 0;
+}
+    /*
     GameState gameState = GameState::Normal;
     
     sf::ContextSettings settings;
@@ -276,7 +331,7 @@ int main() {
     }
 
     return 0;
-}
+}*/
 
 //PATHFINDER EXAMPLE
 /*

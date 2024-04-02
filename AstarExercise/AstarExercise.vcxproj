@@ -165,6 +165,7 @@
     <ClInclude Include="LabelMenu.h" />
     <ClInclude Include="Painters\GridPainter.h" />
     <ClInclude Include="Painters\HexPainter.h" />
+    <ClInclude Include="Painters\PaintingUtilities.h" />
     <ClInclude Include="Painters\SquarePainter.h" />
     <ClInclude Include="Pathfinder\Pathfinder.h" />
     <ClInclude Include="Pathfinder\PathfindingUtilities.h" />
