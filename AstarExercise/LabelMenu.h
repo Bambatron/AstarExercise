@@ -9,6 +9,9 @@ public:
     LabelMenu(sf::Vector2f size, sf::Vector2f position, sf::Vector2f _buffer = sf::Vector2f(10, 10), sf::Vector2f _padding = sf::Vector2f(5,5));
     ~LabelMenu() {}
 
+    void Render(sf::RenderWindow& target);
+
+    // Getters
     bool IsInBounds(sf::Vector2i mousePosition) {
         if (IsOpen()) {
             sf::FloatRect bounds = body.getGlobalBounds();
@@ -25,35 +28,36 @@ public:
     }
 
     sf::Vector2f GetPosition() const { return body.getPosition(); }
+    sf::Vector2f GetSize() const { return body.getSize(); }
+    const sf::Color& GetBackgroundColor() const { return body.getFillColor(); }
+    
+    const sf::Color& GetBorderColor() const { return body.getOutlineColor(); }
+    float GetBorderSize() { return -body.getOutlineThickness(); }
+    
+    sf::Vector2f GetBuffer() const { return buffer; }
+    sf::Vector2f GetPadding() const { return padding; }
+
+    bool IsOpen() const { return _openend; }
+
+    // Setters
     void SetPosition(sf::Vector2f pos) {
         body.setPosition(pos);
         text.setPosition(pos.x + padding.x, pos.y + padding.y);
     }
-    
-    sf::Vector2f GetSize() const { return body.getSize(); }
-    
-    const sf::Color& GetBackgroundColor() const { return body.getFillColor(); }
     void SetBackgroundColor(sf::Color& color) { body.setFillColor(color); }
     
-    const sf::Color& GetBorderColor() const { return body.getOutlineColor(); }
     void SetBorderColor(sf::Color& color) { body.setOutlineColor(color); }
-    
-    float GetBorderSize() { return -body.getOutlineThickness(); }
     void SetBorderSize(float size) { body.setOutlineThickness(-size); }
-
-    sf::Vector2f GetBuffer() const { return buffer; }
+    
     void SetBuffer(sf::Vector2f bufferSize) {
         buffer.x = (bufferSize.x > 0) ? bufferSize.x : 0;
         buffer.y = (bufferSize.y > 0) ? bufferSize.y : 0;
     }
-
-    sf::Vector2f GetPadding() const { return padding; }
     void SetPadding(sf::Vector2f paddingSize) {
         padding.x = (paddingSize.x > 0) ? paddingSize.x : 0;
         padding.y = (paddingSize.y > 0) ? paddingSize.y : 0;
     }
 
-    bool IsOpen() const { return _openend; }
     void Open() { _openend = true; }
     void Close() { _openend = false; }
     void ToggleOpeneded() { _openend = !_openend; }
@@ -67,8 +71,6 @@ public:
         text.setString("");
     }
 
-    void Render(sf::RenderWindow& target);
-    
 private:
     void AddParameter();
     template<typename T, typename... Args>

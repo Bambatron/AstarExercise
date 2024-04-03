@@ -5,7 +5,7 @@
 #include "PaintingUtilities.h"
 #include "../Pathfinder/Pathfinder.h"
 
-enum PainterFlags {
+enum class PainterFlags {
     Visual_Grid,
     Node_Center,
     Node_Coordinates,
@@ -21,11 +21,28 @@ class GridPainter {
 public:
     using tile_t = typename Grid::tile_t;
 
-    GridPainter(const tile_t& initialTile, sf::Vector2u _windowSize = sf::Vector2u(1024, 768), unsigned int maxZoomFactor = 4, unsigned int minZoomFactor = 40);
+    GridPainter(const tile_t& tile, sf::Vector2u _windowSize = sf::Vector2u(1024, 768), unsigned int maxZoomFactor = 4, unsigned int minZoomFactor = 40);
     virtual ~GridPainter() {}
 
+	/// <summary>
+	/// Draw a grid on a window
+	/// </summary>
+	/// <param name="grid"> The grid to show</param>
+	/// <param name="target"> The window on which to draw</param>
 	virtual void Render(const Grid& grid, sf::RenderWindow& target) = 0;
+    /// <summary>
+    /// Visualize a search record on a window
+    /// </summary>
+    /// <param name="grid"> The grid on which the record is taken</param>
+    /// <param name="record"> The record to paint</param>
+    /// <param name="target"> The window on which to paint</param>
     virtual void RenderSearchRecord(const Grid& grid, const SearchRecord<Grid>& record, sf::RenderWindow& target) = 0;
+    /// <summary>
+    /// Zooms in and out of the map
+    /// </summary>
+    /// <param name="factor">How much to zoom, positive zooms in, negative zooms out</param>
+    virtual void Zoom(float factor) = 0;
+
 
     // Getters
     bool flag(PainterFlags f)const { return flags.at(f); }
@@ -49,7 +66,6 @@ public:
 
     void MoveCamera(sf::Vector2i offset) { windowCenter += offset; }
     void MoveCamera(int offsetX, int offsetY) { MoveCamera(sf::Vector2i(offsetX, offsetY)); }
-    virtual void Zoom(float factor) = 0;
     void SetMaxZoom(unsigned int maxZoomFactor) { maxZoom = std::min(windowSize.x, windowSize.y) / maxZoomFactor; }
     void SetMinZoom(unsigned int minZoomFactor) { minZoom = std::min(windowSize.x, windowSize.y) / minZoomFactor; }
 
@@ -65,7 +81,7 @@ protected:
 };
 
 template<typename Grid>
-GridPainter<Grid>::GridPainter(const typename Grid::tile_t& initialTile, sf::Vector2u _windowSize, unsigned int maxZoomFactor, unsigned int minZoomFactor) : tile(initialTile), windowSize(_windowSize) {
+GridPainter<Grid>::GridPainter(const typename Grid::tile_t& tile, sf::Vector2u _windowSize, unsigned int maxZoomFactor, unsigned int minZoomFactor) : tile(tile), windowSize(_windowSize) {
     windowCenter = sf::Vector2i(_windowSize.x / 2, _windowSize.y / 2);
 
     SetMaxZoom(maxZoomFactor);

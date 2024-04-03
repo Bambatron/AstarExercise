@@ -32,10 +32,6 @@ struct PriorityQueue {
     }
 };
 
-/*template<typename T>
-namespace GraphNamespace<T> {
-    typedef A B;
-}*/
 
 
 template<typename location_t>
@@ -64,10 +60,10 @@ struct SearchRecord {
     bool completed;
     location_t currentNode;
 
-    std::vector<std::pair<location_t, cost_t>> discovered;    //Seen but not entered
-    std::vector<std::pair<location_t, cost_t>> visited;   //Seen and entered
+    std::vector<std::pair<location_t, cost_t>> discovered;    // Seen but not entered
+    std::vector<std::pair<location_t, cost_t>> visited;   // Seen and entered
 
-    std::vector<location_t> pathToThisPoint;
+    std::vector<location_t> pathToThisPoint;    // The path to take to get to the current node
 };
 
 
@@ -78,5 +74,5 @@ class PathfindingStrategy {
 public:
     virtual const std::vector<SearchRecord<Graph>> MakeSearch(Graph& graph, typename Graph::location_t& start, typename Graph::location_t& goal) const = 0;
 
-    virtual ~PathfindingStrategy() {} // Virtual destructor for polymorphism
+    virtual ~PathfindingStrategy() {} //Virtual destructor for polymorphism
 };

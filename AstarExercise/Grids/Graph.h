@@ -10,6 +10,7 @@ public:
 
 	Graph(bool _weighted = false) : weighted(_weighted) {}
 
+	// Getters
 	virtual bool IsInBounds(const location_t& loc) const { return (nodes.find(loc) != nodes.end()); }
 
 	virtual std::vector<location_t> Neighbors(const location_t& loc) const { return edges.at(loc); }

@@ -34,6 +34,17 @@ std::vector<SearchRecord<Graph>> DijkstraSearchRecorded(Graph& graph, typename G
 
         if (current == goal) {
             currentRecord.completed = true;
+            for (auto it : costSoFar) {
+                currentRecord.visited.push_back(std::make_pair(it.first, it.second));
+            }
+
+            auto tmp = frontier;    //frontier is a queue so it cannot be visited without destroying it
+            while (!tmp.isEmpty()) {
+                location_t it = tmp.get();
+                currentRecord.discovered.push_back(std::make_pair(it, graph.Weight(it)));
+            }
+
+            currentRecord.pathToThisPoint = ReconstructPath(start, goal, cameFrom);
             break;
         }
 
@@ -63,17 +74,15 @@ std::vector<SearchRecord<Graph>> DijkstraSearchRecorded(Graph& graph, typename G
         result.push_back(currentRecord);
     }
 
-    pathTaken = ReconstructPath(start, goal, cameFrom);
-    
     return result;
 }
 
-/*template<typename Graph>
+template<typename Graph>
 class DijkstraStrategy : public PathfindingStrategy<Graph> {
 public:
     DijkstraStrategy() {}
 
-    const std::vector<SearchRecord<Graph>> MakeSearch(Graph& graph, typename Graph::location_t& start, typename Graph::location_t& goal, std::vector<typename Graph::location_t>& pathTaken) const override {
-        return DijkstraSearchRecorded(graph, start, goal, pathTaken);
+    const std::vector<SearchRecord<Graph>> MakeSearch(Graph& graph, typename Graph::location_t& start, typename Graph::location_t& goal) const override {
+        return DijkstraSearchRecorded(graph, start, goal);
     }
-};*/
+};

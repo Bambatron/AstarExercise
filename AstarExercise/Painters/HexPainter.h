@@ -10,7 +10,7 @@ public:
 
     void Render(const HexGrid& grid, sf::RenderWindow& target) override;
     void RenderSearchRecord(const HexGrid& grid, const SearchRecord<HexGrid>& record, sf::RenderWindow& target) override;
-    //Changes the radius of the tile by factor to aminimum of min(window height, window width) / 20
+    
     void Zoom(float factor) override;
 };
 
@@ -168,16 +168,16 @@ void HexPainter::RenderSearchRecord(const HexGrid& grid, const SearchRecord<HexG
 }
 
 void HexPainter::Zoom(float factor) {
-    unsigned int rad = tile.Radius() + factor;  //Radius of zoomed tile
-    
-    if (rad > maxZoom) {    //Checks if too big
-        rad = maxZoom; 
-    }
-    else if (rad < minZoom) {   //Checks if too small
-        rad = minZoom;
-    }
-
-    tile.SetRadius(rad);    //Zooms by enlarging or reducing the size of the tile    
+    //Changes the radius of the tile by factor to a minimum of (min(window height, window width) / 20)
     //Text loses details when zoomed
     //This is a lot easier than having two view of the map one for the zoomed tiles and one for the text
+
+    unsigned int rad = tile.Radius() + factor;  //Radius of zoomed tile
+    
+    if (rad > maxZoom) 
+        rad = maxZoom; 
+    else if (rad < minZoom)
+        rad = minZoom;
+
+    tile.SetRadius(rad);    //Zooms by enlarging or reducing the size of the tile    
 }

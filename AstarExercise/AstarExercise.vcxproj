@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -156,6 +157,7 @@
     <ClInclude Include="Algoritms\BFS.h" />
     <ClInclude Include="Algoritms\DFS.h" />
     <ClInclude Include="Algoritms\Dijkstra.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Grids\Graph.h" />
     <ClInclude Include="Grids\Hex.h" />
     <ClInclude Include="Grids\HexGrid.h" />

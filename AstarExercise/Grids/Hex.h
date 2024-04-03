@@ -23,25 +23,25 @@ struct Hex {
 		assert(q + r + s == 0);
 	}
 
-	bool operator==(const Hex& other) const {
+	bool operator== (const Hex& other) const {
 		return (this->q == other.q &&
 			this->r == other.r &&
 			this->s == other.s);
 	}
-	bool operator!=(const Hex& other) { return !(*this == other); }
-	bool operator <(const Hex& other) const {
+	bool operator!= (const Hex& other) { return !(*this == other); }
+	bool operator < (const Hex& other) const {
 		return (this->q < other.q ||
 			(this->q == other.q && this->r < other.r) ||
 			(this->q == other.q && this->r == other.r && this->s < other.s));
 	}
 
-	Hex operator+(const Hex& other) const {
+	Hex operator+ (const Hex& other) const {
 		return Hex(
 			this->q + other.q,
 			this->r + other.r,
 			this->s + other.s);
 	}
-	Hex operator-(const Hex& other) const {
+	Hex operator- (const Hex& other) const {
 		return Hex(
 			this->q - other.q,
 			this->r - other.r,
@@ -54,7 +54,7 @@ struct Hex {
 			this->s * k);
 	}
 
-	Hex& operator=(const Hex& other) {
+	Hex& operator= (const Hex& other) {
 		this->q = other.q;
 		this->r = other.r;
 		this->s = other.s;
@@ -156,7 +156,7 @@ struct HexTile {
 			(-a / 2.) + 2.,
 			(-a * sqrt(2) / 2.) + 5.);
 	}
-	sf::Vector2f DownLeftSide()const {
+	sf::Vector2f DownLeftSide() const {
 		float a = Apothem();
 		//Should be (-a/2, a sqrt(3)/2) however it goes outside the tile
 		return sf::Vector2f(

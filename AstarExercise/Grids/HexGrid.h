@@ -35,27 +35,23 @@ public:
 	void MakeRandomGraph();
 	unsigned int RandomWeight();
 
-	void ReadGrid();
+	// Getters
+	bool IsInBounds(const Hex& loc) const override {
+		if (Distance(origin, loc) <= radius) {
+			return true;
+		}
+		return false;
+	}
 
 	std::vector<Hex> Neighbors(const Hex& loc) const override;
-
-	void Increase(const Hex& hex) { nodes[hex]++; }
-	void Decrease(const Hex& hex) { (nodes[hex] > 1) ? nodes[hex]-- : nodes[hex] == 1; }
-
-	const int Radius() const { return radius; }
+	
+	int Radius() const { return radius; }
 	const Hex& Origin() const { return origin; }
 
 	int Distance(const Hex& start, const Hex& goal) const {
 		int dist = std::max(abs(start.q - goal.q), abs(start.r - goal.r));
 		dist = std::max(dist, abs(start.s - goal.s));
 		return dist;
-	}
-
-	bool IsInBounds(const Hex& loc) const override {
-		if (Distance(origin, loc) <= radius) {
-			return true;
-		}
-		return false;
 	}
 
 	unsigned int Weight(const Hex& loc) const override {
@@ -68,20 +64,25 @@ public:
 	}
 
 	unsigned int Heuristic(const Hex& start, const Hex& goal) const override {
-		return (std::abs(start.q - goal.q) + std::abs(start.r - goal.r) + std::abs(start.s - goal.s)) / 2;
+		return Distance(start, goal) * avgWeight;
 	}
 
 	const std::unordered_map<Hex, unsigned int>& VisitNodes() const { return nodes; }
 
 	nlohmann::json ToJson() const;
 
+	// Setters
+	void Increase(const Hex& hex) { nodes[hex]++; }
+	void Decrease(const Hex& hex) { (nodes[hex] > 1) ? nodes[hex]-- : nodes[hex] == 1; }
+
 private:
+	void FoundAvgWeight();
+
 	int radius;
+	
+	unsigned int avgWeight;
+	
 	Hex origin;
-
-	bool weighted;
-
-	std::unordered_map<Hex, unsigned int> nodes;
 };
 
 
@@ -109,6 +110,7 @@ void HexGrid::LoadFromFile(const std::string& jsonFilePath) {
 		file >> jsonData;
 
 		LoadFromString(jsonData);
+		FoundAvgWeight();
 	}
 	catch (const std::exception& e) {
 		std::cerr << "Error parsing JSON: " << e.what() << std::endl;
@@ -140,6 +142,7 @@ void HexGrid::LoadFromString(const nlohmann::json& jsonObject) {
 	else {
 		weighted = false;
 	}
+	FoundAvgWeight();
 }
 
 void HexGrid::MakeGraph() {
@@ -152,6 +155,7 @@ void HexGrid::MakeGraph() {
 			this->nodes[current + this->origin] = 1;
 		}
 	}
+	avgWeight = 1;
 }
 
 void HexGrid::MakeRandomGraph() {
@@ -166,6 +170,8 @@ void HexGrid::MakeRandomGraph() {
 			this->nodes[current + this->origin] = w;
 		}
 	}
+
+	FoundAvgWeight();
 }
 
 unsigned int HexGrid::RandomWeight() {
@@ -213,13 +219,6 @@ unsigned int HexGrid::RandomWeight() {
 	return ret;
 }
 
-void HexGrid::ReadGrid() {
-	std::cout << "Weighted Grid" << std::endl;
-	for (const auto& it : nodes) {
-		std::cout << it.first.PrintOut() << " | " << it.second << "\t";
-	}
-}
-
 std::vector<Hex> HexGrid::Neighbors(const Hex& loc) const  {
 	std::vector<Hex> neighbors;
 
@@ -253,4 +252,8 @@ nlohmann::json HexGrid::ToJson() const {
 	result["weightedNodes"] = hexArray;
 
 	return result;
+}
+
+inline void HexGrid::FoundAvgWeight() {
+	
 }

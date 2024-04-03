@@ -32,21 +32,19 @@ public:
 
 	void ReadGrid();
 
-	std::vector<Square> Neighbors(const Square& loc) const override;
-
-	void Increase(const Square& square) { nodes[square]++; }
-	void Decrease(const Square& square) { (nodes[square] > 1) ? nodes[square]-- : nodes[square] == 1; }
-
-	unsigned int Rows() const { return rows; }
-	unsigned int Cols() const { return cols; }
-
-	bool IsInBounds(const Square& loc) const  {
+	// Getters
+	bool IsInBounds(const Square& loc) const {
 		if (loc.x >= 0 && loc.x < cols &&
 			loc.y >= 0 && loc.y < rows) {
 			return true;
 		}
 		return false;
 	}
+
+	std::vector<Square> Neighbors(const Square& loc) const override;
+
+	unsigned int Rows() const { return rows; }
+	unsigned int Cols() const { return cols; }
 
 	unsigned int Weight(const Square& loc) const override {
 		if (weighted) return nodes.at(loc);
@@ -64,6 +62,10 @@ public:
 	const std::unordered_map<Square, unsigned int>& VisitNodes() const { return nodes; }
 
 	nlohmann::json ToJson() const;
+
+	// Setters
+	void Increase(const Square& square) { nodes[square]++; }
+	void Decrease(const Square& square) { (nodes[square] > 1) ? nodes[square]-- : nodes[square] == 1; }
 
 private:
 	unsigned int rows, cols;

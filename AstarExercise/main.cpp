@@ -2,12 +2,19 @@
 
 #include <typeindex>
 
+#include "Game.h"
+
 #include "SaveOpenUtilities.h"
-#include "Pathfinder/Pathfinder.h"
+
 #include "Grids/HexGrid.h"
 #include "Grids/SquareGrid.h"
+
+#include "Pathfinder/Pathfinder.h"
+
 #include "Painters/HexPainter.h"
+#include "Painters/SquarePainter.h"
 #include "LabelMenu.h"
+
 
 const std::string Help() {
     std::ostringstream oss;
@@ -53,10 +60,7 @@ const std::string Help() {
     return oss.str();
 };
 
-enum class GameState {
-    Normal,
-    Searching,
-};
+
 
 int main() {
     std::cout << "Hello world" << std::endl;
@@ -215,6 +219,7 @@ int main() {
                                             break;
                                         }
                                     }
+
                                     if (!f) {
                                         label.AddParameters(std::string{"Not yet discovered"});
                                     }

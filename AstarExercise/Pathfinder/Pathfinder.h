@@ -20,27 +20,28 @@ public:
 
     void MakeSearch(Graph& graph);
 
-    void SwitchFuntion(PathfindingStrategy<Graph>* _strat) { this->strategy = _strat; }
-
-   void Reset() {
-       _searchCompleted = false;
-       _startSelected = false;
-       _goalSelected = false;
-       cameFrom.clear();
-       costSoFar.clear();
-       while (!frontier.isEmpty()) {
-           frontier.get();
-       }
-       currentRecord = 0;
-       record.clear();
-   }
-
-    std::vector<location> PathTaken(location& goal) { return ReconstructPath(start, goal, cameFrom); }
-
+    // Getters
     bool IsSearchCompleted() const { return _searchCompleted; }
 
     bool IsStartSelected() const { return _startSelected; }
     const location& GetStart() const { return start; }
+
+    bool IsGoalSelected() const { return _goalSelected; }
+    const location& GetGoal() const { return goal; }
+
+    const SearchRecord<Graph>& GetCurrentRecord() { return record[currentRecord]; }
+
+    // Setters
+    void SwitchFuntion(PathfindingStrategy<Graph>* _strat) { this->strategy = _strat; }
+    
+    void Reset() {
+        _searchCompleted = false;
+        _startSelected = false;
+        _goalSelected = false;
+        currentRecord = 0;
+        record.clear();
+    }
+
     void SetStart(location start) {
         if (!_startSelected) {
             _startSelected = true;
@@ -51,9 +52,7 @@ public:
         }
     }
     void ClearStart() { _startSelected = false; }
-    
-    bool IsGoalSelected() const { return _goalSelected; }
-    const location& GetGoal() const { return goal; }
+
     void SetGoal(location goal) {
         if (!_goalSelected) {
             _goalSelected = true;
@@ -61,13 +60,7 @@ public:
         }
     }
     void ClearGoal() { _goalSelected = false; }
-    
-    const std::unordered_map<location, location>& GetCameFrom() const { return cameFrom; }
-    const std::unordered_map<location, cost_t >& GetCostSoFar() const { return costSoFar; }
-    const cost_t  GetCostAtLocation(location loc) { return costSoFar[loc]; }
-    const PriorityQueue<location, cost_t>& GetFrontier() const { return frontier; }
 
-    const SearchRecord<Graph>& GetCurrentRecord() { return record[currentRecord]; }
     void MoveAheadRecord() {currentRecord += (currentRecord < record.size()-1) ? 1 : 0; }
     void MoveBackwardRecord() { currentRecord -= (currentRecord > 0) ? 1 : 0; }
 
@@ -81,10 +74,6 @@ private:
     location goal;
     bool _goalSelected;
     
-    std::unordered_map<location, location> cameFrom;
-    std::unordered_map<location, cost_t > costSoFar;
-    PriorityQueue<location, cost_t > frontier;
-
     std::vector<SearchRecord<Graph>> record;
     unsigned int currentRecord;
 };
