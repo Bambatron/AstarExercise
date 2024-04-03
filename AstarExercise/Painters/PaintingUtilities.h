@@ -13,14 +13,14 @@ public:
 	/// <param name="start">Starting position</param>
 	/// <param name="end">End position, where the arrow points to</param>
 	/// <returns></returns>
-	static Arrow* makeBasicArrow(sf::Vector2f start, sf::Vector2f end) { return new Arrow(start, end); }
+	static Arrow makeBasicArrow(sf::Vector2f start, sf::Vector2f end) { return Arrow(start, end); }
 
 	sf::VertexArray& getBody() { return body; }
 
 private:
 	sf::VertexArray body;
 
-	Arrow(sf::Vector2f start, sf::Vector2f end, sf::Color color = sf::Color(255, 255,0),
+	Arrow(sf::Vector2f start = sf::Vector2f(0, 0), sf::Vector2f end = sf::Vector2f(0,0), sf::Color color = sf::Color(255, 255,0),
 		float headTailLengthRatio = 0.2, float tailWidthLengthRatio = 0.1, float headWidthTailWidthRatio = 3.f,
 		float outlineThickness = 1.f, sf::Color outlineColor = sf::Color::Black)
 		: body(sf::PrimitiveType::TriangleStrip, 7) {

@@ -61,61 +61,6 @@ enum class GameState {
 int main() {
     std::cout << "Hello world" << std::endl;
 
-    sf::ContextSettings settings;
-    settings.antialiasingLevel = 8;
-    sf::RenderWindow window(sf::VideoMode(1024, 768), "Hexagon Example", sf::Style::Default, settings);
-
-    Arrow* arrow = NULL;
-    sf::Vector2f start, end;
-    while (window.isOpen()) {
-        sf::Event e;
-        while (window.pollEvent(e)) {
-            if (e.type == sf::Event::Closed) {
-                window.close();
-            }
-            if (e.type == sf::Event::MouseButtonPressed) {  //ProcessInputMouse(e.mouseButton.button)
-                if (e.mouseButton.button == sf::Mouse::Left) {
-                    sf::Vector2i pixelPos = sf::Mouse::getPosition(window); //Get the current mouse position in the window
-                    start = sf::Vector2f(pixelPos.x, pixelPos.y);
-                }
-            }
-            if (e.type == sf::Event::MouseButtonReleased) {  //ProcessInputMouse(e.mouseButton.button)
-                if (e.mouseButton.button == sf::Mouse::Left) {
-                    sf::Vector2i pixelPos = sf::Mouse::getPosition(window); //Get the current mouse position in the window
-                    end = sf::Vector2f(pixelPos.x, pixelPos.y);
-                    arrow = Arrow::makeBasicArrow(start, end);
-                    std::cout << "0: " << arrow->getBody()[0].position.x << " " << arrow->getBody()[0].position.y << std::endl;
-                    std::cout << "1: " << arrow->getBody()[1].position.x << " " << arrow->getBody()[1].position.y << std::endl;
-                    std::cout << "2: " << arrow->getBody()[2].position.x << " " << arrow->getBody()[2].position.y << std::endl;
-                    std::cout << "3: " << arrow->getBody()[3].position.x << " " << arrow->getBody()[3].position.y << std::endl;
-                    std::cout << "4: " << arrow->getBody()[4].position.x << " " << arrow->getBody()[4].position.y << std::endl;
-                    std::cout << "5: " << arrow->getBody()[5].position.x << " " << arrow->getBody()[5].position.y << std::endl;
-                    std::cout << "6: " << arrow->getBody()[6].position.x << " " << arrow->getBody()[6].position.y << std::endl;
-                }
-            }
-        }
-
-        window.clear();
-
-        
-        if (arrow != NULL) {
-            window.draw(arrow->getBody());
-        }
-        sf::CircleShape c(15);
-        c.setFillColor(sf::Color(255, 0, 0, 128));
-        c.setPosition(start);
-        window.draw(c);
-        c.setPosition(end);
-        window.draw(c);
-
-
-        window.display();
-    }
-
-
-    return 0;
-}
-    /*
     GameState gameState = GameState::Normal;
     
     sf::ContextSettings settings;
@@ -156,9 +101,7 @@ int main() {
                 if (e.key.code == sf::Keyboard::Down) { painter.MoveCamera(0.0f, -movementSpeed); }
                 if (e.key.code == sf::Keyboard::Right) { painter.MoveCamera(-movementSpeed, 0.0f); }
 
-                if (e.key.code == sf::Keyboard::R) {
-                    SaveGrid(grid);
-                }
+                if (e.key.code == sf::Keyboard::R) { SaveGrid(grid); }
                 if (e.key.code == sf::Keyboard::T) {
                     std::string filename = OpenGrid();
                     if (!filename.empty()) {
@@ -166,14 +109,14 @@ int main() {
                     }
                 }
 
-                if (e.key.code == sf::Keyboard::F) { painter.ToggleVisualGrid(); }
-                if (e.key.code == sf::Keyboard::G) { painter.ToggleNodeCenter(); }
-                if (e.key.code == sf::Keyboard::H) { painter.ToggleNodeCoordinates(); }
-                if (e.key.code == sf::Keyboard::J) { painter.ToggleNodeWeights(); }
-
-                if (e.key.code == sf::Keyboard::C) { painter.ToggleRecordedVisiteds(); }
-                if (e.key.code == sf::Keyboard::V) { painter.ToggleRecordedCosts(); }
-                if (e.key.code == sf::Keyboard::B) { painter.ToggleRecordedDiscovereds(); }
+                if (e.key.code == sf::Keyboard::F) { painter.toggleFlag(PainterFlags::Visual_Grid); }
+                if (e.key.code == sf::Keyboard::G) { painter.toggleFlag(PainterFlags::Node_Center); }
+                if (e.key.code == sf::Keyboard::H) { painter.toggleFlag(PainterFlags::Node_Coordinates); }
+                if (e.key.code == sf::Keyboard::J) { painter.toggleFlag(PainterFlags::Node_Weights); }
+                if (e.key.code == sf::Keyboard::C) { painter.toggleFlag(PainterFlags::Visited); }
+                if (e.key.code == sf::Keyboard::V) { painter.toggleFlag(PainterFlags::Costs); }
+                if (e.key.code == sf::Keyboard::B) { painter.toggleFlag(PainterFlags::Discovered); }
+                if (e.key.code == sf::Keyboard::N) { painter.toggleFlag(PainterFlags::Path_Taken); }
 
                 if (gameState == GameState::Normal) {
                     if (e.key.code == sf::Keyboard::Escape) {
@@ -190,7 +133,7 @@ int main() {
                         std::cout << "Select start: \t";
                     }
                     if (e.key.code == sf::Keyboard::W) {    //Start Dijkstra search
-                        pathFinder.SwitchFuntion(new DijkstraStrategy<HexGrid>);
+                        //pathFinder.SwitchFuntion(new DijkstraStrategy<HexGrid>);
                         gameState = GameState::Searching;
                         std::cout << "Starting Dijkstra search" << std::endl;
                         std::cout << "Select start: \t";
@@ -261,6 +204,22 @@ int main() {
                                 label.ClearParameters();
                                 label.AddParameters("Coordinates: ", tmp.q, tmp.r, tmp.s);
                                 label.AddParameters("Weight: ", grid.Weight(tmp));
+                                
+                                if (gameState == GameState::Searching) {
+                                    std::vector<std::pair<Hex, unsigned int>> v = pathFinder.GetCurrentRecord().visited;
+                                    bool f = false;
+                                    for (auto it : v) {
+                                        if (it.first == tmp) {
+                                            label.AddParameters("Cost to get here: ", it.second);
+                                            f = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!f) {
+                                        label.AddParameters(std::string{"Not yet discovered"});
+                                    }
+                                }
+
                                 labeledHex = tmp;
                             }
                         }
@@ -270,15 +229,27 @@ int main() {
                                 label.ClearParameters();
                                 label.AddParameters("Coordinates: ", tmp.q, tmp.r, tmp.s);
                                 label.AddParameters("Weight: ", grid.Weight(tmp));
+                                
+                                if (gameState == GameState::Searching) {
+                                    std::vector<std::pair<Hex, unsigned int>> v = pathFinder.GetCurrentRecord().visited;
+                                    bool f = false;
+                                    for (auto it : v) {
+                                        if (it.first == tmp) {
+                                            label.AddParameters("Cost to get here: ", it.second);
+                                            f = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!f) { label.AddParameters("Not yet discovered"); }
+                                }
+
                                 labeledHex = tmp;
                             }
                             label.Open();
                         }
 
                     }
-                    else {
-                        label.Close();
-                    }
+                    else { label.Close(); }
                 }
             }
 
@@ -295,7 +266,6 @@ int main() {
 
         if (gameState == GameState::Searching && !pathFinder.IsSearchCompleted()
             && pathFinder.IsStartSelected() && pathFinder.IsGoalSelected()) {
-            std::cout << "Make search" << std::endl;
             pathFinder.MakeSearch(grid);
         }
 
@@ -331,7 +301,9 @@ int main() {
     }
 
     return 0;
-}*/
+}
+
+
 
 //PATHFINDER EXAMPLE
 /*

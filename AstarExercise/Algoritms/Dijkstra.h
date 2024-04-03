@@ -68,12 +68,12 @@ std::vector<SearchRecord<Graph>> DijkstraSearchRecorded(Graph& graph, typename G
     return result;
 }
 
-template<typename Graph>
+/*template<typename Graph>
 class DijkstraStrategy : public PathfindingStrategy<Graph> {
 public:
     DijkstraStrategy() {}
 
-    std::vector<SearchRecord<Graph>> MakeSearch(Graph& graph, typename Graph::location_t& start, typename Graph::location_t& goal, std::vector<typename Graph::location_t>& pathTaken) override {
+    const std::vector<SearchRecord<Graph>> MakeSearch(Graph& graph, typename Graph::location_t& start, typename Graph::location_t& goal, std::vector<typename Graph::location_t>& pathTaken) const override {
         return DijkstraSearchRecorded(graph, start, goal, pathTaken);
     }
-};
+};*/

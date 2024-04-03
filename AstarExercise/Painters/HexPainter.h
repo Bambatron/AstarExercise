@@ -154,8 +154,10 @@ void HexPainter::RenderSearchRecord(const HexGrid& grid, const SearchRecord<HexG
     }
 
     if (flag(PainterFlags::Path_Taken) || (!flag(PainterFlags::Path_Taken) && record.completed)) {
-        for (auto l : record.pathToThiPoint) {
-
+        for (int i = 1; i < record.pathToThisPoint.size(); i++) {
+            sf::Vector2f posCurrent = HexToPixel(record.pathToThisPoint.at(i), tile.Radius(), windowCenter);
+            sf::Vector2f posPrecedent = HexToPixel(record.pathToThisPoint.at(i-1), tile.Radius(), windowCenter);
+            target.draw(Arrow::makeBasicArrow(posPrecedent, posCurrent).getBody());
         }
     }
 

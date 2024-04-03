@@ -37,6 +37,23 @@ std::vector<SearchRecord<Graph>> AstarSearchRecorded(Graph& graph, typename Grap
 
         if (current == goal) {
             currentRecord.completed = true;
+            currentRecord.pathToThisPoint = ReconstructPath(start, current, cameFrom);
+            auto tmp = frontier;    //frontier is a queue so it cannot be visited without destroying it
+            while (!tmp.isEmpty()) {
+                location_t it = tmp.get();
+                std::pair<location_t, cost_t> nPair = std::make_pair(it, graph.Weight(it));
+                currentRecord.discovered.push_back(nPair);
+                for (auto it : costSoFar) {
+                    currentRecord.visited.push_back(std::make_pair(it.first, it.second));
+                }
+            }
+
+            for (auto it : costSoFar) {
+                currentRecord.visited.push_back(std::make_pair(it.first, it.second));
+            }
+            
+            result.push_back(currentRecord);
+            break;
         }
         else {
             currentRecord.completed = false;
@@ -65,7 +82,7 @@ std::vector<SearchRecord<Graph>> AstarSearchRecorded(Graph& graph, typename Grap
             }
         }
 
-        currentRecord.pathToThiPoint = ReconstructPath(start, current, cameFrom);
+        currentRecord.pathToThisPoint = ReconstructPath(start, current, cameFrom);
 
 		result.push_back(currentRecord);
     }
@@ -78,7 +95,7 @@ class AstarStrategy : public PathfindingStrategy<Graph> {
 public:
 	AstarStrategy() {};
 
-	std::vector<SearchRecord<Graph>> MakeSearch(Graph& graph, typename Graph::location_t& start, typename Graph::location_t& goal, std::vector<typename Graph::location_t>& pathTaken) override {
-		return AstarSearchRecorded(graph, start, goal, pathTaken);
+	const std::vector<SearchRecord<Graph>> MakeSearch(Graph& graph, typename Graph::location_t& start, typename Graph::location_t& goal) const override {
+		return AstarSearchRecorded(graph, start, goal);
 	}
 };

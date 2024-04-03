@@ -8,7 +8,7 @@
 template <typename Graph>
 class Pathfinder {
 public:
-    using location = typedef typename Graph::location;
+    using location = typedef typename Graph::location_t;
     using cost_t = typedef typename Graph::cost_t;
 
 	Pathfinder(PathfindingStrategy<Graph>* _strat) : strategy(_strat) {
@@ -19,7 +19,6 @@ public:
     }
 
     void MakeSearch(Graph& graph);
-    bool MakeStep(Graph& graph);
 
     void SwitchFuntion(PathfindingStrategy<Graph>* _strat) { this->strategy = _strat; }
 
@@ -92,29 +91,7 @@ private:
 
 template <typename Graph>
 void Pathfinder<Graph>::MakeSearch(Graph& graph) {
-    if (_startSelected && _goalSelected && !_searchCompleted) {
-        while (!_searchCompleted) {
-            _searchCompleted = MakeStep(graph);
-        }
-    }
-}
-
-template<typename Graph>
-bool Pathfinder<Graph>::MakeStep(Graph& graph) {
-    SearchRecord<Graph> cRecord;
-    cRecord.currentNode = frontier.top();
-    cRecord.completed = strategy->MakeStep(graph, goal, cameFrom, costSoFar, frontier);
-    
-    for (auto it : costSoFar) {
-        cRecord.visited.push_back(std::make_pair(it.first, it.second));
-    }
-    PriorityQueue<location, cost_t > tmp = frontier;
-    while (!tmp.isEmpty()) { //Render discovered and open nodes
-        location it = tmp.get();
-        cRecord.discovered.push_back(std::make_pair(it, graph.Weight(it)));
-    }
-
-    record.push_back(cRecord);
-    
-    return cRecord.completed;
+    this->record = strategy->MakeSearch(graph, start, goal);
+    currentRecord = 0 ;
+    _searchCompleted = true;
 }
