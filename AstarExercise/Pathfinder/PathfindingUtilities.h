@@ -6,6 +6,7 @@
 #include <vector>
 #include <stack>
 #include <queue>
+#include <limits>
 
 template<typename T, typename priority_t>
 struct PriorityQueue {
@@ -72,7 +73,7 @@ struct SearchRecord {
 template<typename Graph>
 class PathfindingStrategy {
 public:
-    virtual const std::vector<SearchRecord<Graph>> MakeSearch(Graph& graph, typename Graph::location_t& start, typename Graph::location_t& goal) const = 0;
+    virtual const std::vector<SearchRecord<Graph>> MakeSearch(Graph& graph, typename Graph::location_t& start, typename Graph::location_t& goal, typename Graph::cost_t maxBudget) const = 0;
 
     virtual ~PathfindingStrategy() {} //Virtual destructor for polymorphism
 };

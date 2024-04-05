@@ -3,7 +3,7 @@
 #include "../Pathfinder/PathfindingUtilities.h"
 
 template<typename Graph>
-std::vector<SearchRecord<Graph>> AstarSearchRecorded(Graph& graph, typename Graph::location_t& start, typename Graph::location_t& goal) {
+std::vector<SearchRecord<Graph>> AstarSearchRecorded(Graph& graph, typename Graph::location_t& start, typename Graph::location_t& goal, typename Graph::cost_t maxBudget = std::numeric_limits<typename Graph::cost_t>::max()) {
     typedef typename Graph::location_t location_t;
     typedef typename Graph::cost_t cost_t;
 
@@ -20,7 +20,6 @@ std::vector<SearchRecord<Graph>> AstarSearchRecorded(Graph& graph, typename Grap
         throw std::runtime_error("Search Failed: Start node is not in the graph");
     }
     if (!graph.IsInBounds(goal)) {
-
         throw std::runtime_error("Search failed: Goal node is not in the graph");
     }
 
@@ -36,7 +35,12 @@ std::vector<SearchRecord<Graph>> AstarSearchRecorded(Graph& graph, typename Grap
         currentRecord.currentNode = current;
 
         if (current == goal) {
-            currentRecord.completed = true;
+            if (costSoFar[goal] <= maxBudget) {
+                currentRecord.completed = true;
+            }
+            else {
+                currentRecord.completed = false;
+            }
             currentRecord.pathToThisPoint = ReconstructPath(start, current, cameFrom);
             auto tmp = frontier;    //frontier is a queue so it cannot be visited without destroying it
             while (!tmp.isEmpty()) {
@@ -64,8 +68,14 @@ std::vector<SearchRecord<Graph>> AstarSearchRecorded(Graph& graph, typename Grap
 
             for (location_t next : graph.Neighbors(current)) {
                 cost_t newCost = costSoFar[current] + graph.Cost(current, next);
-                if (costSoFar.find(next) == costSoFar.end() ||
-                    newCost < costSoFar[next]) {
+
+                if ( (costSoFar.find(next) == costSoFar.end() || newCost < costSoFar[next]) &&
+                    newCost <= maxBudget) {
+                    
+                    if (newCost > maxBudget) {
+                        std::cout << "budget exceeded" << std::endl;
+                    }
+
                     costSoFar[next] = newCost;
                     cost_t priority = newCost + graph.Heuristic(next, goal);
                     frontier.put(next, priority);
@@ -95,7 +105,7 @@ class AstarStrategy : public PathfindingStrategy<Graph> {
 public:
 	AstarStrategy() {};
 
-	const std::vector<SearchRecord<Graph>> MakeSearch(Graph& graph, typename Graph::location_t& start, typename Graph::location_t& goal) const override {
-		return AstarSearchRecorded(graph, start, goal);
+	const std::vector<SearchRecord<Graph>> MakeSearch(Graph& graph, typename Graph::location_t& start, typename Graph::location_t& goal, typename Graph::cost_t maxBudget) const override {
+		return AstarSearchRecorded(graph, start, goal, maxBudget);
 	}
 };

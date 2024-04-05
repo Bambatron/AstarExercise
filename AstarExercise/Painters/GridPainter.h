@@ -87,14 +87,14 @@ GridPainter<Grid>::GridPainter(const typename Grid::tile_t& tile, sf::Vector2u _
     SetMaxZoom(maxZoomFactor);
     SetMinZoom(minZoomFactor);
 
-    flags[Visual_Grid] = false;
-    flags[Node_Center] = false;
-    flags[Node_Coordinates] = false;
-    flags[Node_Weights] = true;
-    flags[Visited] = true;
-    flags[Discovered] = true;
-    flags[Costs] = true;
-    flags[Path_Taken] = false;
+    flags[PainterFlags::Visual_Grid] = false;
+    flags[PainterFlags::Node_Center] = false;
+    flags[PainterFlags::Node_Coordinates] = false;
+    flags[PainterFlags::Node_Weights] = true;
+    flags[PainterFlags::Visited] = true;
+    flags[PainterFlags::Discovered] = true;
+    flags[PainterFlags::Costs] = true;
+    flags[PainterFlags::Path_Taken] = false;
 }
 
 

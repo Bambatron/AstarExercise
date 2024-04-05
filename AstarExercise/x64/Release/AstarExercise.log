@@ -57,14 +57,14 @@ C:\Workspace\AstarExercise\AstarExercise\Grids\Square.h(123,64): warning C4244: 
 C:\Workspace\AstarExercise\AstarExercise\Grids\Square.h(123,38): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\Grids\Square.h(125,34): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\Grids\Square.h(125,23): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Grids\SquareGrid.h(44,27): warning C4018: '<': signed/unsigned mismatch
-C:\Workspace\AstarExercise\AstarExercise\Grids\SquareGrid.h(45,24): warning C4018: '<': signed/unsigned mismatch
-C:\Workspace\AstarExercise\AstarExercise\Grids\SquareGrid.h(111,20): warning C4018: '<': signed/unsigned mismatch
-C:\Workspace\AstarExercise\AstarExercise\Grids\SquareGrid.h(112,21): warning C4018: '<': signed/unsigned mismatch
-C:\Workspace\AstarExercise\AstarExercise\Grids\SquareGrid.h(121,20): warning C4018: '<': signed/unsigned mismatch
-C:\Workspace\AstarExercise\AstarExercise\Grids\SquareGrid.h(122,21): warning C4018: '<': signed/unsigned mismatch
+C:\Workspace\AstarExercise\AstarExercise\Grids\SquareGrid.h(37,27): warning C4018: '<': signed/unsigned mismatch
+C:\Workspace\AstarExercise\AstarExercise\Grids\SquareGrid.h(38,24): warning C4018: '<': signed/unsigned mismatch
+C:\Workspace\AstarExercise\AstarExercise\Grids\SquareGrid.h(116,20): warning C4018: '<': signed/unsigned mismatch
+C:\Workspace\AstarExercise\AstarExercise\Grids\SquareGrid.h(117,21): warning C4018: '<': signed/unsigned mismatch
+C:\Workspace\AstarExercise\AstarExercise\Grids\SquareGrid.h(126,20): warning C4018: '<': signed/unsigned mismatch
+C:\Workspace\AstarExercise\AstarExercise\Grids\SquareGrid.h(127,21): warning C4018: '<': signed/unsigned mismatch
 C:\Workspace\AstarExercise\AstarExercise\Pathfinder\Pathfinder.h(11): warning C4091: 'typedef ': ignored on left of 'Graph::location_t' when no variable is declared
-C:\Workspace\AstarExercise\AstarExercise\Pathfinder\Pathfinder.h(90): message : see reference to class template instantiation 'Pathfinder<Graph>' being compiled
+C:\Workspace\AstarExercise\AstarExercise\Pathfinder\Pathfinder.h(83): message : see reference to class template instantiation 'Pathfinder<Graph>' being compiled
 C:\Workspace\AstarExercise\AstarExercise\Pathfinder\Pathfinder.h(12): warning C4091: 'typedef ': ignored on left of 'Graph::cost_t' when no variable is declared
 C:\Workspace\AstarExercise\AstarExercise\Painters\PaintingUtilities.h(32,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\Painters\PaintingUtilities.h(42,1): warning C4305: '*=': truncation from 'double' to 'float'
@@ -94,7 +94,7 @@ C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(143,64): warning 
 C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(158,91): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(159,95): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(165,66): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(171,22): warning C4244: 'initializing': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\Painters\HexPainter.h(175,22): warning C4244: 'initializing': conversion from 'float' to 'unsigned int', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\Painters\SquarePainter.h(19,163): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\Painters\SquarePainter.h(23,61): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\Painters\SquarePainter.h(37,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
@@ -122,29 +122,30 @@ C:\Workspace\AstarExercise\AstarExercise\Painters\SquarePainter.h(132,65): warni
 C:\Workspace\AstarExercise\AstarExercise\Painters\SquarePainter.h(139,67): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\Painters\SquarePainter.h(145,23): warning C4244: 'initializing': conversion from 'float' to 'unsigned int', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\Painters\SquarePainter.h(154,18): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\LabelMenu.h(91,46): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\LabelMenu.h(103,27): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\LabelMenu.h(93,46): warning C4244: 'argument': conversion from 'double' to 'sf::Uint8', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\LabelMenu.h(105,27): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
 C:\Workspace\AstarExercise\AstarExercise\main.cpp(23,12): warning C4566: character represented by universal-character-name '\u2190' cannot be represented in the current code page (1252)
 C:\Workspace\AstarExercise\AstarExercise\main.cpp(23,12): warning C4566: character represented by universal-character-name '\u2191' cannot be represented in the current code page (1252)
 C:\Workspace\AstarExercise\AstarExercise\main.cpp(23,12): warning C4566: character represented by universal-character-name '\u2193' cannot be represented in the current code page (1252)
 C:\Workspace\AstarExercise\AstarExercise\main.cpp(23,12): warning C4566: character represented by universal-character-name '\u2192' cannot be represented in the current code page (1252)
 C:\Workspace\AstarExercise\AstarExercise\Pathfinder\Pathfinder.h(11): warning C4091: 'typedef ': ignored on left of 'Hex' when no variable is declared
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(83): message : see reference to class template instantiation 'Pathfinder<HexGrid>' being compiled
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(84): message : see reference to class template instantiation 'Pathfinder<HexGrid>' being compiled
 C:\Workspace\AstarExercise\AstarExercise\Pathfinder\Pathfinder.h(12): warning C4091: 'typedef ': ignored on left of 'unsigned int' when no variable is declared
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(103,92): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(103,76): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(104,80): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(104,74): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(105,82): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(105,76): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(106,93): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(106,77): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(170,92): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(183,92): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Workspace\AstarExercise\AstarExercise\main.cpp(200,88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(104,92): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(104,76): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(105,80): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(105,74): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(106,82): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(106,76): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(107,93): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(107,77): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(171,92): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(184,92): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(201,88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Workspace\AstarExercise\AstarExercise\main.cpp(318,88): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   Generating code
-  2 of 2694 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+  0 of 2696 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    4 functions had inline decision re-evaluated but remain unchanged
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   AstarExercise.vcxproj -> C:\Workspace\AstarExercise\x64\Release\AstarExercise.exe

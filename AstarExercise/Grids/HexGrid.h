@@ -40,6 +40,9 @@ public:
 		if (Distance(origin, loc) <= radius) {
 			return true;
 		}
+		else if (nodes.find(loc) != nodes.end()) {
+			return true;
+		}
 		return false;
 	}
 

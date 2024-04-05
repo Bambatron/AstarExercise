@@ -38,6 +38,9 @@ public:
 			loc.y >= 0 && loc.y < rows) {
 			return true;
 		}
+		else if (nodes.find(loc) != nodes.end()) {
+			return true;
+		}
 		return false;
 	}
 

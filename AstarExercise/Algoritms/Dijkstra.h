@@ -3,7 +3,7 @@
 #include "../Pathfinder/PathfindingUtilities.h"
 
 template<typename Graph>
-std::vector<SearchRecord<Graph>> DijkstraSearchRecorded(Graph& graph, typename Graph::location_t& start, typename Graph::location_t& goal, std::vector<typename Graph::location_t>& pathTaken) {
+std::vector<SearchRecord<Graph>> DijkstraSearchRecorded(Graph& graph, typename Graph::location_t& start, typename Graph::location_t& goal, typename Graph::cost_t maxBudget = std::numeric_limits<typename Graph::cost_t>::max()) {
     typedef typename Graph::location_t location_t;
     typedef typename Graph::cost_t cost_t;
 
@@ -56,8 +56,10 @@ std::vector<SearchRecord<Graph>> DijkstraSearchRecorded(Graph& graph, typename G
 
         for (location_t next : graph.Neighbors(current)) {
             cost_t newCost = costSoFar[current] + graph.Cost(current, next);
-            if (costSoFar.find(next) == costSoFar.end()
-                || newCost < costSoFar[next]) {
+
+            if ( (costSoFar.find(next) == costSoFar.end() || newCost < costSoFar[next]) &&
+                 newCost <= maxBudget) {
+
                 costSoFar[next] = newCost;
                 cameFrom[next] = current;
                 frontier.put(next, newCost);
@@ -82,7 +84,7 @@ class DijkstraStrategy : public PathfindingStrategy<Graph> {
 public:
     DijkstraStrategy() {}
 
-    const std::vector<SearchRecord<Graph>> MakeSearch(Graph& graph, typename Graph::location_t& start, typename Graph::location_t& goal) const override {
-        return DijkstraSearchRecorded(graph, start, goal);
+    const std::vector<SearchRecord<Graph>> MakeSearch(Graph& graph, typename Graph::location_t& start, typename Graph::location_t& goal, typename Graph::cost_t maxBudget) const override {
+        return DijkstraSearchRecorded(graph, start, goal, maxBudget);
     }
 };

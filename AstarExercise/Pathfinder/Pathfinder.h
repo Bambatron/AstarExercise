@@ -15,6 +15,7 @@ public:
         _searchCompleted = false;
         _startSelected = false;
         _goalSelected = false;
+        maxBudget = 100;
         currentRecord = 0;
     }
 
@@ -28,6 +29,8 @@ public:
 
     bool IsGoalSelected() const { return _goalSelected; }
     const location& GetGoal() const { return goal; }
+
+    cost_t getMaxBudget() const { return maxBudget; }
 
     const SearchRecord<Graph>& GetCurrentRecord() { return record[currentRecord]; }
 
@@ -46,9 +49,6 @@ public:
         if (!_startSelected) {
             _startSelected = true;
             this->start = start;
-            frontier.put(start, 0);
-            cameFrom[start] = start;
-            costSoFar[start] = 0;
         }
     }
     void ClearStart() { _startSelected = false; }
@@ -60,6 +60,8 @@ public:
         }
     }
     void ClearGoal() { _goalSelected = false; }
+
+    void setMaxBudget(cost_t maxBudget) { this->maxBudget = maxBudget; }
 
     void MoveAheadRecord() {currentRecord += (currentRecord < record.size()-1) ? 1 : 0; }
     void MoveBackwardRecord() { currentRecord -= (currentRecord > 0) ? 1 : 0; }
@@ -74,13 +76,15 @@ private:
     location goal;
     bool _goalSelected;
     
+    cost_t maxBudget;
+
     std::vector<SearchRecord<Graph>> record;
     unsigned int currentRecord;
 };
 
 template <typename Graph>
 void Pathfinder<Graph>::MakeSearch(Graph& graph) {
-    this->record = strategy->MakeSearch(graph, start, goal);
+    this->record = strategy->MakeSearch(graph, start, goal, maxBudget);
     currentRecord = 0 ;
     _searchCompleted = true;
 }

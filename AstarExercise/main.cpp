@@ -64,6 +64,7 @@ const std::string Help() {
 
 int main() {
     std::cout << "Hello world" << std::endl;
+    std::cout << "Press F1 for commands" << std::endl;
 
     GameState gameState = GameState::Normal;
     
@@ -223,6 +224,12 @@ int main() {
                                     if (!f) {
                                         label.AddParameters(std::string{"Not yet discovered"});
                                     }
+                                    if (pathFinder.IsStartSelected() && tmp == pathFinder.GetStart()) {
+                                        label.AddParameters("Starting location");
+                                    }
+                                    else if (pathFinder.IsGoalSelected() && tmp == pathFinder.GetGoal()) {
+                                        label.AddParameters("Ending location");
+                                    }
                                 }
 
                                 labeledHex = tmp;
@@ -236,6 +243,7 @@ int main() {
                                 label.AddParameters("Weight: ", grid.Weight(tmp));
                                 
                                 if (gameState == GameState::Searching) {
+
                                     std::vector<std::pair<Hex, unsigned int>> v = pathFinder.GetCurrentRecord().visited;
                                     bool f = false;
                                     for (auto it : v) {
@@ -246,6 +254,13 @@ int main() {
                                         }
                                     }
                                     if (!f) { label.AddParameters("Not yet discovered"); }
+
+                                    if (pathFinder.IsStartSelected() && tmp == pathFinder.GetStart()) {
+                                        label.AddParameters("Starting location");
+                                    }
+                                    else if (pathFinder.IsGoalSelected() && tmp == pathFinder.GetGoal()) {
+                                        label.AddParameters("Ending location");
+                                    }
                                 }
 
                                 labeledHex = tmp;
@@ -298,6 +313,12 @@ int main() {
         
         if (pathFinder.IsSearchCompleted())
             painter.RenderSearchRecord(grid, pathFinder.GetCurrentRecord(), window);
+
+        if (gameState == GameState::Searching && pathFinder.IsStartSelected() && !(pathFinder.IsGoalSelected())) {
+            sf::Vector2f s = HexToPixel(pathFinder.GetStart(), painter.GetTile().Radius(), painter.GetWindowCenter());
+            sf::Vector2f g = sf::Vector2f(sf::Mouse::getPosition(window));
+            window.draw(Arrow::makeBasicArrow(s, g).getBody());
+        }
 
         if (label.IsOpen())
             label.Render(window);
